@@ -181,8 +181,6 @@ export const readOneEpisode = async (id) => {
 
     let epiId = onePodResponse[0].episodes[0]._id;
     let podId = onePodResponse[0]._id;
-    console.log(podId);
-    console.log(epiId);
     let oneEpiProject = {
         $project: {
             _id: 0,
