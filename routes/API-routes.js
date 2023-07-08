@@ -19,4 +19,8 @@ router.route('/api/podcasts/:id')
     // deletes one pod from db
     .delete(podsCTRL.deleteOnePod)
 
+router.route('/api/episodes/:id')
+    .get(podsCTRL.getOneEpi)
+    .delete(podsCTRL.deleteEpisode)
+
 export default router;

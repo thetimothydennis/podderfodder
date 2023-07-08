@@ -15,6 +15,19 @@ export const getOnePod = async (req, res) => {
     };
 };
 
+// get one episode from db
+export const getOneEpi = async (req, res) => {
+    let epiId = req.params.id
+    try {
+        let getOne = await podcasts.readOneEpisode(epiId);
+        res.send(getOne);
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(404).send(error.message);
+    }
+};
+
 // get all pods and episodes from db
 export const getAllPods = async (req, res) => {
     try {
@@ -30,18 +43,27 @@ export const getAllPods = async (req, res) => {
 // update a single pod and episodes from db
 export const updateOnePodcast = async (req, res) => {
     try {
-        let id = req.params.id;
-        const feedUrlToUpdate = await podcasts.readPodcast(id);
+        let podId = req.params.id;
+        const feedUrlToUpdate = await podcasts.readPodcast(podId);
         const updateParsedFeed = await feedFunctions.parseFeed(feedUrlToUpdate[0].feedurl);
-        updateParsedFeed.id = id;
-        await podcasts.updatePodFeed(updateParsedFeed);
-        let updated = await podcasts.readPodcast(id)
+        updateParsedFeed.id = podId;
+        let updatedPod = await podcasts.updatePodFeed(updateParsedFeed);
+        let updated = await podcasts.readPodcast(podId)
         res.send(updated);
     }
     catch (error) {
         console.log(error.message);
         res.status(404).send(error.message);
     };
+};
+
+// delete a single episode from db
+export const deleteEpisode = async (req, res) => {
+    let epiId = req.params.id;
+    let podId = await podcasts.readOneEpisode(epiId);
+    podId = podId.pod_id;
+    let deletedEpi = await podcasts.deleteOneEpisode(podId, epiId);
+    res.send(deletedEpi);
 };
 
 // delete a single pod and episodes from db
