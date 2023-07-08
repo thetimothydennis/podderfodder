@@ -10,7 +10,7 @@ export const getOnePod = async (req, res) => {
         res.send(findPod);
     }
     catch (error) {
-        console.log(error.message);
+        console.log(error);
         res.status(404).send(error.message);
     };
 };

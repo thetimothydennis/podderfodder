@@ -11,7 +11,7 @@ export const parseFeed = async (feedUrl) => {
         // uses rssParser to parse the feed at the given url
         const parsedFeed = await parser.parseURL(feedUrl);
         // destructures data from the parsed feed
-        let { title, description, lastBuildDate } = parsedFeed;
+        let { title, description, lastBuildDate, items } = parsedFeed;
         // regex to remove HTML tags from the description if they are present in the feed
         if (description.match(/(<([^>]+)>)/gi)) {
             description = reformat.removeHTML(description);
@@ -27,7 +27,8 @@ export const parseFeed = async (feedUrl) => {
             image,
             lastBuildDate,
             categories,
-            feedUrl
+            feedUrl,
+            items
         };
         // returns an object containing the pertinent information from the podcast feed
         return podObj;

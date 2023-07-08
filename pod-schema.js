@@ -23,6 +23,8 @@ const EpisodeSchema = new mongoose.Schema({
     content: String
 });
 
+export const episodes = connection.model("episode", EpisodeSchema);
+
 const PodcastSchema = new mongoose.Schema({
     show_title: {
         type: String,
