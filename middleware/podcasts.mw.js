@@ -7,7 +7,6 @@ export const ingestPod = async (req, res) => {
         let feedUrl = req.body.feedurl;
         let insertPod = await parseFeed(feedUrl);
         let feedResponse = await podcasts.ingestFeed(insertPod);
-
         res.send(feedResponse);
     }
     catch (error) {

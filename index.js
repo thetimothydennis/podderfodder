@@ -3,7 +3,8 @@ import 'dotenv/config';
 import http from 'http';
 import morgan from 'morgan';
 
-import APIrouter from './routes/API-routes.js';
+import PodsAndEpisRouter from './routes/pod-API-routes.js';
+import UsersRouter from './routes/user-API-routes.js';
 
 const app = express();
 app.use(morgan('dev'));
@@ -11,7 +12,8 @@ app.use(morgan('dev'));
 const PORT = process.env.PORT;
 
 app.use(express.json());
-app.use(APIrouter);
+app.use(PodsAndEpisRouter);
+app.use(UsersRouter);
 
 const options = {};
 
