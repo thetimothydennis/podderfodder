@@ -1,6 +1,6 @@
 import * as podcasts from '../models/podcasts.model.js';
 import * as feedFunctions from '../functions/feed-functions.js'
-import { podcast } from '../pod-schema.js';
+import { Podcast } from '../pod-schema.js';
 
 // get a single pod and episodes from db
 export const getOnePod = async (req, res) => {
@@ -32,10 +32,10 @@ export const updateOnePodcast = async (req, res) => {
     try {
         let id = req.params.id;
         const feedUrlToUpdate = await podcasts.readPodcast(id);
-        const updateParsedFeed = await feedFunctions.parseFeed(feedUrlToUpdate.feedurl);
+        const updateParsedFeed = await feedFunctions.parseFeed(feedUrlToUpdate[0].feedurl);
         updateParsedFeed.id = id;
         await podcasts.updatePodFeed(updateParsedFeed);
-        let updated = await podcast.findById(id);
+        let updated = await podcasts.readPodcast(id)
         res.send(updated);
     }
     catch (error) {
@@ -60,7 +60,7 @@ export const deleteOnePod = async (req, res) => {
 // delete all pods and episodes from db
 export const deleteAllPods = async (req, res) => {
     try {
-        let deleteAll = podcasts.deleteAllPodcasts();
+        let deleteAll = await podcasts.deleteAllPodcasts();
         res.send(deleteAll);
     }
     catch (error) {

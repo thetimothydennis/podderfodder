@@ -1,6 +1,71 @@
 import { parseFeed, parseFeedURL } from '../functions/feed-functions.js'
 import * as reformat from '../functions/data-type-manipulation.js'
-import { podcast, episodes } from '../pod-schema.js';
+import { Podcast, Episodes } from '../pod-schema.js';
+import mongoose from 'mongoose';
+
+// mongodb aggregate pipeline constant
+
+const aggregatePipeline = async (matchObj) => {
+    let aggResult = await Podcast.aggregate(
+        [
+            matchObj,
+            {
+                $set: {
+                    episodes: {
+                        $map: {
+                            input: "$episodes",
+                            in: {
+                                epi_id: "$$this._id",
+                                title: "$$this.title",
+                                pubDate: "$$this.pubDate",
+                                web_url: "$$this.web_url",
+                                epi_url: "$$this.epi_url",
+                                length: "$$this.length",
+                                content: "$$this.content"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    pod_id: "$_id",
+                    show_title: "$show_title",
+                    description: "$description",
+                    author: "$author",
+                    image: "$image",
+                    feedurl: "$feedurl",
+                    categories: "$categories",
+                    episodes: "$episodes"
+                }
+            }
+        ]
+    );
+    return aggResult;
+};
+
+const emptyMatch = {
+    $match: {}
+};
+
+const feedUrlMatch = (feedUrl) => {
+    return {
+        $match: {
+            feedurl: feedUrl
+        }
+    }
+};
+
+const idMatch = (id) => {
+    return {
+        $match: {
+            _id: {
+                $in: [new mongoose.Types.ObjectId(id)]
+            }
+        }
+    }
+};
 
 // create a podcast with episodes
 export const ingestFeed = async (feedObj) => {
@@ -17,11 +82,11 @@ export const ingestFeed = async (feedObj) => {
     if (description.match(/(<([^>]+)>)/gi)) {
         description = reformat.removeHTML(description);
     };
-    let checkPod = await podcast.find({ feedurl: feedUrl });
+    let checkPod = await Podcast.find({ feedurl: feedUrl });
     if (checkPod.length !== 0) {
         return checkPod;
     } else {
-        let insertPod = new podcast ({
+        let insertPod = new Podcast ({
             show_title: title,
             description: description,
             author: author,
@@ -53,11 +118,11 @@ export const ingestFeed = async (feedObj) => {
             let length = Math.round(duration / 60);
             let web_url = link;
             let epi_url = url;
-            let itemCheck = await episodes.findOne({epi_url: url});
+            let itemCheck = await Episodes.findOne({epi_url: url});
             if (itemCheck !== null) {
                 continue;
             } else {
-                let newEpisode = new episodes ({
+                let newEpisode = new Episodes ({
                     title,
                     pubDate,
                     web_url,
@@ -68,7 +133,7 @@ export const ingestFeed = async (feedObj) => {
                 newEpis.push(newEpisode);
             };
         };
-        await podcast.findOneAndUpdate({
+        await Podcast.findOneAndUpdate({
             feedurl: feedUrl
         },{
             $push: {
@@ -77,20 +142,21 @@ export const ingestFeed = async (feedObj) => {
                 }
             }
         });
-        let response = await podcast.find({ feedurl: feedUrl });
+        let response = await aggregatePipeline(feedUrlMatch(feedUrl));
         return response;
     };
 };
 // read a podcast with episodes
 export const readPodcast = async (id) => {
-    const getOnePod = await podcast.findById(id);
+    // const getOnePod = await Podcast.findById(id);
+    const getOnePod = await aggregatePipeline(idMatch(id))
     return getOnePod;
 };
 
 // read all podcasts with episodes
 export const readAllPodcasts = async () => {
-    const getAllPods = await podcast.find();
-    return getAllPods;
+    let allPodResponse = await aggregatePipeline(emptyMatch);
+    return allPodResponse;
 };
 
 // update a podcast and episodes
@@ -104,7 +170,7 @@ export const updatePodFeed = async (feedObj) => {
         categories,
         id
     } = feedObj;
-    const updatePodFeed = await podcast.findOneAndUpdate({ _id: feedObj.id }, {
+    const updatePodFeed = await Podcast.findByIdAndUpdate({ _id: feedObj.id }, {
         show_title: title,
         description: description,
         author: author,
@@ -112,17 +178,17 @@ export const updatePodFeed = async (feedObj) => {
         feedurl: feedUrl,
         categories: categories
     });
-    await updatePodFeed.save();
-}
+    return updatePodFeed;
+};
 
 // delete a podcast and episodes
 export const deletePodcast = async (id) => {
-    const deletePod = await podcast.findByIdAndDelete(id);
+    const deletePod = await Podcast.findByIdAndDelete(id);
     return deletePod;
 };
 
 // delete all podcasts
 export const deleteAllPodcasts = async () => {
-    const deleteAll = await podcast.deleteMany();
+    const deleteAll = await Podcast.deleteMany();
     return deleteAll;
 }
