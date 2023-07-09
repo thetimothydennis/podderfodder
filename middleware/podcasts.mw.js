@@ -2,12 +2,13 @@ import * as podcasts from '../models/podcasts.model.js';
 import { parseFeed } from '../functions/feed-functions.js';
 
 // import pod and episodes, pass off to user controller
-export const ingestPod = async (req, res) => {
+export const ingestPod = async (req, res, next) => {
     try {
         let feedUrl = req.body.feedurl;
         let insertPod = await parseFeed(feedUrl);
         let feedResponse = await podcasts.ingestFeed(insertPod);
-        res.send(feedResponse);
+        req.feedIngestRes = feedResponse;
+        next();
     }
     catch (error) {
         console.log(error.message);

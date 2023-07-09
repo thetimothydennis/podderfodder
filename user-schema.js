@@ -8,23 +8,49 @@ mongoose.connect(process.env.MONGO_URI, {
 
 const connection = mongoose.createConnection(process.env.MONGO_URI);
 
-const UserEpiSchema = {
-    epi_id: {
+const EpisodeSchema = new mongoose.Schema({
+    title: {
         type: String,
-        // required: true
+        required: true
     },
-    elapsed: {
-        type: Number
-    }
-};
+    pubDate: Date,
+    web_url: String,
+    epi_url: {
+        type: String,
+        required: true,
+    },
+    length: Number,
+    content: String
+});
 
-const UserPodSchema = {
-    pod_id: {
+export const Episodes = connection.model("Episodes", EpisodeSchema);
+
+const PodcastSchema = new mongoose.Schema({
+    show_title: {
         type: String,
-        // required: true
+        required: true
     },
-    episodes: [UserEpiSchema]
-};
+    description: {
+        type: String
+    },
+    author: {
+        type: String
+    },
+    image: {
+        type: String
+    },
+    feedurl: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    categories: {
+        type: String
+    },
+    episodes: [EpisodeSchema]
+});
+
+export const Podcast = connection.model("Podcast", PodcastSchema)
 
 const UserSchema = {
     name: {
@@ -35,7 +61,7 @@ const UserSchema = {
         type: String,
         required: true
     },
-    podcasts: [UserPodSchema]
+    podcasts: [PodcastSchema]
 };
 
 export const User = connection.model("User", UserSchema);

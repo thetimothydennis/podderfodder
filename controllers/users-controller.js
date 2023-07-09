@@ -38,6 +38,39 @@ export const getAUser = async (req, res) => {
 };
 
 // update user pods and epis in db
+export const addUserPods = async (req, res) => {
+    try {
+        const userId = req.params.id;
+        const feedDb = req.feedIngestRes;
+        const userPodAdd = await users.addPodsToUser(userId, feedDb);
+        // add feedDb podcasts and episodes to the podcasts array in the user
+        res.send(userPodAdd)
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(404).send(error.message);
+    };
+};
+
+// get a single pod from user in db
+export const getUserPod = async (req, res) => {
+    try {
+        const { userid, podid } = req.params;
+        let getPodcast = await users.getUserPodcast(userid, podid);
+        res.send(getPodcast);
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(404).send(error.message);
+    };
+};
+
+// get all pods for user
+export const getUserPods = async (req, res) => {
+    let userId = req.params.id;
+    let getPodcasts = await users.getUserPodcasts(userId);
+    res.send(getPodcasts);
+};
 
 // delete a user from db
 export const deleteUser = async (req, res) => {
