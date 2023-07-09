@@ -1,5 +1,19 @@
 import * as users from '../models/users.model.js';
 
+// error handling
+function errConsole (error) {
+    return console.log(error.message)
+};
+
+function err404 (error, res) {
+    return res.status(404).send(error.message)
+};
+
+function errHandler (error, res) {
+    errConsole(error)
+    err404(error, res)
+};
+
 // insert user into db
 export const insertUser = async (req, res) => {
     let userObj = req.body;
@@ -8,10 +22,10 @@ export const insertUser = async (req, res) => {
         res.send(insertAUser);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
+
 // get all users from db
 export const getAllUsers = async (req, res) => {
     try {
@@ -19,10 +33,9 @@ export const getAllUsers = async (req, res) => {
         res.send(allUsers);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
-    }
-}
+        errHandler(error, res);
+    };
+};
 
 // get user from db using email and name
 export const getAUser = async (req, res) => {
@@ -32,8 +45,7 @@ export const getAUser = async (req, res) => {
         res.send(gottenUser)
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
 
@@ -47,8 +59,7 @@ export const addUserPods = async (req, res) => {
         res.send(userPodAdd)
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
 
@@ -60,24 +71,76 @@ export const getUserPod = async (req, res) => {
         res.send(getPodcast);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
 
 // get all pods for user
 export const getUserPods = async (req, res) => {
-    let userId = req.params.id;
-    let getPodcasts = await users.getUserPodcasts(userId);
-    res.send(getPodcasts);
+    try {
+        let userId = req.params.id;
+        let getPodcasts = await users.getUserPodcasts(userId);
+        res.send(getPodcasts);
+    }
+    catch (error) {
+        errHandler(error, res);
+    };
 };
 
 // get single episode for user
 export const getUserEpi = async (req, res) => {
-    const { userid, podid, epiid } = req.params;
-    let getAnEpi = await users.getUserEpisode(userid, podid, epiid);
-    res.send(getAnEpi);
-}
+    try {
+        const { userid, podid, epiid } = req.params;
+        let getAnEpi = await users.getUserEpisode(userid, podid, epiid);
+        res.send(getAnEpi);
+    }
+    catch (error) {
+        errHandler(error, res);
+    };
+};
+
+// delete a single episode for a user
+export const deleteUserEpi = async (req, res) => {
+    const {
+        userid,
+        podid,
+        epiid
+    } = req.params;
+    try {
+        const deletedEpi = await users.deleteAUserEpi(userid, podid, epiid);
+        res.send(deletedEpi);
+    }
+    catch (error) {
+        errHandler(error, res);
+    };
+};
+
+// delete a user pod
+export const deleteUserPod = async (req, res) => {
+    const {
+        userid,
+        podid
+    } = req.params;
+    try {
+        let deletePod = await users.deleteAUserPod(userid, podid);
+        res.send(deletePod)
+    }
+    catch (error) {
+        errHandler(error, res);
+    };
+};
+
+// delete all user pods
+export const deleteUserPods = async (req, res) => {
+    let userId = req.params.id;
+    try {
+        const deletePods = await users.deleteAllUserPods(userId);
+        res.send(deletePods)
+    }
+    catch (error) {
+        errHandler(error, res);
+    };
+};
 
 // delete a user from db
 export const deleteUser = async (req, res) => {
@@ -87,7 +150,6 @@ export const deleteUser = async (req, res) => {
         res.send(deletedUser);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
