@@ -32,7 +32,7 @@ const aggrPodIdMatch = (podId) => {
 const aggrEpiIdMatch = (epiId) => {
     return {
         $match: {
-           "podcasts.episodes._id": {
+            "podcasts.episodes._id": {
                 $in: [new mongoose.Types.ObjectId(epiId)]
             }
         }
@@ -90,7 +90,7 @@ const aggrStdProjection = () => {
                     content: 1,
                     length: 1
                 }
-            }          
+            }
         }
     }
 };
@@ -117,7 +117,7 @@ export const getUser = async (userObj) => {
         email
     } = userObj;
     let foundUser = await User.findOne(
-        {name: name, email: email}
+        { name: name, email: email }
     ).exec();
     return foundUser;
 };
@@ -138,12 +138,12 @@ export const getAllUsers = async () => {
 export const addPodsToUser = async (userId, feedRes) => {
     let feedData = feedRes[0];
     let podCheck = await User.find(
-        {_id: userId, "podcasts._id": feedData._id }, {
-            name: 1,
-            email: 1,
-            _id: 1,
-            "podcasts.$": 1
-        }
+        { _id: userId, "podcasts._id": feedData._id }, {
+        name: 1,
+        email: 1,
+        _id: 1,
+        "podcasts.$": 1
+    }
     );
     if (podCheck.length > 0) {
         return podCheck;
@@ -151,7 +151,7 @@ export const addPodsToUser = async (userId, feedRes) => {
     else {
         let addPod = await User.findOneAndUpdate({
             _id: userId
-        },{
+        }, {
             $push: {
                 podcasts: feedData
             }
@@ -205,28 +205,24 @@ export const getUserEpisode = async (userId, podId, epiId) => {
 
 // delete an episode from a podcast from user
 export const deleteAUserEpi = async (userId, podId, epiId) => {
-    const deleteUserEpi = await User.findOneAndUpdate(
-    {_id: userId},
-    {
+    const getEpiFromDb = await getUserEpisode(userId, podId, epiId);
+    let epiUrl = getEpiFromDb[0].podcasts.episodes.epi_url;
+    const deleteOneUserEpi = await User.updateOne({'podcasts.episodes.epi_url': epiUrl}, {
         $pull: {
-            podcasts: {
-                _id: podId,
-                episodes: {
-                    _id: epiId
-                }
+            'podcasts.$.episodes': {
+                epi_url: epiUrl
             }
-        }
-    }
-    )
-    return deleteUserEpi;
-}
+        }  
+    })
+    return deleteOneUserEpi;
+};
 
 // delete a podcast and episodes from user
 export const deleteAUserPod = async (userId, podId) => {
     const deleteUserPod = await User.updateOne(
-        {_id: userId},
+        { _id: userId },
         {
-            $pull: 
+            $pull:
             {
                 podcasts: {
                     _id: podId
