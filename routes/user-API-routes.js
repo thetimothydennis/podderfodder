@@ -22,6 +22,10 @@ router.route('/api/user/:userid/:podid')
     // gets a single podcast for a user
     .get(CTRLusers.getUserPod)
 
+router.route('/api/user/:userid/:podid/:epiid')
+    // gets a single episode for a user
+    .get(CTRLusers.getUserEpi)
+
 router.route('/api/users')
     // gets all users from db
     .get(CTRLusers.getAllUsers)

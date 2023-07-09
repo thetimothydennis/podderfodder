@@ -70,22 +70,175 @@ export const addPodsToUser = async (userId, feedRes) => {
 };
 // get a podcast for a user
 export const getUserPodcast = async (userId, podId) => {
-    let podFind = await User.find(
-        {_id: userId, "podcasts._id": podId }, {
-            name: 1,
-            email: 1,
-            _id: 1,
-            "podcasts.$": 1
-        }
+    const podFind = await User.aggregate(
+        [
+            {
+                $match: {
+                    _id: {
+                        $in: [new mongoose.Types.ObjectId(userId)]
+                    }
+                }
+            },
+            {
+                $unwind: {
+                    path: "$podcasts"
+                },
+            },
+            {
+                $match: {
+                    "podcasts._id": {
+                        $in: [new mongoose.Types.ObjectId(podId)]
+                    } 
+                }
+            },
+            {
+                $unwind: {
+                    path: "$podcasts.episodes"
+                }
+            },
+            {
+                $project: {
+                    name: 1,
+                    email: 1,
+                    _id: 0,
+                    user_id: "$_id",
+                    podcasts: {
+                        pod_id: "$podcasts._id",
+                        show_title: 1,
+                        author: 1,
+                        feedurl: 1,
+                        image: 1,
+                        categories: 1,
+                        description: 1,
+                        episodes: {
+                            epi_id: "$podcasts.episodes._id",
+                            title: 1,
+                            epi_url: 1,
+                            content: 1,
+                            length: 1
+                        }
+                    }          
+                }
+            }
+        ]
     );
     return podFind;
 };
 
 // get all podcasts for user
 export const getUserPodcasts = async (userId) => {
-    let getPods = await User.findById(userId);
+    // let getPods = await User.findById(userId);
+    const getPods = await User.aggregate(
+        [
+            {
+                $match: {
+                    _id: {
+                        $in: [new mongoose.Types.ObjectId(userId)]
+                    }
+                }
+            },
+            {
+                $unwind: {
+                    path: "$podcasts"
+                }
+            },
+            {
+                $unwind: {
+                    path: "$podcasts.episodes"
+                }
+            },
+            {
+                $project: {
+                    name: 1,
+                    email: 1,
+                    _id: 0,
+                    user_id: "$_id",
+                    podcasts: {
+                        pod_id: "$podcasts._id",
+                        show_title: 1,
+                        author: 1,
+                        feedurl: 1,
+                        image: 1,
+                        categories: 1,
+                        description: 1,
+                        episodes: {
+                            epi_id: "$podcasts.episodes._id",
+                            title: 1,
+                            epi_url: 1,
+                            content: 1,
+                            length: 1
+                        }
+                    }          
+                }
+            }
+        ]
+    )
     return getPods;
 };
+
+// get an episode from a podcast from user
+export const getUserEpisode = async (userId, podId, epiId) => {
+    let getEpisode = await User.aggregate(
+        [
+            {
+                $match: {
+                    _id: {
+                        $in: [new mongoose.Types.ObjectId(userId)]
+                    }
+                }
+            },
+            {
+                $unwind: {
+                    path: "$podcasts"
+                }
+            },
+            {
+                $match: {
+                    "podcasts._id": {
+                        $in: [new mongoose.Types.ObjectId(podId)]
+                    }
+                }
+            },
+            {
+                $unwind: {
+                    path: "$podcasts.episodes"
+                }
+            },
+            {
+                $match: {
+                   "podcasts.episodes._id": {
+                        $in: [new mongoose.Types.ObjectId(epiId)]
+                    }
+                }
+            },
+            {
+                $project: {
+                    name: 1,
+                    email: 1,
+                    _id: 0,
+                    user_id: "$_id",
+                    podcasts: {
+                        pod_id: "$podcasts._id",
+                        show_title: 1,
+                        author: 1,
+                        feedurl: 1,
+                        image: 1,
+                        categories: 1,
+                        description: 1,
+                        episodes: {
+                            epi_id: "$podcasts.episodes._id",
+                            title: 1,
+                            epi_url: 1,
+                            content: 1,
+                            length: 1
+                        }
+                    }          
+                }
+            }        
+        ]
+    );
+    return getEpisode;
+}
 
 // delete an episode from a podcast from user
 

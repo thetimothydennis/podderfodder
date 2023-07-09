@@ -72,6 +72,13 @@ export const getUserPods = async (req, res) => {
     res.send(getPodcasts);
 };
 
+// get single episode for user
+export const getUserEpi = async (req, res) => {
+    const { userid, podid, epiid } = req.params;
+    let getAnEpi = await users.getUserEpisode(userid, podid, epiid);
+    res.send(getAnEpi);
+}
+
 // delete a user from db
 export const deleteUser = async (req, res) => {
     let id = req.params.id;
