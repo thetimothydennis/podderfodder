@@ -240,11 +240,12 @@ export const deleteAUserPod = async (userId, podId) => {
 
 // delete all podcasts and episodes from user
 export const deleteAllUserPods = async (userId) => {
-    const deleteUserPods = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrDeleteAllPOds()
-        ]
+    const deleteUserPods = await User.updateOne({_id: userId}, {
+        $pull: {
+            podcasts: {}
+        }
+    }
+
     );
     return deleteUserPods;
 };

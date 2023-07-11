@@ -10,7 +10,7 @@ function err404 (error, res) {
     return res.status(404).send(error.message)
 };
 
-function errHandler (error, res) {
+export function errHandler (error, res) {
     errConsole(error)
     err404(error, res)
 };
@@ -73,7 +73,7 @@ export const updateUserPod = async (req, res) => {
         let getFeedUrlFromDb = await users.getUserPodcast(userid, podid);
         let userFeedUrl = getFeedUrlFromDb[0].podcasts.feedurl;
         // first update the podcast in the user db
-        let updatePod 
+        
     }
     catch (error) {
         errHandler(error, res);
