@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
-import { User } from '../user-schema.js';
-import { Podcast } from '../pod-schema.js';
+import { User, Podcast, Episodes } from '../user-schema.js';
 import * as podcasts from '../models/podcasts.model.js'
 import { deleteUser } from '../controllers/users-controller.js';
 
@@ -116,9 +115,7 @@ export const getUser = async (userObj) => {
         name,
         email
     } = userObj;
-    let foundUser = await User.findOne(
-        { name: name, email: email }
-    ).exec();
+    let foundUser = await User.find({ email: email })
     return foundUser;
 };
 
@@ -156,10 +153,17 @@ export const addPodsToUser = async (userId, feedRes) => {
                 podcasts: feedData
             }
         });
-        await User.findById(userId);
-        return addPod;
+        console.log(addPod)
+        let userReturn = await User.findById(userId);
+        return userReturn;
     };
 };
+
+// update podcast and episodes for user
+export const updateUserPodAndEpis = async (userId, podId, feedRes) => {
+
+};
+
 // get a podcast for a user
 export const getUserPodcast = async (userId, podId) => {
     const podFind = await User.aggregate(
@@ -213,7 +217,8 @@ export const deleteAUserEpi = async (userId, podId, epiId) => {
                 epi_url: epiUrl
             }
         }  
-    })
+    });
+    await deleteOneUserEpi.save();
     return deleteOneUserEpi;
 };
 
@@ -245,6 +250,6 @@ export const deleteAllUserPods = async (userId) => {
 };
 // delete a user from db
 export const deleteAUser = async (userId) => {
-    let deleteUser = await User.findByIdAndDelete(userId);
+    let deleteUser = await User.deleteOne({_id: userId});
     return deleteUser;
 };

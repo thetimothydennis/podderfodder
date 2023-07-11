@@ -148,9 +148,8 @@ export const ingestFeed = async (feedObj) => {
         });
         await insertPod.save();
         // inserting episodes
-        let newEpis = await epiHandler(items)
-        console.log(newEpis)
-        await Podcast.findOneAndUpdate({
+        let newEpis = await epiHandler(items);
+        let response = await Podcast.findOneAndUpdate({
             feedurl: feedUrl
         },{
             $push: {
@@ -159,7 +158,7 @@ export const ingestFeed = async (feedObj) => {
                 }
             }
         });
-        let response = await aggregatePipeline(feedUrlMatch(feedUrl), standardProject);
+        // let response = await aggregatePipeline(feedUrlMatch(feedUrl), standardProject);
         return response;
     };
 };

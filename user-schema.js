@@ -41,8 +41,7 @@ const PodcastSchema = new mongoose.Schema({
     },
     feedurl: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     categories: {
         type: String

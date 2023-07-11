@@ -1,4 +1,5 @@
 import * as users from '../models/users.model.js';
+import { User } from '../user-schema.js';
 
 // error handling
 function errConsole (error) {
@@ -55,8 +56,24 @@ export const addUserPods = async (req, res) => {
         const userId = req.params.id;
         const feedDb = req.feedIngestRes;
         const userPodAdd = await users.addPodsToUser(userId, feedDb);
-        // add feedDb podcasts and episodes to the podcasts array in the user
         res.send(userPodAdd)
+    }
+    catch (error) {
+        errHandler(error, res);
+    };
+};
+
+// updates a podcast for user in db
+export const updateUserPod = async (req, res) => {
+    try {
+        const {
+            userid,
+            podid
+        } = req.params;
+        let getFeedUrlFromDb = await users.getUserPodcast(userid, podid);
+        let userFeedUrl = getFeedUrlFromDb[0].podcasts.feedurl;
+        // first update the podcast in the user db
+        let updatePod 
     }
     catch (error) {
         errHandler(error, res);
@@ -144,9 +161,9 @@ export const deleteUserPods = async (req, res) => {
 
 // delete a user from db
 export const deleteUser = async (req, res) => {
-    let id = req.params.id;
+    let userid = req.params.userid;
     try {
-        let deletedUser = await users.deleteAUser(id);
+        let deletedUser = await users.deleteAUser(userid);
         res.send(deletedUser);
     }
     catch (error) {

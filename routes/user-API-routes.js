@@ -21,6 +21,8 @@ router.route('/api/user/:id')
 router.route('/api/user/:userid/:podid')
     // gets a single podcast for a user
     .get(CTRLusers.getUserPod)
+    // updates a single podcast for a user
+    .put(CTRLusers.updateUserPod)
     // deletes a single podcast for a user
     .delete(CTRLusers.deleteUserPod)
 
@@ -33,5 +35,9 @@ router.route('/api/user/:userid/:podid/:epiid')
 router.route('/api/users')
     // gets all users from db
     .get(CTRLusers.getAllUsers)
+
+router.route('/api/users/:userid')
+    // deletes a user from db
+    .delete(CTRLusers.deleteUser)
 
 export default router;

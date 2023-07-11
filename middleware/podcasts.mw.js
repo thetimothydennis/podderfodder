@@ -8,6 +8,7 @@ export const ingestPod = async (req, res, next) => {
         let insertPod = await parseFeed(feedUrl);
         let feedResponse = await podcasts.ingestFeed(insertPod);
         req.feedIngestRes = feedResponse;
+        // res.send(feedResponse)
         next();
     }
     catch (error) {

@@ -47,7 +47,7 @@ export const updateOnePodcast = async (req, res) => {
         const feedUrlToUpdate = await podcasts.readPodcast(podId);
         const updateParsedFeed = await feedFunctions.parseFeed(feedUrlToUpdate[0].feedurl);
         updateParsedFeed.id = podId;
-        let updatedPod = await podcasts.updatePodFeed(updateParsedFeed);
+        await podcasts.updatePodFeed(updateParsedFeed);
         let updated = await podcasts.readPodcast(podId)
         res.send(updated);
     }
