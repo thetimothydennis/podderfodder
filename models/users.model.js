@@ -211,14 +211,13 @@ export const getUserEpisode = async (userId, podId, epiId) => {
 export const deleteAUserEpi = async (userId, podId, epiId) => {
     const getEpiFromDb = await getUserEpisode(userId, podId, epiId);
     let epiUrl = getEpiFromDb[0].podcasts.episodes.epi_url;
-    const deleteOneUserEpi = await User.updateOne({'podcasts.episodes.epi_url': epiUrl}, {
+    const deleteOneUserEpi = await User.updateOne({_id: userId, 'podcasts.episodes.epi_url': epiUrl}, {
         $pull: {
             'podcasts.$.episodes': {
                 epi_url: epiUrl
             }
         }  
     });
-    await deleteOneUserEpi.save();
     return deleteOneUserEpi;
 };
 
