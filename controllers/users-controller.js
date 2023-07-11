@@ -50,7 +50,7 @@ export const getAUser = async (req, res) => {
     };
 };
 
-// update user pods and epis in db
+// update user by adding a pod and epis in db
 export const addUserPods = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -70,10 +70,9 @@ export const updateUserPod = async (req, res) => {
             userid,
             podid
         } = req.params;
-        let getFeedUrlFromDb = await users.getUserPodcast(userid, podid);
-        let userFeedUrl = getFeedUrlFromDb[0].podcasts.feedurl;
-        // first update the podcast in the user db
-        
+        let updated = req.params.updatedPods;
+        const updateAUserPod = await users.updateUserPodAndEpis(userid, podid, updated);
+        res.send(updateAUserPod);
     }
     catch (error) {
         errHandler(error, res);

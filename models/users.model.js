@@ -161,7 +161,14 @@ export const addPodsToUser = async (userId, feedRes) => {
 
 // update podcast and episodes for user
 export const updateUserPodAndEpis = async (userId, podId, feedRes) => {
-
+    let updatePod = await User.findOneAndUpdate({
+        _id: userId
+    }, {
+        $push: {
+            podcasts: feedRes
+        }
+    });
+    return updatePod;
 };
 
 // get a podcast for a user

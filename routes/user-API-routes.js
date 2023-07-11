@@ -22,7 +22,7 @@ router.route('/api/user/:userid/:podid')
     // gets a single podcast for a user
     .get(CTRLusers.getUserPod)
     // updates a single podcast for a user
-    .put(CTRLusers.updateUserPod)
+    .put(MWpods.updatePod, CTRLusers.updateUserPod)
     // deletes a single podcast for a user
     .delete(CTRLusers.deleteUserPod)
 

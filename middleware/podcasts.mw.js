@@ -1,5 +1,5 @@
 import * as podcasts from '../models/podcasts.model.js';
-import { parseFeed } from '../functions/feed-functions.js';
+import * as feedFunctions from '../functions/feed-functions.js';
 import { errHandler } from '../controllers/users-controller.js';
 
 // import pod and episodes, pass off to user controller
@@ -21,11 +21,15 @@ export const ingestPod = async (req, res, next) => {
 export const updatePod = async (req, res, next) => {
     try {
         const {
-            userid,
             podid
         } = req.params;
-        let getPodFeedUrl = Podcast.find({_id: podid});
-        console.log(getPodFeedUrl)
+        const feedUrlToUpdate = await podcasts.readPodcast(podid);
+        const updateParsedFeed = await feedFunctions.parseFeed(feedUrlToUpdate[0].feedurl);
+        updateParsedFeed.id = podid;
+        await podcasts.updatePodFeed(updateParsedFeed);
+        let updated = await podcasts.readPodcast(podid)
+        req.params.updatedPods = updated;
+        next();
     }
     catch (error) {
         errHandler(error, res);
