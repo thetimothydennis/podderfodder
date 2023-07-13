@@ -58,7 +58,8 @@ const UserSchema = {
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     podcasts: [PodcastSchema]
 };

@@ -1,5 +1,6 @@
 import * as users from '../models/users.model.js';
 import { User } from '../user-schema.js';
+import * as feedFunctions from '../functions/feed-functions.js'
 
 // error handling
 function errConsole (error) {
@@ -50,7 +51,7 @@ export const getAUser = async (req, res) => {
     };
 };
 
-// update user pods and epis in db
+// update user by adding pod with epis to db
 export const addUserPods = async (req, res) => {
     try {
         const userId = req.params.id;
@@ -68,12 +69,12 @@ export const updateUserPod = async (req, res) => {
     try {
         const {
             userid,
-            podid
+            podid,
+            updated
         } = req.params;
-        let getFeedUrlFromDb = await users.getUserPodcast(userid, podid);
-        let userFeedUrl = getFeedUrlFromDb[0].podcasts.feedurl;
-        // first update the podcast in the user db
-        let updatePod 
+        // pass off updated feed object to the model
+        let updatedUserPod = await users.updateUserPodAndEpis(userid, podid, updated);
+        res.send(updatedUserPod)
     }
     catch (error) {
         errHandler(error, res);

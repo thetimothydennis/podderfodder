@@ -148,6 +148,7 @@ export const ingestFeed = async (feedObj) => {
         });
         await insertPod.save();
         // inserting episodes
+
         let newEpis = await epiHandler(items);
         let response = await Podcast.findOneAndUpdate({
             feedurl: feedUrl
@@ -159,12 +160,14 @@ export const ingestFeed = async (feedObj) => {
             }
         });
         // let response = await aggregatePipeline(feedUrlMatch(feedUrl), standardProject);
+
         return response;
     };
 };
 // read a podcast with episodes
 export const readPodcast = async (id) => {
     // const getOnePod = await Podcast.findById(id);
+
     const getOnePod = await aggregatePipeline(idMatch(id), standardProject)
 
     return getOnePod;
@@ -235,8 +238,15 @@ export const readAllPodcasts = async () => {
     return allPodResponse;
 };
 
+export const findByFeedUrl = async (feedUrl) => {
+    let podCheck = await Podcast.find({ feedurl: feedUrl });
+    return podCheck;
+};
+
 // update a podcast and episodes
+    // pass in a parsed feed
 export const updatePodFeed = async (feedObj) => {
+    // destructure the needed elements from the feed object
     const {
         title,
         description,
@@ -247,6 +257,7 @@ export const updatePodFeed = async (feedObj) => {
         items,
         id
     } = feedObj;
+    // use the destructured elements to find the podcast, update the values
     let updates = await Podcast.findByIdAndUpdate({ _id: id }, {
         show_title: title,
         description: description,
@@ -255,7 +266,9 @@ export const updatePodFeed = async (feedObj) => {
         feedurl: feedUrl,
         categories: categories
     });
+    // run the episodes array through the epiHandler
     let newEpisodes = await epiHandler(items)
+    // update the podcast in db based on the feed url, push in the episodes
     await Podcast.findOneAndUpdate({
         feedurl: feedUrl
     },{
@@ -265,6 +278,7 @@ export const updatePodFeed = async (feedObj) => {
             }
         }
     });
+    // return the updated podcast
     let response = await aggregatePipeline(feedUrlMatch(feedUrl), standardProject);
     return response;
 };

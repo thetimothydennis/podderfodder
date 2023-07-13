@@ -17,7 +17,7 @@ export const getOnePod = async (req, res) => {
 
 // get one episode from db
 export const getOneEpi = async (req, res) => {
-    let epiId = req.params.id
+    let epiId = req.params.id;
     try {
         let getOne = await podcasts.readOneEpisode(epiId);
         res.send(getOne);
@@ -43,10 +43,15 @@ export const getAllPods = async (req, res) => {
 // update a single pod and episodes from db
 export const updateOnePodcast = async (req, res) => {
     try {
+        // destructure req.params object
         let podId = req.params.id;
+        // get the feed url for the pod from db
         const feedUrlToUpdate = await podcasts.readPodcast(podId);
+        // use feedurl to parse the RSS
         const updateParsedFeed = await feedFunctions.parseFeed(feedUrlToUpdate[0].feedurl);
+        // add the podcast id from db into the newly parsed feed object
         updateParsedFeed.id = podId;
+        // pass off the updated feed object to the model
         await podcasts.updatePodFeed(updateParsedFeed);
         let updated = await podcasts.readPodcast(podId)
         res.send(updated);
