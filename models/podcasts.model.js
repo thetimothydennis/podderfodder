@@ -75,6 +75,27 @@ const standardProject = {
     }
 };
 
+const oneEpiProject = (onePodResponse, epiId) => {
+    return {
+        $project: {
+            _id: 0,
+            pod_id: "$_id",
+            show_title: "$show_title",
+            description: "$description",
+            author: "$author",
+            image: "$image",
+            feedurl: "$feedurl",
+            categories: "$categories",
+            episodes: {
+                $filter: {
+                    input: [onePodResponse[0].episodes],
+                    cond: {"_id": epiId}
+                }
+            }
+        }
+    }
+};
+
 const epiHandler = async (itemsArr) => {
     let newEpis = [];
     for (let i = 0;(i < 20) && (i < itemsArr.length); i++) {
@@ -148,7 +169,6 @@ export const ingestFeed = async (feedObj) => {
         });
         await insertPod.save();
         // inserting episodes
-
         let newEpis = await epiHandler(items);
         await Podcast.findOneAndUpdate({
             feedurl: feedUrl
@@ -165,10 +185,7 @@ export const ingestFeed = async (feedObj) => {
 };
 // read a podcast with episodes
 export const readPodcast = async (id) => {
-    // const getOnePod = await Podcast.findById(id);
-
     const getOnePod = await aggregatePipeline(idMatch(id), standardProject)
-
     return getOnePod;
 };
 
@@ -182,28 +199,11 @@ export const readOneEpisode = async (id) => {
 
     let epiId = onePodResponse[0].episodes[0]._id;
     let podId = onePodResponse[0]._id;
-    let oneEpiProject = {
-        $project: {
-            _id: 0,
-            pod_id: "$_id",
-            show_title: "$show_title",
-            description: "$description",
-            author: "$author",
-            image: "$image",
-            feedurl: "$feedurl",
-            categories: "$categories",
-            episodes: {
-                $filter: {
-                    input: [onePodResponse[0].episodes],
-                    cond: {"_id": epiId}
-                }
-            }
-        }
-    }
+    
     const getOneEpi = await Podcast.aggregate(
         [
             idMatch(podId),
-            oneEpiProject
+            oneEpiProject(onePodResponse, epiId)
         ]
     );
     return getOneEpi[0];

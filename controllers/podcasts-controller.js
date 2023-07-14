@@ -1,6 +1,7 @@
 import * as podcasts from '../models/podcasts.model.js';
 import * as feedFunctions from '../functions/feed-functions.js'
 import { Podcast } from '../pod-schema.js';
+import { errHandler } from '../functions/err-handler.js';
 
 // get a single pod and episodes from db
 export const getOnePod = async (req, res) => {
@@ -10,8 +11,7 @@ export const getOnePod = async (req, res) => {
         res.send(findPod);
     }
     catch (error) {
-        console.log(error);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
 
@@ -23,8 +23,7 @@ export const getOneEpi = async (req, res) => {
         res.send(getOne);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     }
 };
 
@@ -35,8 +34,7 @@ export const getAllPods = async (req, res) => {
         res.send(allPods);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
 
@@ -57,18 +55,22 @@ export const updateOnePodcast = async (req, res) => {
         res.send(updated);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
 
 // delete a single episode from db
 export const deleteEpisode = async (req, res) => {
-    let epiId = req.params.id;
-    let podId = await podcasts.readOneEpisode(epiId);
-    podId = podId.pod_id;
-    let deletedEpi = await podcasts.deleteOneEpisode(podId, epiId);
-    res.send(deletedEpi);
+    try {
+        let epiId = req.params.id;
+        let podId = await podcasts.readOneEpisode(epiId);
+        podId = podId.pod_id;
+        let deletedEpi = await podcasts.deleteOneEpisode(podId, epiId);
+        res.send(deletedEpi);
+    }
+    catch (error) {
+        errHandler(error, res);
+    };
 };
 
 // delete a single pod and episodes from db
@@ -79,8 +81,7 @@ export const deleteOnePod = async (req, res) => {
         res.send(deletePodcast);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };
 
@@ -91,7 +92,6 @@ export const deleteAllPods = async (req, res) => {
         res.send(deleteAll);
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, res);
     };
 };

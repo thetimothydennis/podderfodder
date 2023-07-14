@@ -1,5 +1,6 @@
 import * as podcasts from '../models/podcasts.model.js';
 import * as feedFunctions from '../functions/feed-functions.js';
+import { errHandler } from '../functions/err-handler.js';
 
 // import pod and episodes, pass off to user controller
 export const ingestPod = async (req, res, next) => {
@@ -21,8 +22,7 @@ export const ingestPod = async (req, res, next) => {
         };
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, message);
     };
 };
 
@@ -45,10 +45,6 @@ export const updateOnePodcast = async (req, res, next) => {
         next();
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, message);
     };
 };
-// delete one pod and epis from user
-
-// delete all pods and epis from user

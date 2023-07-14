@@ -1,6 +1,7 @@
 import * as users from '../models/users.model.js';
 import * as podcasts from '../models/podcasts.model.js';
 import * as feedFunctions from '../functions/feed-functions.js';
+import { errHandler } from '../functions/err-handler.js';
 
 // update pod and episodes, pass off to user controller
 // update a single pod and episodes from db
@@ -23,7 +24,6 @@ export const updateOnePodcast = async (req, res, next) => {
         next();
     }
     catch (error) {
-        console.log(error.message);
-        res.status(404).send(error.message);
+        errHandler(error, message);
     };
 };

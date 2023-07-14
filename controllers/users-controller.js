@@ -1,20 +1,7 @@
 import * as users from '../models/users.model.js';
 import { User } from '../user-schema.js';
 import * as feedFunctions from '../functions/feed-functions.js'
-
-// error handling
-function errConsole (error) {
-    return console.log(error.message)
-};
-
-function err404 (error, res) {
-    return res.status(404).send(error.message)
-};
-
-export function errHandler (error, res) {
-    errConsole(error)
-    err404(error, res)
-};
+import { errHandler } from '../functions/err-handler.js';
 
 // insert user into db
 export const insertUser = async (req, res) => {
