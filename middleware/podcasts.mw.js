@@ -5,7 +5,9 @@ import * as feedFunctions from '../functions/feed-functions.js';
 export const ingestPod = async (req, res, next) => {
     try {
         let checkPod = await podcasts.findByFeedUrl(req.body.feedurl);
+        console.log(checkPod)
         if (checkPod.length > 0) {
+            console.log(checkPod)
             req.feedIngestRes = checkPod;
             next();
         }

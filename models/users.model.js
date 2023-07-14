@@ -27,6 +27,15 @@ const aggrPodIdMatch = (podId) => {
     }
 };
 
+// match by podcast feed URL
+const aggrFeedURLMatch = (feedUrl) => {
+    return {
+        $match: {
+            "podcasts.feedurl": feedUrl
+        }
+    }
+};
+
 // match by episode id
 const aggrEpiIdMatch = (epiId) => {
     return {
@@ -144,7 +153,6 @@ export const addPodsToUser = async (userId, feedRes) => {
         "podcasts.$": 1
     }
     );
-    console.log(podCheck)
     if (podCheck.length > 0) {
         return podCheck;
     }
@@ -161,19 +169,47 @@ export const addPodsToUser = async (userId, feedRes) => {
     };
 };
 
+// find podcast for user by feed URL
+export const checkPodByURL = async (userId, feedURL) => {
+    const checkURL = await User.aggregate(
+        [
+            aggrUserIdMatch(userId),
+            aggrPodUnwind(),
+            aggrFeedURLMatch(feedURL),
+            aggrStdProjection(),
+        ]
+    )
+    return checkURL;
+};
+
 // update podcast and episodes for user - for PUT route
 export const updateUserPodAndEpis = async (userId, podId, feedObj) => {
-    let removeOldPod = await deleteAUserPod(userId, podId);
-    console.log(removeOldPod)
-    let addNewPodData = await User.findOneAndUpdate({
+    let userPodUrlGet = await User.aggregate(
+        [
+            aggrUserIdMatch(userId),
+            aggrPodUnwind(),
+            aggrPodIdMatch(podId),
+            aggrStdProjection(),
+        ]
+    );
+    let feedUrl = userPodUrlGet[0].podcasts.feedurl;
+    await deleteAUserPod(userId, podId);
+    await User.findOneAndUpdate({
         _id: userId
     }, {
         $push: {
             podcasts: feedObj
         }
     });
-    console.log(addNewPodData);
-    return addNewPodData;
+    let updatedPodReturn = await User.aggregate(
+        [
+            aggrUserIdMatch(userId),
+            aggrPodUnwind(),
+            aggrFeedURLMatch(feedUrl),
+            aggrStdProjection()
+        ]
+    );
+    return updatedPodReturn;
 };
 
 // get a podcast for a user

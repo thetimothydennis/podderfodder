@@ -51,20 +51,27 @@ export const getAUser = async (req, res) => {
     };
 };
 
-// update user by adding pod with epis to db
+// update user by adding pod with epis to db - for user/ POST route
 export const addUserPods = async (req, res) => {
     try {
         const userId = req.params.id;
         const feedDb = req.feedIngestRes;
-        const userPodAdd = await users.addPodsToUser(userId, feedDb);
-        res.send(userPodAdd)
+        const feedUrl = feedDb[0].feedurl;
+        const checkUserPod = await users.checkPodByURL(userId, feedUrl);
+        if (checkUserPod.lenght > 0) {
+            res.send(checkUserPod);
+        }
+        else {
+            const userPodAdd = await users.addPodsToUser(userId, feedDb);
+            res.send(userPodAdd)
+        };
     }
     catch (error) {
         errHandler(error, res);
     };
 };
 
-// updates a podcast for user in db
+// updates a podcast for user in db - for user/ PUT route
 export const updateUserPod = async (req, res) => {
     try {
         const {
