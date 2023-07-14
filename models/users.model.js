@@ -124,7 +124,19 @@ export const getUser = async (userObj) => {
         name,
         email
     } = userObj;
-    let foundUser = await User.find({$and: [ {name: name},{email: email} ] })
+    // let foundUser = await User.find({$and: [ {name: name},{email: email} ] })
+    let foundUser = await User.aggregate(
+        [
+            {
+                $match: {
+                    $and: [{name: name}, {email: email}]
+                }
+            },
+            aggrPodUnwind(),
+            aggrEpiUnwind(),
+            aggrStdProjection()
+        ]
+    )
     return foundUser;
 };
 
