@@ -7,14 +7,18 @@ import cors from 'cors';
 import PodsAndEpisRouter from './routes/pod-API-routes.js';
 import UsersRouter from './routes/user-API-routes.js';
 import SearchRouter from './routes/search-pod-API-routes.js';
+import FrontendRoutes from './routes/frontend-routes.js';
 
 const app = express();
-app.use(morgan('dev'));
 
 const PORT = process.env.PORT;
-app.use(cors())
+
+app.use(morgan('dev'));
+app.use(cors());
 app.use(express.json());
+
 app.use(PodsAndEpisRouter);
+app.use(FrontendRoutes);
 app.use(SearchRouter);
 app.use(UsersRouter);
 

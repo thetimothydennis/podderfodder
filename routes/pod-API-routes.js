@@ -1,6 +1,6 @@
 import express from 'express';
 import * as podsMW from '../middleware/podcasts.mw.js';
-import * as podsCTRL from '../controllers/podcasts-controller.js'
+import * as podsCTRL from '../controllers/podcasts-controller.js';
 const router = express.Router();
 
 router.route('/api/podcasts')
