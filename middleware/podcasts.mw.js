@@ -6,14 +6,13 @@ import { errHandler } from '../functions/err-handler.js';
 export const ingestPod = async (req, res, next) => {
     try {
         let checkPod = await podcasts.findByFeedUrl(req.body.feedurl);
-        console.log(checkPod)
         if (checkPod.length > 0) {
             console.log(checkPod)
             req.feedIngestRes = checkPod;
             next();
         }
         else {
-            let feedUrl = req.body.feedurl;
+            let feedUrl = req.body.feedUrl;
             let insertPod = await feedFunctions.parseFeed(feedUrl);
             let feedResponse = await podcasts.ingestFeed(insertPod);
             console.log(feedResponse)
@@ -22,7 +21,7 @@ export const ingestPod = async (req, res, next) => {
         };
     }
     catch (error) {
-        errHandler(error, message);
+        errHandler(error, res);
     };
 };
 

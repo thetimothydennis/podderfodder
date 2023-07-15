@@ -100,6 +100,7 @@ function PodSearch () {
     }, [input, response]);
 
     const handleSubmit = async (inputArg) => {
+        console.log(inputArg)
         await axios.post(
             `http://localhost:9000/api/user/${userId}`, 
             {

@@ -53,9 +53,6 @@ function OnePod(props) {
             episodes
         } = res.data[0].podcasts;
         setPodObj(res.data[0].podcasts);
-        let podcastId = podObj._id
-        console.log(podcastId)
-        console.log(podId)
         setShowTitle(show_title);
         setShowDesc(description);
         setShowImg(image);
@@ -65,14 +62,15 @@ function OnePod(props) {
 
     const updatePod = async () => {
         let res = await axios.put(
-            `http://localhost:9000/api/user/${userId}/${props.podId}`, 
-            {}/* , 
+            `http://localhost:9000/api/user/${userId}/${props.podId}`/*, 
+            {} , 
             {
                 headers: {
                     Authorization: `Bearer ${accessToken}`
                 }
             } */
         );
+        console.log(res.data)
         setEpisodes(res.data);
     }
 
@@ -98,8 +96,6 @@ function OnePod(props) {
     }, [getPodcasts, episodes])
 
     const handleClick = async (e) => {
-        console.log(userId);
-        console.log(e.target.value);
         await axios.delete(
             `http://localhost:9000/api/user/${userId}/${e.target.value}`/* , 
             {
@@ -169,7 +165,7 @@ function OnePod(props) {
                         </td>
                         <td>
                             <button id={-7} 
-                                    value={item._id} 
+                                    value={`${props.podId}/${item._id}`} 
                                     onClick={handleClick}
                             >
                                 Delete

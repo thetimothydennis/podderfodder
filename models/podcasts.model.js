@@ -270,7 +270,7 @@ export const updatePodFeed = async (feedObj) => {
     // run the episodes array through the epiHandler
     let newEpisodes = await epiHandler(items)
     // update the podcast in db based on the feed url, push in the episodes
-    await Podcast.findOneAndUpdate({
+    let response = await Podcast.findOneAndUpdate({
         feedurl: feedUrl
     },{
         $push: {
@@ -280,7 +280,7 @@ export const updatePodFeed = async (feedObj) => {
         }
     });
     // return the updated podcast
-    let response = await aggregatePipeline(feedUrlMatch(feedUrl), standardProject);
+    // let response = await aggregatePipeline(feedUrlMatch(feedUrl), standardProject);
     return response;
 };
 
