@@ -103,7 +103,6 @@ function AllPods() {
                                 Description
                             </th>
                             <th>
-                                Delete podcast
                             </th>
                         </tr>
                     </thead>
@@ -142,7 +141,7 @@ function AllPods() {
                                         value={item._id} 
                                         onClick={handleDeleteClick}
                                 >
-                                    Delete
+                                    Delete podcast
                                 </button>
                             </td>
                         </tr>

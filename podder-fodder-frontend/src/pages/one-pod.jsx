@@ -141,7 +141,6 @@ function OnePod(props) {
                             Description
                         </th>
                         <th>
-                            Delete episode
                         </th>
                     </tr>
                 </thead>
@@ -168,7 +167,7 @@ function OnePod(props) {
                                     value={`${props.podId}/${item._id}`} 
                                     onClick={handleClick}
                             >
-                                Delete
+                                Delete episode
                             </button>
                         </td>
                     </tr>))}

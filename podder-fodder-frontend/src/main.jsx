@@ -1,10 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom';
 import MainUi from './MainUi.jsx'
+import RoutesUi from './routes.jsx';
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <MainUi />
+    <BrowserRouter>
+      <RoutesUi />
+    </BrowserRouter>
   </React.StrictMode>,
 );
