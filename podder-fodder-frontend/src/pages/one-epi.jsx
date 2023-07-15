@@ -86,7 +86,7 @@ function OneEpi (props) {
                 <img className="epiImg" 
                             alt="podcast_image" 
                             src={image}
-                            width="500"
+                            height="250em"
                 />
                 <br />
                 <ReactAudioPlayer src={audio} controls />

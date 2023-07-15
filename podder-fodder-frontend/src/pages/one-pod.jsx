@@ -115,7 +115,7 @@ function OnePod(props) {
                 {showAuthor}
             </h2>
             <img alt="podcast_image" 
-                 width="400"
+                 height="250em"
                  src={showImg}
             />
             <br />
