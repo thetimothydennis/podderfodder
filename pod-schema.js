@@ -20,7 +20,8 @@ const EpisodeSchema = new mongoose.Schema({
         required: true,
     },
     length: Number,
-    content: String
+    content: String,
+    duration: Number
 });
 
 export const Episodes = connection.model("Episodes", EpisodeSchema);

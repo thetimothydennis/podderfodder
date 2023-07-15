@@ -19,7 +19,7 @@ const EpisodeSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    length: Number,
+    duration: Number,
     content: String
 });
 

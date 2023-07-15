@@ -1,6 +1,4 @@
 import * as users from '../models/users.model.js';
-import { User } from '../user-schema.js';
-import * as feedFunctions from '../functions/feed-functions.js'
 import { errHandler } from '../functions/err-handler.js';
 
 // insert user into db
@@ -31,7 +29,7 @@ export const getAUser = async (req, res) => {
     const userObj = req.body;
     try {
         const gottenUser = await users.getUser(userObj);
-        res.send(gottenUser)
+        res.send(gottenUser);
     }
     catch (error) {
         errHandler(error, res);
@@ -79,7 +77,8 @@ export const updateUserPod = async (req, res) => {
 export const getUserPod = async (req, res) => {
     try {
         const { userid, podid } = req.params;
-        let getPodcast = await users.getUserPodcast(userid, podid);
+        // let getPodcast = await users.getUserPodcast(userid, podid);
+        let getPodcast = await users.getAUserPod(userid, podid);
         res.send(getPodcast);
     }
     catch (error) {
@@ -91,7 +90,8 @@ export const getUserPod = async (req, res) => {
 export const getUserPods = async (req, res) => {
     try {
         let userId = req.params.id;
-        let getPodcasts = await users.getUserPodcasts(userId);
+        // let getPodcasts = await users.getUserPodcasts(userId);
+        let getPodcasts = await users.getAllUserPods(userId);
         res.send(getPodcasts);
     }
     catch (error) {
@@ -109,6 +109,13 @@ export const getUserEpi = async (req, res) => {
     catch (error) {
         errHandler(error, res);
     };
+};
+
+// get episodes for all user podcasts
+export const getAllUserEpis = async (req, res) => {
+    let userId = req.params.userid;
+    let getEpis = await users.getAllUserEpisodes(userId);
+    res.send(getEpis);
 };
 
 // delete a single episode for a user

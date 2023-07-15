@@ -20,7 +20,8 @@ const aggregatePipeline = async (matchObj, projection) => {
                                 web_url: "$$this.web_url",
                                 epi_url: "$$this.epi_url",
                                 length: "$$this.length",
-                                content: "$$this.content"
+                                content: "$$this.content",
+                                duration: "$$this.duration"
                             }
                         }
                     }
@@ -98,7 +99,10 @@ const oneEpiProject = (onePodResponse, epiId) => {
 
 const epiHandler = async (itemsArr) => {
     let newEpis = [];
+    console.log(itemsArr[0].itunes.duration)
     for (let i = 0;(i < 20) && (i < itemsArr.length); i++) {
+        let duration = itemsArr[i].itunes.duration;
+        let url = itemsArr[i].enclosure.url;
         let episode = itemsArr[i];
         let {
             title,
@@ -106,8 +110,6 @@ const epiHandler = async (itemsArr) => {
             link,
             content
             } = episode;
-        let { duration } = episode.itunes;
-        let { url } = episode.enclosure;
         let length = Math.round(duration / 60);
         let web_url = link;
         let epi_url = url;        
@@ -130,7 +132,7 @@ const epiHandler = async (itemsArr) => {
                 pubDate,
                 web_url,
                 epi_url,
-                length,
+                duration,
                 content
             });
             newEpis.push(newEpisode);

@@ -96,9 +96,23 @@ const aggrStdProjection = () => {
                     title: 1,
                     epi_url: 1,
                     content: 1,
-                    length: 1
+                    duration: 1,
+                    pubDate: 1
                 }
             }
+        }
+    }
+};
+
+// just podcasts aggregation
+const aggrPodsProjection = () => {
+    return {
+        $project: {
+            name: 1,
+            email: 1,
+            _id: 0,
+            user_id: "$_id",
+            podcasts: 1
         }
     }
 };
@@ -110,12 +124,18 @@ export const ingestUser = async (userObj) => {
         email,
         name
     } = userObj;
-    let newUser = new User({
-        name,
-        email
-    });
-    await newUser.save();
-    return newUser;
+    let checkUser = await getUser(userObj);
+    if (checkUser.length > 0) {
+        return checkUser;
+    }
+    else {
+        let newUser = new User({
+            name,
+            email
+        });
+        await newUser.save();
+        return newUser;
+    }
 };
 
 // get a user by name and email
@@ -136,9 +156,34 @@ export const getUser = async (userObj) => {
             aggrEpiUnwind(),
             aggrStdProjection()
         ]
-    )
+    );
     return foundUser;
 };
+
+
+// get all user pods
+export const getAllUserPods = async (userId) => {
+    let userPods = await User.aggregate(
+        [
+            aggrUserIdMatch(userId),
+            aggrPodsProjection()
+        ]
+    );
+    return userPods;
+}
+
+// get one user pod
+export const getAUserPod = async (userId, podId) => {
+    let userPods = await User.aggregate(
+        [
+            aggrUserIdMatch(userId),
+            aggrPodUnwind(),
+            aggrPodIdMatch(podId),
+            aggrPodsProjection()
+        ]
+    )
+    return userPods;
+}
 
 // get a user by id
 export const getUserById = async (id) => {
@@ -254,6 +299,20 @@ export const getUserPodcasts = async (userId) => {
     );
     return getPods;
 };
+
+// get all episodes for all user podcasts
+export const getAllUserEpisodes = async (userId) => {
+    let getEpisodes = await User.aggregate(
+        [
+            aggrUserIdMatch(userId),
+            aggrPodUnwind(),
+            aggrEpiUnwind(),
+            aggrStdProjection()
+        ]
+    )
+    console.log(getEpisodes)
+    return getEpisodes;
+}
 
 // get an episode from a podcast from user
 export const getUserEpisode = async (userId, podId, epiId) => {

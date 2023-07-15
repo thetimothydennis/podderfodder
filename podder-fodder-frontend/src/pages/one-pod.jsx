@@ -1,0 +1,185 @@
+import React, { useState, useEffect } from 'react';
+// import { useAuth0 } from '@auth0/auth0-react';
+// import '../Epi.css';
+import axios from 'axios';
+
+function OnePod(props) {
+    // const { user, getAccessTokenSilently } = useAuth0();
+    const [episodes, setEpisodes] = useState([]);
+    const [showTitle, setShowTitle] = useState('');
+    const [showDesc, setShowDesc] = useState('');
+    const [showImg, setShowImg] = useState('');
+    const [showAuthor, setShowAuthor] = useState('');
+    const [userId, setUserId] = useState("");
+    // const [accessToken, setAccessToken] = useState("");
+    const [podObj, setPodObj] = useState({});
+    const [podId, setPodId] = useState("");
+    const user = {
+        name: "Timothy Dennis",
+        email: "timothyddennis@gmail.com"
+    }
+
+    async function insertUser() {
+        // let res = await axios.post(
+        //     `https://timothyddennis.com:9000/api/user`, 
+        //     { 
+        //         user: {
+        //             name: user.name, 
+        //             email: user.email
+        //         } 
+        //     }
+        // );
+        // setUserId(res.data.user_id);
+        let res = await axios.post(
+            `http://localhost:9000/api/user`, {name: user.name, email: user.email}
+        );
+        setUserId(res.data[0].user_id);
+    };
+
+    const getPodcasts = async () => {
+        let res = await axios.get(
+            `http://localhost:9000/api/user/${userId}/${props.podId}`/* , 
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            } */
+        );
+        let {
+            show_title,
+            description,
+            image,
+            author,
+            episodes
+        } = res.data[0].podcasts;
+        setPodObj(res.data[0].podcasts);
+        let podcastId = podObj._id
+        console.log(podcastId)
+        console.log(podId)
+        setShowTitle(show_title);
+        setShowDesc(description);
+        setShowImg(image);
+        setEpisodes(episodes);
+        setShowAuthor(author);
+    };
+
+    const updatePod = async () => {
+        let res = await axios.put(
+            `http://localhost:9000/api/user/${userId}/${props.podId}`, 
+            {}/* , 
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            } */
+        );
+        setEpisodes(res.data);
+    }
+
+    // function getToken () {
+    //     getAccessTokenSilently().then(
+    //         res => {
+    //             setAccessToken(res);
+    //         }
+    //     );
+    // };
+
+    useEffect(() => {
+        // getToken();
+        insertUser();
+    }, []);
+    
+    useEffect(() => {
+        getPodcasts();
+    }, [userId]);
+
+    useEffect(() => {
+        setPodId(episodes._id);
+    }, [getPodcasts, episodes])
+
+    const handleClick = async (e) => {
+        console.log(userId);
+        console.log(e.target.value);
+        await axios.delete(
+            `http://localhost:9000/api/user/${userId}/${e.target.value}`/* , 
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }
+         */);
+    };
+
+    return (
+        <div className="Epi">
+            <h1>
+                {showTitle}
+            </h1>
+            <h2>
+                {showAuthor}
+            </h2>
+            <img alt="podcast_image" 
+                 width="400"
+                 src={showImg}
+            />
+            <br />
+            <button id={-8} 
+                    onClick={updatePod}
+            >
+                Update Pod Feed
+            </button>
+            <p>{showDesc}</p>
+            <table className="episodes">
+                <thead>
+                    <tr className="epiRow">
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Duration
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th>
+                            Delete episode
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {episodes.map((item, x) => (
+                    <tr className="epiRow" 
+                        key={x} 
+                        value={item._id}
+                    >
+                        <td id={`${props.podId}/${item._id}`} >
+                            {item.title}
+                        </td>
+                        <td id={`${props.podId}/${item._id}`}>
+                            {Math.round(item.duration / 60)} min.
+                        </td>
+                        <td id={`${props.podId}/${item._id}`}>
+                            { item.pubDate.toString().slice(0, 10) }
+                        </td>
+                        <td id={`${props.podId}/${item._id}`}>
+                            {item.content.slice(0, 200)}...
+                        </td>
+                        <td>
+                            <button id={-7} 
+                                    value={item._id} 
+                                    onClick={handleClick}
+                            >
+                                Delete
+                            </button>
+                        </td>
+                    </tr>))}
+                </tbody>
+            </table>
+        </div>
+    );
+};
+
+export default OnePod;

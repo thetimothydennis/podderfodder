@@ -40,4 +40,8 @@ router.route('/api/users/:userid')
     // deletes a user from db
     .delete(CTRLusers.deleteUser);
 
+router.route('/api/allepisodes/:userid/')
+    // sends episodes for all user podcasts
+    .get(CTRLusers.getAllUserEpis)
+
 export default router;
