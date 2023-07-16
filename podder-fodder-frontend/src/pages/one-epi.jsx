@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
-// import { useAuth0 } from '@auth0/auth0-react';
-// import '../Epi.css';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
 
 function OneEpi (props) {
-    // const { user, getAccessTokenSilently } = useAuth0();
-    
     const [showTitle, setShowTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [image, setImage] = useState('');
@@ -16,38 +12,22 @@ function OneEpi (props) {
     const [content, setContent] = useState('');
     const [podId, setPodId] = useState("");
     const [userId, setUserId] = useState("");
-    // const [accessToken, setAccessToken] = useState("");
+
     const user = {
         name: "Timothy Dennis",
         email: "timothyddennis@gmail.com"
-    }
+    };
 
     async function insertUser() {
-        // let res = await axios.post(
-        //     `https://timothyddennis.com:9000/api/user`, 
-        //     { 
-        //         user: {
-        //             name: user.name, 
-        //             email: user.email
-        //         } 
-        //     }
-        // );
-        // setUserId(res.data.user_id);
         let res = await axios.post(
             `http://localhost:9000/api/user`, {name: user.name, email: user.email}
         );
-        console.log(res.data[0])
         setUserId(res.data[0].user_id);
     };
 
     const getEpisode = async () => {
         let res = await axios.get(
-            `http://localhost:9000/api/user/${userId}/${props.epiId}`,/*  
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            } */
+            `http://localhost:9000/api/user/${userId}/${props.epiId}`
         );
         setShowTitle(res.data[0].podcasts.show_title);
         setAuthor(res.data[0].podcasts.author);
@@ -59,16 +39,7 @@ function OneEpi (props) {
         setPodId(res.data[0].podcasts.pod_id);
     };
 
-    // function getToken () {
-    //     getAccessTokenSilently().then(
-    //         res => {
-    //             setAccessToken(res);
-    //         }
-    //     );
-    // };
-
     useEffect(() => {
-        // getToken();
         insertUser();
     }, []);
 

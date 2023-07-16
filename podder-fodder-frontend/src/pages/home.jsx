@@ -1,5 +1,3 @@
-// import '../Epi.css';
-
 export function HomePage() {
     return (
         <div className={"Epi"}>

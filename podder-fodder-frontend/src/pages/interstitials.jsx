@@ -1,5 +1,4 @@
 import React from 'react';
-// import '../Epi.css';
 
 export function UpdatePod () {
     return (

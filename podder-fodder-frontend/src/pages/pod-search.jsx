@@ -1,62 +1,33 @@
 import React, { useState, useEffect } from 'react';
-// import { useAuth0 } from '@auth0/auth0-react';
-// import '../Epi.css';
 import axios from 'axios';
 
 function PodSearch () {
-    // const { user, getAccessTokenSilently } = useAuth0();
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
     const [feedInput, setFeedInput] = useState('');
     const [render, setRender] = useState()
     const [userId, setUserId] = useState("");
-    // const [accessToken, setAccessToken] = useState("");
 
     const user = {
         name: "Timothy Dennis",
         email: "timothyddennis@gmail.com"
-    }
+    };
 
     async function insertUser() {
-        // let res = await axios.post(
-        //     `https://timothyddennis.com:9000/api/user`, 
-        //     { 
-        //         user: {
-        //             name: user.name, 
-        //             email: user.email
-        //         } 
-        //     }
-        // );
-        // setUserId(res.data.user_id);
         let res = await axios.post(
             `http://localhost:9000/api/user`, {name: user.name, email: user.email}
         );
-        setUserId(res.data[0].user_id)
+        setUserId(res.data[0].user_id);
     };
 
     async function getSearch(inputStr) {
         let res = await axios.get(
-            `http://localhost:9000/api/search?q=${inputStr}`/* , 
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            } */
+            `http://localhost:9000/api/search?q=${inputStr}`
         );
         setResponse(res.data.results);
     };
 
-
-    // function getToken () {
-    //     getAccessTokenSilently().then(
-    //         res => {
-    //             setAccessToken(res);
-    //         }
-    //     );
-    // };
-
     useEffect(() => {
-        // getToken();
         insertUser();
     }, []);
 
@@ -105,12 +76,7 @@ function PodSearch () {
             `http://localhost:9000/api/user/${userId}`, 
             {
                 feedUrl: inputArg
-            }/* , 
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
-            } */
+            }
         );
     };
    
