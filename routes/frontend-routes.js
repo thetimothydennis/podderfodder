@@ -10,7 +10,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const router = express.Router();
 
 // static middleware for serving the frontend
-router.use(express.static(path.join(__dirname, "..", "podder-fodder-frontend", "dist")));
+router.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 // frontend routes
     // root route
