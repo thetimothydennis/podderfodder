@@ -52,6 +52,7 @@ function OnePod(props) {
     const updatePod = async () => {
         let res = await axios.put(
             `https://localhost:9000/api/user/${userId}/${props.podId}`,
+            {},
             config
         );
         setEpisodes(res.data);
@@ -80,8 +81,8 @@ function OnePod(props) {
 
     const handleClick = async (e) => {
         await axios.delete(
-            `http://localhost:9000/api/user/${userId}/${e.target.value}`,
-            options
+            `https://localhost:9000/api/user/${userId}/${e.target.value}`,
+            config
             );
     };
 

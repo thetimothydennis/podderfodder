@@ -8,6 +8,8 @@ import cors from 'cors';
 import UsersRouter from './routes/user-API-routes.js';
 import SearchRouter from './routes/search-pod-API-routes.js';
 import FrontendRoutes from './routes/frontend-routes.js';
+import CoreAPIRoutes from './routes/pod-API-routes.js';
+
 
 const options = {
     key: fs.readFileSync('./certs/localhost.key'),
@@ -47,6 +49,7 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 
+app.use(CoreAPIRoutes)
 app.use(SearchRouter);
 app.use(FrontendRoutes);
 app.use(UsersRouter);

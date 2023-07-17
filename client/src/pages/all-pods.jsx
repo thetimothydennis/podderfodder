@@ -43,12 +43,15 @@ function AllPods() {
 
     useEffect(() => {
         getToken();
+    }, [user]);
+
+    useEffect(() => {
         insertUser();
-    });
+    }, [accessToken])
 
     useEffect(() => {
         getPods();
-    }, [userId, accessToken]);
+    }, [userId]);
 
     async function handleDeleteClick(e) {
         await axios.delete(

@@ -6,11 +6,11 @@ import RoutesUi from './routes/routes.jsx';
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <div>
     <BrowserRouter>
       <Auth0ProviderWithNavigate>
         <RoutesUi />
       </Auth0ProviderWithNavigate>
     </BrowserRouter>
-  </React.StrictMode>
+  </div>
 );

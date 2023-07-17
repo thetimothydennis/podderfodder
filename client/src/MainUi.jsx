@@ -9,10 +9,10 @@ import { UpdatePod, DeletePod, DeleteEpi, ImportedPod } from './pages/interstiti
 import './App.css';
 
 function MainUi() {
-  const [display, setDisplay] = useState('searchPods');
+  const [display, setDisplay] = useState('allPods');
   const [podId, setPodId] = useState('');
   const [epiId, setEpiId] = useState('');
-  const [render, setRender] = useState(<PodSearch />)
+  const [render, setRender] = useState(<AllPods />)
     //logic for re-rendering the current display
     useEffect(() => {
 
