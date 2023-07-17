@@ -14,16 +14,25 @@ function OnePod(props) {
     const [podObj, setPodObj] = useState({});
     const [podId, setPodId] = useState("");
 
+    let config = { 
+        headers: { 
+            Authorization: `Bearer ${accessToken}` 
+        } 
+    };
+
     async function insertUser() {
         let res = await axios.post(
-            `http://localhost:9000/api/user`, {name: user.name, email: user.email}
+            `https://localhost:9000/api/user`,
+            {name: user.name, email: user.email},
+            config
         );
         setUserId(res.data[0].user_id);
     };
 
     const getPodcasts = async () => {
         let res = await axios.get(
-            `http://localhost:9000/api/user/${userId}/${props.podId}`
+            `https://localhost:9000/api/user/${userId}/${props.podId}`,
+            config
         );
         let {
             show_title,
@@ -42,18 +51,28 @@ function OnePod(props) {
 
     const updatePod = async () => {
         let res = await axios.put(
-            `http://localhost:9000/api/user/${userId}/${props.podId}`
+            `https://localhost:9000/api/user/${userId}/${props.podId}`,
+            config
         );
         setEpisodes(res.data);
     };
 
+    function getToken () {
+        getAccessTokenSilently().then(
+            res => {
+                setAccessToken(res);
+            }
+        );
+    };
+
     useEffect(() => {
+        getToken();
         insertUser();
-    }, []);
+    });
     
     useEffect(() => {
         getPodcasts();
-    }, [userId]);
+    }, [userId, accessToken]);
 
     useEffect(() => {
         setPodId(episodes._id);
@@ -61,7 +80,9 @@ function OnePod(props) {
 
     const handleClick = async (e) => {
         await axios.delete(
-            `http://localhost:9000/api/user/${userId}/${e.target.value}`);
+            `http://localhost:9000/api/user/${userId}/${e.target.value}`,
+            options
+            );
     };
 
     return (

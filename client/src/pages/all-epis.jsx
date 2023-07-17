@@ -10,27 +10,45 @@ function AllEpis () {
     const [podId, setPodId] = useState("");
     const [accessToken, setAccessToken] = useState("");
 
+    let config = { 
+        headers: { 
+            Authorization: `Bearer ${accessToken}` 
+        } 
+    };
+
     async function insertUser() {
         let res = await axios.post(
-            `http://localhost:9000/api/user`, {name: user.name, email: user.email}
+            `https://localhost:9000/api/user`, 
+            {name: user.name, email: user.email},
+            config
         );
         setUserId(res.data[0].user_id);
     };
 
     async function getAllEpis() {
         let res = await axios.get(
-            `http://localhost:9000/api/allepisodes/${userId}`
+            `https://localhost:9000/api/allepisodes/${userId}`,
+            config
         );
         setEpisodes(res.data);
     };
 
+    function getToken () {
+        getAccessTokenSilently().then(
+            res => {
+                setAccessToken(res);
+            }
+        );
+    };
+
     useEffect(() => {
+        getToken();
         insertUser();
     });
 
     useEffect(() => {
         getAllEpis();
-    }, [userId]);
+    }, [userId, accessToken]);
 
     const handleClick = (e) => {
         setPodId(e.target.value);

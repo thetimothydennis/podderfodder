@@ -12,23 +12,40 @@ function PodSearch () {
     const [render, setRender] = useState()
     const [userId, setUserId] = useState("");
 
+    let config = { 
+        headers: { 
+            Authorization: `Bearer ${accessToken}` 
+        } 
+    };
+
     async function insertUser() {
         let res = await axios.post(
-            `http://localhost:9000/api/user`, {name: user.name, email: user.email}
+            `https://localhost:9000/api/user`,
+            {name: user.name, email: user.email},
+            config
         );
         setUserId(res.data[0].user_id);
     };
 
     async function getSearch(inputStr) {
         let res = await axios.get(
-            `http://localhost:9000/api/search?q=${inputStr}`
+            `https://localhost:9000/api/search?q=${inputStr}`
         );
         setResponse(res.data.results);
     };
 
+    function getToken () {
+        getAccessTokenSilently().then(
+            res => {
+                setAccessToken(res);
+            }
+        );
+    };
+
     useEffect(() => {
+        getToken();
         insertUser();
-    }, []);
+    });
 
     useEffect(() => {
         getSearch(input);
@@ -72,10 +89,11 @@ function PodSearch () {
     const handleSubmit = async (inputArg) => {
         console.log(inputArg)
         await axios.post(
-            `http://localhost:9000/api/user/${userId}`, 
+            `https://localhost:9000/api/user/${userId}`, 
             {
                 feedUrl: inputArg
-            }
+            },
+            config
         );
     };
    

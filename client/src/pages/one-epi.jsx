@@ -17,16 +17,25 @@ function OneEpi (props) {
     const [podId, setPodId] = useState("");
     const [userId, setUserId] = useState("");
 
+    let config = { 
+        headers: { 
+            Authorization: `Bearer ${accessToken}` 
+        } 
+    };
+
     async function insertUser() {
         let res = await axios.post(
-            `http://localhost:9000/api/user`, {name: user.name, email: user.email}
+            `https://localhost:9000/api/user`,
+            {name: user.name, email: user.email},
+            config
         );
         setUserId(res.data[0].user_id);
     };
 
     const getEpisode = async () => {
         let res = await axios.get(
-            `http://localhost:9000/api/user/${userId}/${props.epiId}`
+            `https://localhost:9000/api/user/${userId}/${props.epiId}`,
+            config
         );
         setShowTitle(res.data[0].podcasts.show_title);
         setAuthor(res.data[0].podcasts.author);
@@ -38,13 +47,22 @@ function OneEpi (props) {
         setPodId(res.data[0].podcasts.pod_id);
     };
 
+    function getToken () {
+        getAccessTokenSilently().then(
+            res => {
+                setAccessToken(res);
+            }
+        );
+    };
+
     useEffect(() => {
+        getToken();
         insertUser();
-    }, []);
+    });
 
     useEffect(() => {
         getEpisode();
-    }, [getEpisode, userId, insertUser]);
+    }, [accessToken, getEpisode, userId, insertUser]);
 
     return (
         <div className="Epi">
