@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 function PodSearch () {
+    const { user, getAccessTokenSilently } = useAuth0();
+    const [accessToken, setAccessToken] = useState("");
+
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
     const [feedInput, setFeedInput] = useState('');
     const [render, setRender] = useState()
     const [userId, setUserId] = useState("");
-
-    const user = {
-        name: "Timothy Dennis",
-        email: "timothyddennis@gmail.com"
-    };
 
     async function insertUser() {
         let res = await axios.post(

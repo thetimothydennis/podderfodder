@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 function AllEpis () {
+    const { user, getAccessTokenSilently } = useAuth0();
     const [episodes, setEpisodes] = useState([]);
     const [epiId, setEpiId] = useState("");
     const [userId, setUserId] = useState("");
     const [podId, setPodId] = useState("");
-
-    const user = {
-        name: "Timothy Dennis",
-        email: "timothyddennis@gmail.com"
-    };
+    const [accessToken, setAccessToken] = useState("");
 
     async function insertUser() {
         let res = await axios.post(

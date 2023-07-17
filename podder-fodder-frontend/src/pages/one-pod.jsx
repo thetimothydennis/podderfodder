@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 function OnePod(props) {
+    const { user, getAccessTokenSilently } = useAuth0();
+    const [accessToken, setAccessToken] = useState("");
     const [episodes, setEpisodes] = useState([]);
     const [showTitle, setShowTitle] = useState('');
     const [showDesc, setShowDesc] = useState('');
@@ -10,11 +13,6 @@ function OnePod(props) {
     const [userId, setUserId] = useState("");
     const [podObj, setPodObj] = useState({});
     const [podId, setPodId] = useState("");
-
-    const user = {
-        name: "Timothy Dennis",
-        email: "timothyddennis@gmail.com"
-    };
 
     async function insertUser() {
         let res = await axios.post(

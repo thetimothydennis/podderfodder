@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
 
 function OneEpi (props) {
+    const { user, getAccessTokenSilently } = useAuth0();
+    const [accessToken, setAccessToken] = useState("");
+
     const [showTitle, setShowTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [image, setImage] = useState('');
@@ -12,11 +16,6 @@ function OneEpi (props) {
     const [content, setContent] = useState('');
     const [podId, setPodId] = useState("");
     const [userId, setUserId] = useState("");
-
-    const user = {
-        name: "Timothy Dennis",
-        email: "timothyddennis@gmail.com"
-    };
 
     async function insertUser() {
         let res = await axios.post(
