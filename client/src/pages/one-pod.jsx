@@ -14,6 +14,8 @@ function OnePod(props) {
     const [podObj, setPodObj] = useState({});
     const [podId, setPodId] = useState("");
 
+    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+
     let config = { 
         headers: { 
             Authorization: `Bearer ${accessToken}` 
@@ -22,7 +24,7 @@ function OnePod(props) {
 
     async function insertUser() {
         let res = await axios.post(
-            `https://localhost:9000/api/user`,
+            `${apiCall}/api/user`,
             {name: user.name, email: user.email},
             config
         );
@@ -31,7 +33,7 @@ function OnePod(props) {
 
     const getPodcasts = async () => {
         let res = await axios.get(
-            `https://localhost:9000/api/user/${userId}/${props.podId}`,
+            `${apiCall}/api/user/${userId}/${props.podId}`,
             config
         );
         let {
@@ -51,7 +53,7 @@ function OnePod(props) {
 
     const updatePod = async () => {
         let res = await axios.put(
-            `https://localhost:9000/api/user/${userId}/${props.podId}`,
+            `${apiCall}/api/user/${userId}/${props.podId}`,
             {},
             config
         );
@@ -81,7 +83,7 @@ function OnePod(props) {
 
     const handleClick = async (e) => {
         await axios.delete(
-            `https://localhost:9000/api/user/${userId}/${e.target.value}`,
+            `${apiCall}/api/user/${userId}/${e.target.value}`,
             config
             );
     };

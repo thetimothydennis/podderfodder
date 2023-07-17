@@ -10,6 +10,8 @@ function AllEpis () {
     const [podId, setPodId] = useState("");
     const [accessToken, setAccessToken] = useState("");
 
+    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+
     let config = { 
         headers: { 
             Authorization: `Bearer ${accessToken}` 
@@ -18,7 +20,7 @@ function AllEpis () {
 
     async function insertUser() {
         let res = await axios.post(
-            `https://localhost:9000/api/user`, 
+            `${apiCall}/api/user`, 
             {name: user.name, email: user.email},
             config
         );
@@ -27,7 +29,7 @@ function AllEpis () {
 
     async function getAllEpis() {
         let res = await axios.get(
-            `https://localhost:9000/api/allepisodes/${userId}`,
+            `${apiCall}/api/allepisodes/${userId}`,
             config
         );
         setEpisodes(res.data);

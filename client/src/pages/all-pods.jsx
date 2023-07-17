@@ -9,6 +9,8 @@ function AllPods() {
     const [userId, setUserId] = useState("");
     const [accessToken, setAccessToken] = useState("")
 
+    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+
     let config = { 
         headers: { 
             Authorization: `Bearer ${accessToken}` 
@@ -17,7 +19,7 @@ function AllPods() {
 
     async function insertUser() {
         let res = await axios.post(
-            `https://localhost:9000/api/user`,
+            `${apiCall}/api/user`,
             {name: user.name, email: user.email},
             config
         );
@@ -27,7 +29,7 @@ function AllPods() {
 
     async function getPods() {
         let res = await axios.get(
-            `https://localhost:9000/api/user/${userId}/`,
+            `${apiCall}/api/user/${userId}/`,
             config
         );
         setPodcasts(res.data[0].podcasts);
@@ -55,7 +57,7 @@ function AllPods() {
 
     async function handleDeleteClick(e) {
         await axios.delete(
-            `https://localhost:9000/api/user/${userId}/${e.target.value}`,
+            `${apiCall}/api/user/${userId}/${e.target.value}`,
             config
         );
     };

@@ -17,6 +17,8 @@ function OneEpi (props) {
     const [podId, setPodId] = useState("");
     const [userId, setUserId] = useState("");
 
+    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+
     let config = { 
         headers: { 
             Authorization: `Bearer ${accessToken}` 
@@ -25,7 +27,7 @@ function OneEpi (props) {
 
     async function insertUser() {
         let res = await axios.post(
-            `https://localhost:9000/api/user`,
+            `${apiCall}/api/user`,
             {name: user.name, email: user.email},
             config
         );
@@ -34,7 +36,7 @@ function OneEpi (props) {
 
     const getEpisode = async () => {
         let res = await axios.get(
-            `https://localhost:9000/api/user/${userId}/${props.epiId}`,
+            `${apiCall}/api/user/${userId}/${props.epiId}`,
             config
         );
         setShowTitle(res.data[0].podcasts.show_title);

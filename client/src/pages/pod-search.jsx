@@ -12,6 +12,8 @@ function PodSearch () {
     const [render, setRender] = useState()
     const [userId, setUserId] = useState("");
 
+    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+
     let config = { 
         headers: { 
             Authorization: `Bearer ${accessToken}` 
@@ -20,7 +22,7 @@ function PodSearch () {
 
     async function insertUser() {
         let res = await axios.post(
-            `https://localhost:9000/api/user`,
+            `${apiCall}/api/user`,
             {name: user.name, email: user.email},
             config
         );
@@ -29,7 +31,7 @@ function PodSearch () {
 
     async function getSearch(inputStr) {
         let res = await axios.get(
-            `https://localhost:9000/api/search?q=${inputStr}`
+            `${apiCall}/api/search?q=${inputStr}`
         );
         setResponse(res.data.results);
     };
@@ -89,7 +91,7 @@ function PodSearch () {
     const handleSubmit = async (inputArg) => {
         console.log(inputArg)
         await axios.post(
-            `https://localhost:9000/api/user/${userId}`, 
+            `${apiCall}/api/user/${userId}`, 
             {
                 feedUrl: inputArg
             },
