@@ -5,6 +5,7 @@ import React from 'react';
 import { NavBarButtons } from '../assets/buttons/nav-bar-buttons.jsx';
 import MainUi from '../MainUi.jsx';
 import { HomePage } from '../pages/home.jsx';
+import { AuthenticationGuard } from '../provider/authentication-guard.jsx';
 
 // main user interface component
 export function RoutesUi() {
@@ -28,7 +29,7 @@ export function RoutesUi() {
                 {/* root route for unauthenticated acces */}
                 <Route path="/" element={<HomePage />} />
                 {/* app route for authenticated access */}
-                <Route path="/app" element={<MainUi />} />
+                <Route path="/app" element={<AuthenticationGuard component={MainUi} />} />
             </Routes>
         </div>
     );
