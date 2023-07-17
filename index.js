@@ -10,10 +10,9 @@ import SearchRouter from './routes/search-pod-API-routes.js';
 import FrontendRoutes from './routes/frontend-routes.js';
 import CoreAPIRoutes from './routes/pod-API-routes.js';
 
-
 const options = {
-    key: fs.readFileSync('./certs/localhost.key'),
-    cert: fs.readFileSync('./certs/localhost.crt')
+    key: process.env.SSL_KEY,
+    cert: process.env.SSL_CERT
 };
 
 const app = express();

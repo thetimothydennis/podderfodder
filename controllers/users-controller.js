@@ -66,7 +66,6 @@ export const updateUserPod = async (req, res) => {
         } = req.params;
         // pass off updated feed object to the model
         let updatedUserPod = await users.updateUserPodAndEpis(userid, podid, updated);
-        console.log(updatedUserPod)
         res.send(updatedUserPod)
     }
     catch (error) {
