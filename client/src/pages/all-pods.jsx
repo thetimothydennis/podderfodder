@@ -18,12 +18,13 @@ function AllPods() {
     };
 
     async function insertUser() {
+        console.log(user)
         let res = await axios.post(
             `${apiCall}/api/user`,
             {name: user.name, email: user.email},
             config
         );
-        setUserId(res.data[0].user_id);
+        setUserId(res.data._id);
     };
 
 

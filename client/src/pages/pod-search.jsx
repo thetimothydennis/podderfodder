@@ -26,7 +26,7 @@ function PodSearch () {
             {name: user.name, email: user.email},
             config
         );
-        setUserId(res.data[0].user_id);
+        setUserId(res.data._id);
     };
 
     async function getSearch(inputStr) {
@@ -89,7 +89,6 @@ function PodSearch () {
     }, [input, response]);
 
     const handleSubmit = async (inputArg) => {
-        console.log(inputArg)
         await axios.post(
             `${apiCall}/api/user/${userId}`, 
             {

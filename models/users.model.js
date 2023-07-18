@@ -134,6 +134,7 @@ export const ingestUser = async (userObj) => {
         name
     } = userObj;
     let checkUser = await getUser(userObj);
+    console.log(checkUser)
     if (checkUser.length > 0) {
         return checkUser;
     }
@@ -153,19 +154,19 @@ export const getUser = async (userObj) => {
         name,
         email
     } = userObj;
-    // let foundUser = await User.find({$and: [ {name: name},{email: email} ] })
-    let foundUser = await User.aggregate(
-        [
-            {
-                $match: {
-                    $and: [{name: name}, {email: email}]
-                }
-            },
-            aggrPodUnwind(),
-            aggrEpiUnwind(),
-            aggrStdProjection()
-        ]
-    );
+    let foundUser = await User.find({$and: [ {name: name},{email: email} ] })
+    // let foundUser = await User.aggregate(
+    //     [
+    //         {
+    //             $match: {
+    //                 $and: [{name: name}, {email: email}]
+    //             }
+    //         },
+    //         aggrPodUnwind(),
+    //         aggrEpiUnwind(),
+    //         aggrStdProjection()
+    //     ]
+    // );
     return foundUser;
 };
 

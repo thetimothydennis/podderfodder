@@ -24,7 +24,7 @@ function AllEpis () {
             {name: user.name, email: user.email},
             config
         );
-        setUserId(res.data[0].user_id);
+        setUserId(res.data._id);
     };
 
     async function getAllEpis() {

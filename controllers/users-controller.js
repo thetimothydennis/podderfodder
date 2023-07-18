@@ -6,7 +6,7 @@ export const insertUser = async (req, res) => {
     let userObj = req.body;
     try {
         let insertAUser = await users.ingestUser(userObj);
-        res.send(insertAUser);
+        res.send(insertAUser[0]);
     }
     catch (error) {
         errHandler(error, res);
