@@ -5,6 +5,14 @@ import * as MWusers from '../middleware/user.mw.js';
 import * as MWpods from '../middleware/podcasts.mw.js';
 import { validateAccessToken } from '../middleware/auth0-mw.js';
 
+router.post('/api/login', (req, res) => {
+    console.log(req.body)
+});
+
+router.post('/api/register', (req, res) => {
+    console.log(req.body)
+});
+
 // router.use(validateAccessToken);
 
 router.route('/api/user')

@@ -1,9 +1,11 @@
 import express from 'express';
 import 'dotenv/config';
 import https from 'https';
-import fs from 'fs';
 import morgan from 'morgan';
 import cors from 'cors';
+import passport from 'passport';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
 
 import UsersRouter from './routes/user-API-routes.js';
 import SearchRouter from './routes/search-pod-API-routes.js';
@@ -15,7 +17,13 @@ const options = {
     cert: process.env.SSL_CERT
 };
 
+const sessionOptions = {
+    secret: "feldman and keillor rot in hell"
+};
+
 const app = express();
+
+app.use(session(sessionOptions));
 
 // establishes environment variables for auth0 as local constants
 const PORT = parseInt(process.env.PORT, 10);
@@ -47,6 +55,7 @@ https.createServer(options, app)
 app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 app.use(CoreAPIRoutes)
 app.use(SearchRouter);

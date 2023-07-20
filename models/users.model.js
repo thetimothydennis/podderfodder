@@ -81,8 +81,7 @@ const aggrStdProjection = () => {
         $project: {
             name: 1,
             email: 1,
-            _id: 0,
-            user_id: "$_id",
+            _id: 1,
             podcasts: {
                 pod_id: "$podcasts._id",
                 show_title: 1,
@@ -134,7 +133,6 @@ export const ingestUser = async (userObj) => {
         name
     } = userObj;
     let checkUser = await getUser(userObj);
-    console.log(checkUser)
     if (checkUser.length > 0) {
         return checkUser;
     }
