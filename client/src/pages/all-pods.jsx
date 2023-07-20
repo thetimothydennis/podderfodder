@@ -18,22 +18,13 @@ function AllPods() {
     };
 
     async function insertUser() {
-        console.log(user)
         let res = await axios.post(
             `${apiCall}/api/user`,
             {name: user.name, email: user.email},
             config
         );
+        setPodcasts(res.data.podcasts);
         setUserId(res.data._id);
-    };
-
-
-    async function getPods() {
-        let res = await axios.get(
-            `${apiCall}/api/user/${userId}/`,
-            config
-        );
-        setPodcasts(res.data[0].podcasts);
     };
 
     function getToken () {
@@ -51,10 +42,6 @@ function AllPods() {
     useEffect(() => {
         insertUser();
     }, [accessToken])
-
-    useEffect(() => {
-        getPods();
-    }, [userId]);
 
     async function handleDeleteClick(e) {
         await axios.delete(
