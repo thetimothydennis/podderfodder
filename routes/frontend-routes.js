@@ -14,7 +14,7 @@ router.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 // frontend routes
     // root route
-router.get("/", frontend.rootRoute);
+router.get("/", frontend.appRoute);
     // authenticated app route
 router.get("/app", frontend.appRoute);
 router.get("/login", frontend.appRoute)
