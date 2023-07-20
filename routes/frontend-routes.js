@@ -17,6 +17,8 @@ router.use(express.static(path.join(__dirname, "..", "client", "dist")));
 router.get("/", frontend.rootRoute);
     // authenticated app route
 router.get("/app", frontend.appRoute);
+router.get("/login", frontend.appRoute)
+router.get("/register", frontend.appRoute)
 
 // exports the router for index.js
 export default router;

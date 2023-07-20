@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function UpdatePod () {
+export function UserLogin () {
     return (
         <div className="Epi">
             <form method="POST" action="/api/login">

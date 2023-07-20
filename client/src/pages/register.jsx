@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function UpdatePod () {
+export function UserRegister () {
     return (
         <div className="Epi">
             <form method="POST" action="/api/register">

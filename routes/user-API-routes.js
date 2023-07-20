@@ -5,7 +5,7 @@ import * as MWusers from '../middleware/user.mw.js';
 import * as MWpods from '../middleware/podcasts.mw.js';
 import { validateAccessToken } from '../middleware/auth0-mw.js';
 
-router.use(validateAccessToken);
+// router.use(validateAccessToken);
 
 router.route('/api/user')
     // adds a user to db
