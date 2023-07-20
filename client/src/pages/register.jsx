@@ -5,6 +5,14 @@ export function UserRegister () {
         <div className="Epi">
             <form method="POST" action="/api/register">
                 <p>
+                    <label htmlFor="name">name</label>
+                    <input type="text" name="name" id="name" />
+                </p>
+                <p>
+                    <label htmlFor="email">email</label>
+                    <input type="text" name="email" id="email" />
+                </p>
+                <p>
                     <label htmlFor="username">username</label>
                     <input type="text" name="username" id="username" />
                 </p>

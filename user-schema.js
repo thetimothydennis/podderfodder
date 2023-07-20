@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+import passportLocalMongoose from 'passport-local-mongoose';
 import 'dotenv/config';
+import passport from 'passport';
 
 mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -49,11 +51,12 @@ const PodcastSchema = new mongoose.Schema({
     episodes: [EpisodeSchema]
 });
 
-export const Podcast = connection.model("Podcast", PodcastSchema)
+export const Podcast = connection.model("Podcast", PodcastSchema);
 
-const UserSchema = {
-    name: {
+const userSchema = new mongoose.Schema({
+    username: {
         type: String,
+        unique: true,
         required: true
     },
     email: {
@@ -62,6 +65,8 @@ const UserSchema = {
         unique: true
     },
     podcasts: [PodcastSchema]
-};
+});
 
-export const User = connection.model("User", UserSchema);
+userSchema.plugin(passportLocalMongoose);
+
+export const User = connection.model("User", userSchema);

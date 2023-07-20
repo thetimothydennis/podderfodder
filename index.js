@@ -12,22 +12,42 @@ import SearchRouter from './routes/search-pod-API-routes.js';
 import FrontendRoutes from './routes/frontend-routes.js';
 import CoreAPIRoutes from './routes/pod-API-routes.js';
 
+import { User } from './user-schema.js';
+
 const options = {
     key: process.env.SSL_KEY,
     cert: process.env.SSL_CERT
 };
 
 const sessionOptions = {
-    secret: "feldman and keillor rot in hell"
+    secret: "feldman and keillor rot in hell",
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 };
 
 const app = express();
 
+passport.use(User.createStrategy());
 app.use(session(sessionOptions));
 
 // establishes environment variables for auth0 as local constants
 const PORT = parseInt(process.env.PORT, 10);
 const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
+
+// cross-origin resource sharing middleware for auth0
+app.use(
+    cors({
+        // origin: CLIENT_ORIGIN_URL,
+        // methods: ['GET'],
+        // allowedHeaders: ["Authorization", "Content-Type"],
+        // maxAge: 86400,
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 // checks for port and origin url for auth0
 if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
@@ -37,15 +57,7 @@ if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
     );
 };
 
-// cross-origin resource sharing middleware for auth0
-app.use(
-    cors({
-        origin: CLIENT_ORIGIN_URL,
-        methods: ['GET'],
-        allowedHeaders: ["Authorization", "Content-Type"],
-        maxAge: 86400,
-    })
-);
+
 
 https.createServer(options, app)
     .listen(PORT, () => {

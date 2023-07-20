@@ -3,14 +3,43 @@ const router = express.Router();
 import * as CTRLusers from '../controllers/users-controller.js';
 import * as MWusers from '../middleware/user.mw.js';
 import * as MWpods from '../middleware/podcasts.mw.js';
-import { validateAccessToken } from '../middleware/auth0-mw.js';
+import passport from 'passport';
 
-router.post('/api/login', (req, res) => {
-    console.log(req.body)
+import { User } from '../user-schema.js';
+
+// import { validateAccessToken } from '../middleware/auth0-mw.js';
+
+router.post('/api/login', (err, user, info) => {
+    if (err) {
+        res.status(404).send();
+    }
+    else {
+        if (!user) {
+        res.status(404).send('username or password incorrect')
+    }
+    else {
+        const token = jwt.sign({ userId: user._id, username: user.username }, secretkey, {expiresIn: "24h" });
+        
+    }
+}
+}, (req, res) => {
+    passport.authenticate('local', {
+        failureRedirect: '/login',
+        successRedirect: '/app'
+    })
 });
 
 router.post('/api/register', (req, res) => {
     console.log(req.body)
+    const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })
+    User.register(user, req.body.password, (err) => {
+        if (err) {
+            res.redirect("/register");
+            return;
+        }
+        console.log(`user registered`);
+        res.redirect("/app");
+    });
 });
 
 // router.use(validateAccessToken);
