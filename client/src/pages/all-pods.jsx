@@ -1,41 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function AllPods() {
+function AllPods(props) {
     const [podcasts, setPodcasts] = useState([]);
     const [podId, setPodId] = useState("");
-    const [userId, setUserId] = useState("");
-
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-    async function getUserId() {
-        let res = await axios.get(
-            `${apiCall}/api/user-data`
-        )
-        setUserId(res.data.user_id)
-    }
 
     async function getPods() {
         let res = await axios.get(
-            `${apiCall}/api/user/${userId}/`
+            `${apiCall}/api/user/${props.userId}/`
         );
         setPodcasts(res.data[0].podcasts);
     };
 
- 
-
-    useEffect(() => {
-        getUserId();
-    }, []);
-
     useEffect(() => {
         getPods();
-    }, [userId]);
+    }, []);
 
     async function handleDeleteClick(e) {
         await axios.delete(
-            `${apiCall}/api/user/${userId}/${e.target.value}`,
-            config
+            `${apiCall}/api/user/${props.userId}/${e.target.value}`
         );
     };
 

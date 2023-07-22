@@ -1,36 +1,52 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import NavBar from './pages/pod-nav-bar.jsx';
 import PodSearch from './pages/pod-search.jsx';
 import AllPods from './pages/all-pods.jsx';
 import OnePod from './pages/one-pod.jsx';
 import OneEpi from './pages/one-epi.jsx';
 import AllEpis from './pages/all-epis.jsx';
-import { UpdatePod, DeletePod, DeleteEpi, ImportedPod } from './pages/interstitials.jsx';
+import { UpdatePod, DeletePod, DeleteEpi, ImportedPod, Welcome } from './pages/interstitials.jsx';
 import './App.css';
 
 function MainUi() {
-  const [display, setDisplay] = useState('allPods');
+  const [display, setDisplay] = useState('welcome');
   const [podId, setPodId] = useState('');
   const [epiId, setEpiId] = useState('');
-  const [render, setRender] = useState(<AllPods />)
+  const [render, setRender] = useState(<Welcome />)
+  const [userId, setUserId] = useState('');
+
+  const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+
+  async function getUserId() {
+      let res = await axios.get(
+          `${apiCall}/api/user-data`
+      );
+      setUserId(res.data.user_id);
+  };
+
+  useEffect(() => {
+    getUserId();
+  }, [getUserId]);
+
     //logic for re-rendering the current display
     useEffect(() => {
 
       switch (display) {
           case 'allPods':
-              setRender(<AllPods />);
+              setRender(<AllPods userId={userId}/>);
               break;
           case 'onePod':
-              setRender(<OnePod podId={podId} />);
+              setRender(<OnePod userId={userId} podId={podId} />);
               break;
           case 'oneEpi':
-              setRender(<OneEpi podId={podId} epiId={epiId} />);
+              setRender(<OneEpi userId={userId} podId={podId} epiId={epiId} />);
               break;
           case 'allEpis':
-              setRender(<AllEpis />);
+              setRender(<AllEpis userId={userId} />);
               break;
           case 'searchPods':
-              setRender(<PodSearch />);
+              setRender(<PodSearch userId={userId} />);
               break;
           case 'updatePod':
               setRender(<UpdatePod />);
@@ -44,10 +60,13 @@ function MainUi() {
           case 'submitPod':
               setRender(<ImportedPod />);
               break;
+          case 'welcome':
+              setRender(<Welcome />);
+              break;
           default:
-              setRender(<AllPods />)
+              setRender(<Welcome userId={userId} />)
       };
-  }, [display, epiId, podId]);
+  }, [display, epiId, podId, userId]);
 
   // logic for telling the app to re-render the display
   const handleClick = (e) => {

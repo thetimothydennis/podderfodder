@@ -11,20 +11,12 @@ function OneEpi (props) {
     const [audio, setAudio] = useState('');
     const [content, setContent] = useState('');
     const [podId, setPodId] = useState("");
-    const [userId, setUserId] = useState("");
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-    
-    async function getUserId() {
-        let res = await axios.get(
-            `${apiCall}/api/user-data`
-        )
-        setUserId(res.data.user_id);
-    };
 
     const getEpisode = async () => {
         let res = await axios.get(
-            `${apiCall}/api/user/${userId}/${props.epiId}`
+            `${apiCall}/api/user/${props.userId}/${props.epiId}`
         );
         setShowTitle(res.data[0].podcasts.show_title);
         setAuthor(res.data[0].podcasts.author);
@@ -37,12 +29,8 @@ function OneEpi (props) {
     };
 
     useEffect(() => {
-        getUserId();
-    }, [])
-
-    useEffect(() => {
         getEpisode();
-    }, [userId]);
+    }, []);
 
     return (
         <div className="Epi">

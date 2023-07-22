@@ -31,3 +31,11 @@ export function ImportedPod () {
         </div>
     );
 };
+
+export function Welcome () {
+    return (
+        <div>
+            <p>Welcome to PodderFodder. Use the links above to navigate</p>
+        </div>
+    )
+}

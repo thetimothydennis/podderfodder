@@ -1,22 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
-function PodSearch () {
+function PodSearch (props) {
 
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
     const [feedInput, setFeedInput] = useState('');
-    const [render, setRender] = useState()
-    const [userId, setUserId] = useState("");
+    const [render, setRender] = useState();
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-    async function getUserId() {
-        let res = await axios.get(
-            `${apiCall}/api/user-data`
-        )
-        setUserId(res.data.user_id)
-    }
 
     async function getSearch(inputStr) {
         let res = await axios.get(
@@ -24,10 +16,6 @@ function PodSearch () {
         );
         setResponse(res.data.results);
     };
-
-    useEffect(() => {
-        getUserId();
-    }, [])
 
     useEffect(() => {
         getSearch(input);
@@ -70,7 +58,7 @@ function PodSearch () {
 
     const handleSubmit = async (inputArg) => {
         await axios.post(
-            `${apiCall}/api/user/${userId}`, 
+            `${apiCall}/api/user/${props.userId}`, 
             {
                 feedUrl: inputArg
             }
