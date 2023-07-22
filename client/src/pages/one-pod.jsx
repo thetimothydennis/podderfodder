@@ -49,7 +49,7 @@ function OnePod(props) {
     const handleClick = async (e) => {
         await axios.delete(
             `${apiCall}/api/user/${props.userId}/${e.target.value}`
-            );
+        );
     };
 
     return (

@@ -3,10 +3,10 @@ import axios from 'axios';
 
 function AllEpis (props) {
     const [episodes, setEpisodes] = useState([]);
-    const [epiId, setEpiId] = useState("");
-    const [podId, setPodId] = useState("");
+    const [epiId, setEpiId] = useState('');
+    const [podId, setPodId] = useState('');
 
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`;
 
     async function getAllEpis() {
         let res = await axios.get(

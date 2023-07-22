@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 function PodSearch (props) {
-
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
     const [feedInput, setFeedInput] = useState('');
@@ -19,7 +18,7 @@ function PodSearch (props) {
 
     useEffect(() => {
         getSearch(input);
-    }, [input])
+    }, [input]);
 
     useEffect(() => {
         setRender(response.map((item) => (
@@ -117,7 +116,7 @@ function PodSearch (props) {
                 </tbody>
             </table>
         </div>
-    )
+    );
 };
 
 export default PodSearch;

@@ -10,7 +10,7 @@ function OneEpi (props) {
     const [date, setDate] = useState('');
     const [audio, setAudio] = useState('');
     const [content, setContent] = useState('');
-    const [podId, setPodId] = useState("");
+    const [podId, setPodId] = useState('');
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 

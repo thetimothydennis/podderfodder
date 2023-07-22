@@ -4,7 +4,7 @@ import axios from 'axios';
 function AllPods(props) {
     const [podcasts, setPodcasts] = useState([]);
     const [podId, setPodId] = useState("");
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
+    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`;
 
     async function getPods() {
         let res = await axios.get(

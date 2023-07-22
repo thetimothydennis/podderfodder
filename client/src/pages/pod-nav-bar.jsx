@@ -2,7 +2,7 @@ import React from 'react';
 
 function NavBar () {
     return (
-        <div className="Epi">
+        <div className="NavBar, Epi">
            <ul className="NavBar">
            <li id={-3}>
                 Search and Add

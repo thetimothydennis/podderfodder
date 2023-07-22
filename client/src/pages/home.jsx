@@ -1,8 +1,8 @@
 export function HomePage() {
     return (
         <div className={"Epi"}>
-            <p>Welcome to the podcast getter!</p>
-            <p><a href="/app">Enter the site here.</a></p>
+            <p>Welcome to PodderFodder!</p>
+            <p><a href="/login">Login</a> or <a href="/register">Register</a></p>
         </div>
-    )
-}
+    );
+};
