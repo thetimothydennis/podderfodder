@@ -1,6 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
-import https from 'https';
+import http from 'http';
 import morgan from 'morgan';
 import cors from 'cors';
 import passport from 'passport';
@@ -15,8 +15,8 @@ import CoreAPIRoutes from './routes/pod-API-routes.js';
 import { User } from './user-schema.js';
 
 const options = {
-    key: process.env.SSL_KEY,
-    cert: process.env.SSL_CERT
+    // key: process.env.SSL_KEY,
+    // cert: process.env.SSL_CERT
 };
 
 const sessionOptions = {
@@ -31,7 +31,6 @@ app.use(session(sessionOptions));
 
 // establishes environment variables for auth0 as local constants
 const PORT = parseInt(process.env.PORT, 10);
-const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 
 // cross-origin resource sharing middleware for auth0
 app.use(
@@ -48,18 +47,7 @@ app.use(passport.session());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
-// checks for port and origin url for auth0
-if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
-    // if client origin or port aren't in the environment variables, throws an error
-    throw new Error(
-        "Missing required environment variables. Check docs for more information."
-    );
-};
-
-
-
-https.createServer(options, app)
+http.createServer(options, app)
     .listen(PORT, () => {
         console.log(`app listening on port ${PORT}`);
     });

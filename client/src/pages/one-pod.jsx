@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 
 function OnePod(props) {
-    const { user, getAccessTokenSilently } = useAuth0();
-    const [accessToken, setAccessToken] = useState("");
     const [episodes, setEpisodes] = useState([]);
     const [showTitle, setShowTitle] = useState('');
     const [showDesc, setShowDesc] = useState('');
@@ -16,25 +13,18 @@ function OnePod(props) {
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
-    let config = { 
-        headers: { 
-            Authorization: `Bearer ${accessToken}` 
-        } 
-    };
 
     async function insertUser() {
         let res = await axios.post(
             `${apiCall}/api/user`,
-            {name: user.name, email: user.email},
-            config
+            {name: user.name, email: user.email}
         );
         setUserId(res.data._id);
     };
 
     const getPodcasts = async () => {
         let res = await axios.get(
-            `${apiCall}/api/user/${userId}/${props.podId}`,
-            config
+            `${apiCall}/api/user/${userId}/${props.podId}`
         );
         let {
             show_title,
@@ -53,29 +43,16 @@ function OnePod(props) {
 
     const updatePod = async () => {
         let res = await axios.put(
-            `${apiCall}/api/user/${userId}/${props.podId}`,
-            {},
-            config
+            `${apiCall}/api/user/${userId}/${props.podId}`
         );
         setEpisodes(res.data);
     };
 
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
-    };
 
-    useEffect(() => {
-        getToken();
-        insertUser();
-    });
     
     useEffect(() => {
         getPodcasts();
-    }, [userId, accessToken]);
+    }, []);
 
     useEffect(() => {
         setPodId(episodes._id);
@@ -83,8 +60,7 @@ function OnePod(props) {
 
     const handleClick = async (e) => {
         await axios.delete(
-            `${apiCall}/api/user/${userId}/${e.target.value}`,
-            config
+            `${apiCall}/api/user/${userId}/${e.target.value}`
             );
     };
 

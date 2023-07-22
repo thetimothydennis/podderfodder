@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+
 import axios from 'axios';
 
 function PodSearch () {
-    const { user, getAccessTokenSilently } = useAuth0();
-    const [accessToken, setAccessToken] = useState("");
 
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
@@ -14,17 +11,10 @@ function PodSearch () {
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
-    let config = { 
-        headers: { 
-            Authorization: `Bearer ${accessToken}` 
-        } 
-    };
-
     async function insertUser() {
         let res = await axios.post(
             `${apiCall}/api/user`,
-            {name: user.name, email: user.email},
-            config
+            {name: user.name, email: user.email}
         );
         setUserId(res.data._id);
     };
@@ -36,18 +26,7 @@ function PodSearch () {
         setResponse(res.data.results);
     };
 
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
-    };
 
-    useEffect(() => {
-        getToken();
-        insertUser();
-    });
 
     useEffect(() => {
         getSearch(input);
@@ -93,8 +72,7 @@ function PodSearch () {
             `${apiCall}/api/user/${userId}`, 
             {
                 feedUrl: inputArg
-            },
-            config
+            }
         );
     };
    

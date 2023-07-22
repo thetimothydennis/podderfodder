@@ -9,25 +9,11 @@ import { User } from '../user-schema.js';
 
 // import { validateAccessToken } from '../middleware/auth0-mw.js';
 
-router.post('/api/login', (err, user, info) => {
-    if (err) {
-        res.status(404).send();
-    }
-    else {
-        if (!user) {
-        res.status(404).send('username or password incorrect')
-    }
-    else {
-        const token = jwt.sign({ userId: user._id, username: user.username }, secretkey, {expiresIn: "24h" });
-        
-    }
-}
-}, (req, res) => {
-    passport.authenticate('local', {
+router.post('/api/login', passport.authenticate('local', {
         failureRedirect: '/login',
         successRedirect: '/app'
     })
-});
+);
 
 router.post('/api/register', (req, res) => {
     console.log(req.body)
@@ -42,7 +28,10 @@ router.post('/api/register', (req, res) => {
     });
 });
 
-// router.use(validateAccessToken);
+router.use((req, res, next) => {
+    console.log(req.user);
+    next()
+})
 
 router.route('/api/user')
     // adds a user to db
