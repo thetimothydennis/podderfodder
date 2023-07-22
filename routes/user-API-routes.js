@@ -33,6 +33,16 @@ router.use((req, res, next) => {
     next()
 })
 
+router.get('/api/user-data', (req, res) => {
+    if (req.user === undefined) {
+        res.json({})
+    } else {
+        res.json({
+            user_id: req.user._id
+        })
+    }
+})
+
 router.route('/api/user')
     // adds a user to db
     .post(CTRLusers.insertUser)

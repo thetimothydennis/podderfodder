@@ -9,6 +9,13 @@ function AllEpis () {
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
+    async function getUserId() {
+        let res = await axios.get(
+            `${apiCall}/api/user-data`
+        )
+        setUserId(res.data.user_id)
+    }
+
     async function getAllEpis() {
         let res = await axios.get(
             `${apiCall}/api/allepisodes/${userId}`
@@ -16,10 +23,13 @@ function AllEpis () {
         setEpisodes(res.data);
     };
 
+    useEffect(() => {
+        getUserId();
+    }, []);
 
     useEffect(() => {
         getAllEpis();
-    }, []);
+    }, [userId]);
 
     const handleClick = (e) => {
         setPodId(e.target.value);

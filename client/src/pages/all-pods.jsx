@@ -8,6 +8,12 @@ function AllPods() {
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
+    async function getUserId() {
+        let res = await axios.get(
+            `${apiCall}/api/user-data`
+        )
+        setUserId(res.data.user_id)
+    }
 
     async function getPods() {
         let res = await axios.get(
@@ -16,17 +22,15 @@ function AllPods() {
         setPodcasts(res.data[0].podcasts);
     };
 
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
-    };
+ 
+
+    useEffect(() => {
+        getUserId();
+    }, []);
 
     useEffect(() => {
         getPods();
-    });
+    }, [userId]);
 
     async function handleDeleteClick(e) {
         await axios.delete(

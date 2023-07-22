@@ -14,14 +14,12 @@ function OneEpi (props) {
     const [userId, setUserId] = useState("");
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`,
-            {name: user.name, email: user.email}
-        );
-        setUserId(res.data._id);
+    
+    async function getUserId() {
+        let res = await axios.get(
+            `${apiCall}/api/user-data`
+        )
+        setUserId(res.data.user_id);
     };
 
     const getEpisode = async () => {
@@ -38,12 +36,13 @@ function OneEpi (props) {
         setPodId(res.data[0].podcasts.pod_id);
     };
 
- 
-
+    useEffect(() => {
+        getUserId();
+    }, [])
 
     useEffect(() => {
         getEpisode();
-    }, []);
+    }, [userId]);
 
     return (
         <div className="Epi">

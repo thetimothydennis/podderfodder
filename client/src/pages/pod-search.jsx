@@ -1,4 +1,4 @@
-
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 function PodSearch () {
@@ -11,13 +11,12 @@ function PodSearch () {
 
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`,
-            {name: user.name, email: user.email}
-        );
-        setUserId(res.data._id);
-    };
+    async function getUserId() {
+        let res = await axios.get(
+            `${apiCall}/api/user-data`
+        )
+        setUserId(res.data.user_id)
+    }
 
     async function getSearch(inputStr) {
         let res = await axios.get(
@@ -26,7 +25,9 @@ function PodSearch () {
         setResponse(res.data.results);
     };
 
-
+    useEffect(() => {
+        getUserId();
+    }, [])
 
     useEffect(() => {
         getSearch(input);

@@ -14,12 +14,11 @@ function OnePod(props) {
     const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
 
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`,
-            {name: user.name, email: user.email}
-        );
-        setUserId(res.data._id);
+    async function getUserId() {
+        let res = await axios.get(
+            `${apiCall}/api/user-data`
+        )
+        setUserId(res.data.user_id);
     };
 
     const getPodcasts = async () => {
@@ -48,11 +47,13 @@ function OnePod(props) {
         setEpisodes(res.data);
     };
 
-
+    useEffect(() => {
+        getUserId();
+    }, []);
     
     useEffect(() => {
         getPodcasts();
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
         setPodId(episodes._id);
