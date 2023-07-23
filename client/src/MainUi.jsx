@@ -26,7 +26,7 @@ function MainUi() {
 
   useEffect(() => {
     getUserId();
-  }, [getUserId]);
+  });
 
     //logic for re-rendering the current display
     useEffect(() => {
@@ -109,7 +109,7 @@ function MainUi() {
         {render}
       </div>
     </>
-  )
+  );
 };
 
 export default MainUi;

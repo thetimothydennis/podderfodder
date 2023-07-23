@@ -5,9 +5,9 @@ import RoutesUi from './routes/routes.jsx';
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <div>
+  <React.StrictMode>
     <BrowserRouter>
         <RoutesUi />
     </BrowserRouter>
-  </div>
+  </React.StrictMode>
 );

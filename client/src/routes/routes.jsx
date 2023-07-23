@@ -1,12 +1,9 @@
-// auth0 and react imports
-import { useAuth0 } from '@auth0/auth0-react';
 import { Route, Routes } from 'react-router-dom';
 import React from 'react';
 import MainUi from '../MainUi.jsx';
-import { HomePage } from '../pages/home.jsx';
+import { HomePage } from '../pages/interstitials.jsx';
 import { UserLogin } from '../pages/login.jsx';
 import { UserRegister } from '../pages/register.jsx';
-
 
 // main user interface component
 export function RoutesUi() {
