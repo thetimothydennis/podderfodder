@@ -1,6 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import { User } from '../user-schema.js';
+import * as emailValidator from 'node-email-validation';
 
 const router = express.Router();
 
@@ -10,9 +11,11 @@ router.post('/api/login', passport.authenticate('local', {
     })
 );
 
-router.post('/api/register', (req, res) => {
+router.post('/api/register', async (req, res) => {
     if (req.body.password !== req.body.passwordMatch) {
-        res.redirect('/register')
+        res.redirect('/register');
+    } else if (emailValidator.is_email_valid(req.body.email) === false) {
+        res.redirect('/register');
     } else {
         const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })
         User.register(user, req.body.password, (err) => {
