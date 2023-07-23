@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import { User } from '../user-schema.js';
+import { User } from '../models/user-schema.js';
 import * as emailValidator from 'node-email-validation';
 
 const router = express.Router();

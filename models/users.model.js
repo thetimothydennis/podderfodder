@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { User } from '../user-schema.js';
+import { User } from './user-schema.js';
 
 // aggregation components
 // match components

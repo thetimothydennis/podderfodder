@@ -1,6 +1,5 @@
-import { parseFeed, parseFeedURL } from '../functions/feed-functions.js'
 import * as reformat from '../functions/data-type-manipulation.js'
-import { Podcast, Episodes } from '../pod-schema.js';
+import { Podcast, Episodes } from './user-schema.js';
 import mongoose from 'mongoose';
 
 // mongodb aggregate pipeline constant

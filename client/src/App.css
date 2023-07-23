@@ -7,11 +7,12 @@
 
 .NavBar {
   display: flex;
-  flex-flow: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .NavBar li {
+  display: flex;
   list-style: none
 }
 

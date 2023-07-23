@@ -1,37 +1,21 @@
 import * as users from '../models/users.model.js';
 import { errHandler } from '../functions/err-handler.js';
 
-// update user by adding pod with epis to db - for user/ POST route
-export const addUserPods = async (req, res) => {
-    try {
-        const userId = req.params.id;
-        const feedDb = req.feedIngestRes;
-        const feedUrl = feedDb[0].feedurl;
-        const checkUserPod = await users.checkPodByURL(userId, feedUrl);
-        if (checkUserPod.length > 0) {
-            res.send(checkUserPod);
-        }
-        else {
-            const userPodAdd = await users.addPodsToUser(userId, feedDb);
-            res.send(userPodAdd);
-        };
-    }
-    catch (error) {
-        errHandler(error, res);
-    };
-};
-
 // updates a podcast for user in db - for user/ PUT route
 export const updateUserPod = async (req, res) => {
     try {
-        const {
+        let {
             userid,
             podid,
             updated
         } = req.params;
+        if (req.id && req.podid) {
+            userid = req.id;
+            podid = req.podid;
+        };
         // pass off updated feed object to the model
         let updatedUserPod = await users.updateUserPodAndEpis(userid, podid, updated);
-        res.send(updatedUserPod)
+        res.send(updatedUserPod);
     }
     catch (error) {
         errHandler(error, res);

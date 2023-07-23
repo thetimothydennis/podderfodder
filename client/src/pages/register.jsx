@@ -3,6 +3,7 @@ import React from 'react';
 export function UserRegister () {
     return (
         <div className="Epi">
+            <h1>Podder Fodder Registration</h1>
             <form method="POST" action="/api/register">
                 <p>
                     <label htmlFor="name">name</label>

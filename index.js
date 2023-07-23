@@ -11,7 +11,7 @@ import authRoutes from './routes/auth-routes.js';
 import UsersRouter from './routes/user-API-routes.js';
 import FrontendRoutes from './routes/frontend-routes.js';
 
-import { User } from './user-schema.js';
+import { User } from './models/user-schema.js';
 
 const options = {
     key: process.env.SSL_KEY,

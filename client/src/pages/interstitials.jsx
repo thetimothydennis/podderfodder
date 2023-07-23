@@ -35,7 +35,8 @@ export function ImportedPod () {
 export function Welcome () {
     return (
         <div>
+            <h1>Podder Fodder</h1>
             <p>Welcome to PodderFodder. Use the links above to navigate</p>
         </div>
-    )
-}
+    );
+};

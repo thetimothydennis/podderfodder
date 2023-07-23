@@ -14,7 +14,7 @@ router.route('/api/user/:id')
     // gets all podcasts for user
     .get(CTRLusers.getUserPods)
     // adds a podcast and episodes for a user in db
-    .post(MWpods.ingestPod, CTRLusers.addUserPods)
+    .post(MWpods.ingestPod, MWusers.addUserPods, MWusers.updateOnePodcast, CTRLusers.updateUserPod)
 
 router.route('/api/user/:userid/:podid')
     // gets a single podcast for a user
