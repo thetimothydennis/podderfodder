@@ -205,24 +205,28 @@ export const updateUserPodAndEpis = async (userId, podId, feedObj) => {
             aggrStdProjection(),
         ]
     );
-    let feedUrl = userPodUrlGet[0].podcasts.feedurl;
-    await deleteAUserPod(userId, podId);
-    await User.findOneAndUpdate({
-        _id: userId
-    }, {
-        $push: {
-            podcasts: feedObj
-        }
-    });
-    let updatedPodReturn = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrFeedURLMatch(feedUrl),
-            aggrStdProjection()
-        ]
-    );
-    return updatedPodReturn;
+    if (userPodUrlGet.length == 0) {
+        return ["podcast added to user"];
+    } else {
+        let feedUrl = userPodUrlGet[0].podcasts.feedurl;
+        await deleteAUserPod(userId, podId);
+        await User.findOneAndUpdate({
+            _id: userId
+        }, {
+            $push: {
+                podcasts: feedObj
+            }
+        });
+        let updatedPodReturn = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodUnwind(),
+                aggrFeedURLMatch(feedUrl),
+                aggrStdProjection()
+            ]
+        );
+        return updatedPodReturn;
+    }
 };
 
 // get a podcast for a user

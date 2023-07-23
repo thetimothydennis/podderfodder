@@ -11,10 +11,11 @@ export const updateUserPod = async (req, res) => {
         } = req.params;
         if (req.id && req.podid) {
             userid = req.id;
-            podid = req.podid;
+            podid = req.podid.toString();
         };
         // pass off updated feed object to the model
         let updatedUserPod = await users.updateUserPodAndEpis(userid, podid, updated);
+        console.log(`updated user pod`)
         res.send(updatedUserPod);
     }
     catch (error) {

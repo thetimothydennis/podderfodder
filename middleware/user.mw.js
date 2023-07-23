@@ -14,8 +14,11 @@ export const addUserPods = async (req, res, next) => {
             res.send(checkUserPod);
         }
         else {
-            const userPodAdd = await users.addPodsToUser(userId, feedDb);
+            await users.addPodsToUser(userId, feedDb);
+            const getAddedPod = await users.checkPodByURL(userId, feedUrl);
+            req.podid = getAddedPod[0].podcasts.pod_id;
             req.id = userId;
+            console.log('pod added to user')
             next();
         };
     }
@@ -37,19 +40,22 @@ export const updateOnePodcast = async (req, res, next) => {
         if (req.id) {
             userid = req.id;
         };
-        let podId = podid;
         // get the feed url for the pod from db
-        const feedUrlToUpdate = await users.getUserPodcast(userid, podId);
-        console.log(feedUrlToUpdate)
+        let feedUrl;
+        if (req.podid || req.id) {
+            feedUrl = req.feedurl;
+        } else {
+            let feedUrlToUpdate = await users.getUserPodcast(userid, podid);
+            feedUrl = feedUrlToUpdate[0].podcasts.feedurl;
+        }
         // use feedurl to parse the RSS
-        const updateParsedFeed = await feedFunctions.parseFeed(feedUrlToUpdate[0].podcasts.feedurl);
-
+        const updateParsedFeed = await feedFunctions.parseFeed(feedUrl);
         // add the podcast id from db into the newly parsed feed object
-        updateParsedFeed.id = podId;
+        updateParsedFeed.id = podid;
         // pass off the updated feed object to the pods model
         let updateOp = await podcasts.updatePodFeed(updateParsedFeed);
-        podId = updateOp._id;
-        let updated = await podcasts.readPodcast(podId);
+        podid = updateOp._id;
+        let updated = await podcasts.readPodcast(podid);
         req.params.updated = updated;
         console.log('updated podcast object')
         next();

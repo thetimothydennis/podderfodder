@@ -19,7 +19,9 @@ const options = {
 };
 
 const sessionOptions = {
-    secret: "feldman and keillor rot in hell",
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: process.env.MONGO_URI })
 };
 

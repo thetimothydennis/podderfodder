@@ -11,7 +11,8 @@ export const removeHTML = (content) => {
 
 // reformates input parameter from colon-separated time to seconds
 export const deColonDuration = (duration) => {
-    if (duration.length <= 5) {
+    let durArr = duration.split(':')
+    if (durArr.length < 3) {
         let durArr = duration.split(':');
         duration = Number(durArr[0] * 60);
         return duration;

@@ -9,7 +9,6 @@ import * as reformat from './data-type-manipulation.js';
 export const parseFeed = async (feedUrl) => {
     try {
         // uses rssParser to parse the feed at the given url
-        console.log(feedUrl)
         const parsedFeed = await parser.parseURL(feedUrl);
         // destructures data from the parsed feed
         let { title, description, lastBuildDate, items } = parsedFeed;

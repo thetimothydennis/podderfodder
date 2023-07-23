@@ -100,7 +100,7 @@ function OnePod(props) {
                             {item.title}
                         </td>
                         <td id={`${props.podId}/${item._id}`}>
-                            {Math.round(item.duration / 60)} min.
+                            {item.duration} min.
                         </td>
                         <td id={`${props.podId}/${item._id}`}>
                             { item.pubDate.toString().slice(0, 10) }

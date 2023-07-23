@@ -73,7 +73,7 @@ function AllEpis (props) {
                         </td>
                         <td id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
-                            {Math.round(item.podcasts.episodes.duration / 60)} min.
+                            {item.podcasts.episodes.duration} min.
                         </td>
                         <td id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
