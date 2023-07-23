@@ -30,7 +30,6 @@ router.post('/api/register', (req, res) => {
 });
 
 router.get('/api/logout', (req, res) => {
-
     req.logout(() => {
         res.redirect("/");
     });
@@ -46,9 +45,11 @@ router.get('/api/user-data', (req, res) => {
     };
 });
 
+router.use(isAuthenticated);
+
 router.route('/api/user')
     // adds a user to db
-    .post(CTRLusers.insertUser)
+    // .post(CTRLusers.insertUser)
     // gets a user from db using name and email
     .get(CTRLusers.getAUser);
 
