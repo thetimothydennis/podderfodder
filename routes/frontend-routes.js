@@ -14,8 +14,6 @@ const router = express.Router();
 router.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 // frontend routes
-    // frontpage route
-router.get("/", appRoute);
     // login route
 router.get("/login", appRoute);
     // register route

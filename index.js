@@ -7,8 +7,8 @@ import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 
+import authRoutes from './routes/auth-routes.js';
 import UsersRouter from './routes/user-API-routes.js';
-import SearchRouter from './routes/search-pod-API-routes.js';
 import FrontendRoutes from './routes/frontend-routes.js';
 
 import { User } from './user-schema.js';
@@ -44,12 +44,11 @@ https.createServer(options, app)
     });
 
 app.use(morgan('dev'));
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+app.use(authRoutes);
 app.use(FrontendRoutes);
 app.use(UsersRouter);
-app.use(SearchRouter);
 
 
