@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import { apiCall } from '../functions/api-call.jsx';
 
 function PodSearch (props) {
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
     const [feedInput, setFeedInput] = useState('');
     const [render, setRender] = useState();
-
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
     async function getSearch(inputStr) {
         let res = await axios.get(

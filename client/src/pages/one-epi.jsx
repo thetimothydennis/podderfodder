@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
+import { apiCall } from '../functions/api-call.jsx';
 
 function OneEpi (props) {
     const [showTitle, setShowTitle] = useState('');
@@ -11,8 +12,6 @@ function OneEpi (props) {
     const [audio, setAudio] = useState('');
     const [content, setContent] = useState('');
     const [podId, setPodId] = useState('');
-
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
     const getEpisode = async () => {
         let res = await axios.get(

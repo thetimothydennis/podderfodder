@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { apiCall } from '../functions/api-call.jsx';
 
 function AllEpis (props) {
     const [episodes, setEpisodes] = useState([]);
     const [epiId, setEpiId] = useState('');
     const [podId, setPodId] = useState('');
-
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`;
 
     async function getAllEpis() {
         let res = await axios.get(

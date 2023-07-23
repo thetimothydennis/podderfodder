@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { apiCall } from '../functions/api-call.jsx';
 
 function OnePod(props) {
     const [episodes, setEpisodes] = useState([]);
@@ -9,8 +10,6 @@ function OnePod(props) {
     const [showAuthor, setShowAuthor] = useState('');
     const [podObj, setPodObj] = useState({});
     const [podId, setPodId] = useState("");
-
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
     const getPodcasts = async () => {
         let res = await axios.get(

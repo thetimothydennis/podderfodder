@@ -6,6 +6,7 @@ import AllPods from './pages/all-pods.jsx';
 import OnePod from './pages/one-pod.jsx';
 import OneEpi from './pages/one-epi.jsx';
 import AllEpis from './pages/all-epis.jsx';
+import { apiCall } from './functions/api-call.jsx';
 import { UpdatePod, DeletePod, DeleteEpi, ImportedPod, Welcome } from './pages/interstitials.jsx';
 import './App.css';
 
@@ -15,8 +16,6 @@ function MainUi() {
   const [epiId, setEpiId] = useState('');
   const [render, setRender] = useState(<Welcome />)
   const [userId, setUserId] = useState('');
-
-  const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
 
   async function getUserId() {
       let res = await axios.get(
