@@ -11,16 +11,19 @@ router.post('/api/login', passport.authenticate('local', {
 );
 
 router.post('/api/register', (req, res) => {
-    console.log(req.body)
-    const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })
-    User.register(user, req.body.password, (err) => {
-        if (err) {
-            res.redirect("/register");
-            return;
-        }
-        console.log(`user registered`);
-        res.redirect("/app");
-    });
+    if (req.body.password !== req.body.passwordMatch) {
+        res.redirect('/register')
+    } else {
+        const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })
+        User.register(user, req.body.password, (err) => {
+            if (err) {
+                res.redirect("/register");
+                return;
+            };
+            console.log(`user registered`);
+            res.redirect("/app");
+        });
+    };
 });
 
 router.get('/api/logout', (req, res) => {

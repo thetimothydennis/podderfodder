@@ -20,6 +20,10 @@ export function UserRegister () {
                     <label htmlFor="password">password</label>
                     <input type="password" name="password" id="password" />
                 </p>
+                <p>
+                    <label htmlFor="password">password</label>
+                    <input type="password" name="passwordMatch" id="passwordMatch" />
+                </p>
                 <button type="submit">Register</button>
             </form>
         </div>
