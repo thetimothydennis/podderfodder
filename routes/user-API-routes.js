@@ -3,6 +3,7 @@ const router = express.Router();
 import * as CTRLusers from '../controllers/users-controller.js';
 import * as MWusers from '../middleware/user.mw.js';
 import * as MWpods from '../middleware/podcasts.mw.js';
+import isAuthenticated from '../middleware/is-authenticated.js';
 import passport from 'passport';
 
 import { User } from '../user-schema.js';
@@ -28,10 +29,12 @@ router.post('/api/register', (req, res) => {
     });
 });
 
-router.use((req, res, next) => {
-    console.log(req.user);
-    next()
-})
+router.get('/api/logout', (req, res) => {
+
+    req.logout(() => {
+        res.redirect("/");
+    });
+});
 
 router.get('/api/user-data', (req, res) => {
     if (req.user === undefined) {
@@ -40,8 +43,8 @@ router.get('/api/user-data', (req, res) => {
         res.json({
             user_id: req.user._id
         })
-    }
-})
+    };
+});
 
 router.route('/api/user')
     // adds a user to db

@@ -13,6 +13,9 @@ function NavBar () {
             <li id={-2}>
                 All Episodes
             </li>
+            <li>
+                <a href="/api/logout">Logout</a>
+            </li>
             </ul>
         </div>
     );
