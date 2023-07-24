@@ -93,6 +93,7 @@ function OnePod(props) {
                     <div className="row" 
                         key={x} 
                         value={item._id}
+                        id={`${props.podId}/${item._id}`}
                     >
                         <div className="col" id={`${props.podId}/${item._id}`} >
                             {item.title}
