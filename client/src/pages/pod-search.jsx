@@ -42,7 +42,9 @@ function PodSearch (props) {
                     </a>
                 </div>
                 <div className="col">
-                    <button id={-4} 
+                    <button id={-4}
+                            type="button"
+                            className="btn btn-dark"
                             onClick={() => {
                         handleSubmit(item.feedUrl);
                         }}
@@ -74,7 +76,9 @@ function PodSearch (props) {
                                 value={feedInput} 
                                 onChange={e => setFeedInput(e.target.value)} 
                         />
-                        <button id={-4} 
+                        <button id={-4}
+                                type="button"
+                                className="btn btn-dark"
                                 onClick={() => handleSubmit(feedInput)}
                         >
                             Submit feed
