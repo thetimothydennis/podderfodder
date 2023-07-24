@@ -70,54 +70,53 @@ function OnePod(props) {
                 Update Pod Feed
             </button>
             <p>{showDesc}</p>
-            <table className="episodes">
-                <thead>
-                    <tr className="epiRow">
-                        <th>
+            <div className="container">
+
+                    <div className="row">
+                        <div className="col">
                             Title
-                        </th>
-                        <th>
+                        </div>
+                        <div className="col">
                             Duration
-                        </th>
-                        <th>
+                        </div>
+                        <div className="col">
                             Date
-                        </th>
-                        <th>
+                        </div>
+                        <div className="col">
                             Description
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
+                        </div>
+                        <div className="col">
+                        </div>
+                    </div>
+
                 {episodes.map((item, x) => (
-                    <tr className="epiRow" 
+                    <div className="row" 
                         key={x} 
                         value={item._id}
                     >
-                        <td id={`${props.podId}/${item._id}`} >
+                        <div className="col" id={`${props.podId}/${item._id}`} >
                             {item.title}
-                        </td>
-                        <td id={`${props.podId}/${item._id}`}>
+                        </div>
+                        <div className="col" id={`${props.podId}/${item._id}`}>
                             {item.duration} min.
-                        </td>
-                        <td id={`${props.podId}/${item._id}`}>
+                        </div>
+                        <div className="col" id={`${props.podId}/${item._id}`}>
                             { item.pubDate.toString().slice(0, 10) }
-                        </td>
-                        <td id={`${props.podId}/${item._id}`}>
+                        </div>
+                        <div className="col" id={`${props.podId}/${item._id}`}>
                             {item.content.slice(0, 200)}...
-                        </td>
-                        <td>
+                        </div>
+                        <div>
                             <button id={-7} 
                                     value={`${props.podId}/${item._id}`} 
                                     onClick={handleClick}
                             >
                                 Delete episode
                             </button>
-                        </td>
-                    </tr>))}
-                </tbody>
-            </table>
+                        </div>
+                    </div>))}
+
+            </div>
         </div>
     );
 };

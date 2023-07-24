@@ -9,7 +9,22 @@ body {
   display: flex;
   flex-flow: column;
   width: 100%;
-  font-size: 1.25rem
+  font-size: 1.25rem;
+  background-color: #0a0a0a;
+  color: #ddd
+}
+
+div {
+  text-align: center;
+  margin: auto;
+}
+
+.row {
+  padding-bottom: 2.5%
+}
+
+.row:hover {
+  background-color: #666666;
 }
 
 .NavBar {

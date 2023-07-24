@@ -21,27 +21,27 @@ function PodSearch (props) {
 
     useEffect(() => {
         setRender(response.map((item) => (
-            <tr key={item.collectionId}>
-                <td>
+            <div className="row" key={item.collectionId}>
+                <div className="col">
                     {item.collectionName}
-                </td>
-                <td>
+                </div>
+                <div className="col">
                     <img alt="podcast_image" 
                         src={item.artworkUrl100} 
                     />
-                </td>
-                <td>
+                </div>
+                <div className="col">
                     {item.artistName}
-                </td>
-                <td>
+                </div>
+                <div className="col">
                     <a href={item.collectionViewUrl} 
                         target="_blank" 
                         rel="noreferrer"
                     >
                         Link
                     </a>
-                </td>
-                <td>
+                </div>
+                <div className="col">
                     <button id={-4} 
                             onClick={() => {
                         handleSubmit(item.feedUrl);
@@ -49,8 +49,8 @@ function PodSearch (props) {
                     >
                         Add podcast
                     </button>
-                </td>
-            </tr>
+                </div>
+            </div>
         )));
     }, [input, response]);
 
@@ -90,30 +90,29 @@ function PodSearch (props) {
                         />
                     </form>
                 </div>
-                <table className="searchTable">
-                    <thead>
-                        <tr>
-                            <th>
+                <div className="container">
+
+                        <div className="row">
+                            <div className="col">
                                 Podcast Name
-                            </th>
-                            <th>
+                            </div>
+                            <div className="col">
                                 Artwork
-                            </th>
-                            <th>
+                            </div>
+                            <div className="col">
                                 Artist
-                            </th>
-                            <th>
+                            </div>
+                            <div className="col">
                                 Preview feed
-                            </th>
-                            <th>
+                            </div>
+                            <div className="col">
                                 Link to RSS
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                            </div>
+                        </div>
+
                     {render}
-                </tbody>
-            </table>
+
+            </div>
         </div>
     );
 };

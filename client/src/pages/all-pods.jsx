@@ -32,54 +32,55 @@ function AllPods(props) {
                 <h1>
                     All Podcasts
                 </h1>
-                <table className="episodes">
-                    <thead>
-                        <tr className="epiRow">
-                            <th>
+                <div className="container">
+
+                        <div className="row">
+                            <div className="col">
                                 Artwork
-                            </th>
-                            <th>
+                            </div>
+                            <div className="col">
                                 Title
-                            </th>
-                            <th>
+                            </div>
+                            <div className="col">
                                 Author
-                            </th>
-                            <th>
+                            </div>
+                            <div className="col">
                                 Description
-                            </th>
-                            <th>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id={-1}>
+                            </div>
+                            <div className="col">
+                            </div>
+                        </div>
+
+
                     {podcasts.map((item, x) => (
-                            <tr className="epiRow" 
+                            <div className="row" 
                                 key={x}
+                                id={item._id}
                             >
-                            <td onClick={handlePodClick} 
+                            <div className="col" onClick={handlePodClick} 
                             id={item._id} 
                             >
                                 <img alt="podcast_show_image"
                                 width='150' 
                                 src={item.image} 
                             />
-                            </td>
-                            <td onClick={handlePodClick} 
+                            </div>
+                            <div className="col" onClick={handlePodClick} 
                                 id={item._id} 
                             >
                                 {item.show_title}
-                            </td >
-                            <td onClick={handlePodClick} 
+                            </div >
+                            <div className="col" onClick={handlePodClick} 
                                 id={item._id}
                             >
                                 {item.author}
-                            </td>
-                            <td onClick={handlePodClick} 
+                            </div>
+                            <div className="col" onClick={handlePodClick} 
                                 id={item._id}
                             >
                                 {item.description.slice(0, 250)}
-                            </td>
-                            <td id={item._id} 
+                            </div>
+                            <div className="col" id={item._id} 
                                 onClick={handleDeleteClick}
                             >
                                 <button id='-6' 
@@ -88,11 +89,10 @@ function AllPods(props) {
                                 >
                                     Delete podcast
                                 </button>
-                            </td>
-                        </tr>
+                            </div>
+                        </div>
                         ))}
-                    </tbody>
-            </table>
+            </div>
         </div>
     );
 };
