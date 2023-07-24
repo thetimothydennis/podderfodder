@@ -83,7 +83,9 @@ function AllPods(props) {
                             <div className="col" id={item._id} 
                                 onClick={handleDeleteClick}
                             >
-                                <button id='-6' 
+                                <button id='-6'
+                                        type="button"
+                                        className="btn btn-dark"
                                         value={item._id} 
                                         onClick={handleDeleteClick}
                                 >

@@ -14,6 +14,10 @@ body {
   color: #ddd
 }
 
+button {
+  color: #987;
+}
+
 div {
   text-align: center;
   margin: auto;
@@ -42,10 +46,6 @@ h1 {
   font-size: .25em
 }
 
-tr:hover {
-  background-color: #444444
-}
-
-tr:active {
-  background-color: #444444
+li:hover {
+  background-color: #666666;
 }
