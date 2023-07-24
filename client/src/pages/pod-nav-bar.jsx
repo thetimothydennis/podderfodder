@@ -11,16 +11,24 @@ function NavBar () {
         <div className="NavBar, Epi, Fixed">
                 <ul className="NavBar">
                     <li id={-3}>
-                        Search and Add
+                        <b id={-3}>
+                            Search and Add
+                        </b>
                     </li>
                     <li id={-1} >
-                        All Podcasts
+                        <b id={-1}>
+                            All Podcasts
+                        </b>
                     </li>
                     <li id={-2}>
-                        All Episodes
+                        <b id={-2}>
+                            All Episodes
+                        </b>
                     </li>
                     <li>
-                        <a onClick={handleClick} href="/api/logout">Logout</a>
+                        <b>
+                            <a onClick={handleClick} href="/api/logout">Logout</a>
+                        </b>
                     </li>
                 </ul>
         </div>
