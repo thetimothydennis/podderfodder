@@ -25,7 +25,7 @@ export function UserRegister () {
                     <label htmlFor="password">re-enter password</label>
                     <input type="password" name="passwordMatch" id="passwordMatch" />
                 </p>
-                <button type="submit">Register</button>
+                <button type="submit" className="btn btn-dark">Register</button>
             </form>
         </div>
     );

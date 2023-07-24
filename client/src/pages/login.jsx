@@ -13,7 +13,7 @@ export function UserLogin () {
                     <label htmlFor="password">password</label>
                     <input type="password" name="password" id="password" />
                 </p>
-                <button type="submit">Login</button>
+                <button type="submit" className="btn btn-dark">Login</button>
             </form>
             <p>Don't have an account yet? Create one <a href="/register">here</a>.</p>
         </div>

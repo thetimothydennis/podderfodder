@@ -21,7 +21,7 @@ export function ChangePassword () {
                     <label htmlFor="newpassmatch">new password match</label>
                     <input type="password" name="newpassmatch" id="newpassmatch" />
                 </p>
-                <button type="submit">Change password</button>
+                <button type="submit" className="btn btn-dark">Change password</button>
             </form>
         </div>
     );
