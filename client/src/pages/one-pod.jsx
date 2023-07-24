@@ -1,40 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import { apiCall } from '../functions/api-call.jsx';
 
 function OnePod(props) {
-    const { user, getAccessTokenSilently } = useAuth0();
-    const [accessToken, setAccessToken] = useState("");
     const [episodes, setEpisodes] = useState([]);
     const [showTitle, setShowTitle] = useState('');
     const [showDesc, setShowDesc] = useState('');
     const [showImg, setShowImg] = useState('');
     const [showAuthor, setShowAuthor] = useState('');
-    const [userId, setUserId] = useState("");
     const [podObj, setPodObj] = useState({});
     const [podId, setPodId] = useState("");
 
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-    let config = { 
-        headers: { 
-            Authorization: `Bearer ${accessToken}` 
-        } 
-    };
-
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`,
-            {name: user.name, email: user.email},
-            config
-        );
-        setUserId(res.data._id);
-    };
-
     const getPodcasts = async () => {
         let res = await axios.get(
-            `${apiCall}/api/user/${userId}/${props.podId}`,
-            config
+            `${apiCall}/api/user/${props.userId}/${props.podId}`
         );
         let {
             show_title,
@@ -53,29 +32,14 @@ function OnePod(props) {
 
     const updatePod = async () => {
         let res = await axios.put(
-            `${apiCall}/api/user/${userId}/${props.podId}`,
-            {},
-            config
+            `${apiCall}/api/user/${props.userId}/${props.podId}`
         );
         setEpisodes(res.data);
     };
-
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
-    };
-
-    useEffect(() => {
-        getToken();
-        insertUser();
-    });
     
     useEffect(() => {
         getPodcasts();
-    }, [userId, accessToken]);
+    }, []);
 
     useEffect(() => {
         setPodId(episodes._id);
@@ -83,9 +47,8 @@ function OnePod(props) {
 
     const handleClick = async (e) => {
         await axios.delete(
-            `${apiCall}/api/user/${userId}/${e.target.value}`,
-            config
-            );
+            `${apiCall}/api/user/${props.userId}/${e.target.value}`
+        );
     };
 
     return (
@@ -136,7 +99,7 @@ function OnePod(props) {
                             {item.title}
                         </td>
                         <td id={`${props.podId}/${item._id}`}>
-                            {Math.round(item.duration / 60)} min.
+                            {item.duration} min.
                         </td>
                         <td id={`${props.podId}/${item._id}`}>
                             { item.pubDate.toString().slice(0, 10) }

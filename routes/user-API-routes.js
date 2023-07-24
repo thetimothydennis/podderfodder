@@ -3,23 +3,18 @@ const router = express.Router();
 import * as CTRLusers from '../controllers/users-controller.js';
 import * as MWusers from '../middleware/user.mw.js';
 import * as MWpods from '../middleware/podcasts.mw.js';
-import { validateAccessToken } from '../middleware/auth0-mw.js';
+import { search } from '../controllers/search-pods-controller.js';
+import isAuthenticated from '../middleware/is-authenticated.js';
 
-router.use(validateAccessToken);
+router.use(isAuthenticated);
 
-router.route('/api/user')
-    // adds a user to db
-    .post(CTRLusers.insertUser)
-    // gets a user from db using name and email
-    .get(CTRLusers.getAUser);
+router.get('/api/search/', search);
 
 router.route('/api/user/:id')
     // gets all podcasts for user
     .get(CTRLusers.getUserPods)
     // adds a podcast and episodes for a user in db
-    .post(MWpods.ingestPod, CTRLusers.addUserPods)
-    // deletes all user pods from db
-    .delete(CTRLusers.deleteUserPods);
+    .post(MWpods.ingestPod, MWusers.addUserPods, MWusers.updateOnePodcast, CTRLusers.updateUserPod)
 
 router.route('/api/user/:userid/:podid')
     // gets a single podcast for a user
@@ -35,16 +30,8 @@ router.route('/api/user/:userid/:podid/:epiid')
     // deletes a single episode for a user
     .delete(CTRLusers.deleteUserEpi);
 
-router.route('/api/users')
-    // gets all users from db
-    .get(CTRLusers.getAllUsers);
-
-router.route('/api/users/:userid')
-    // deletes a user from db
-    .delete(CTRLusers.deleteUser);
-
 router.route('/api/allepisodes/:userid/')
     // sends episodes for all user podcasts
-    .get(CTRLusers.getAllUserEpis)
+    .get(CTRLusers.getAllUserEpis);
 
 export default router;

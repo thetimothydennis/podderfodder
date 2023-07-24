@@ -1,56 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import { apiCall } from '../functions/api-call.jsx';
 
-function AllEpis () {
-    const { user, getAccessTokenSilently } = useAuth0();
+function AllEpis (props) {
     const [episodes, setEpisodes] = useState([]);
-    const [epiId, setEpiId] = useState("");
-    const [userId, setUserId] = useState("");
-    const [podId, setPodId] = useState("");
-    const [accessToken, setAccessToken] = useState("");
-
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-    let config = { 
-        headers: { 
-            Authorization: `Bearer ${accessToken}` 
-        } 
-    };
-
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`, 
-            {name: user.name, email: user.email},
-            config
-        );
-        setUserId(res.data._id);
-    };
+    const [epiId, setEpiId] = useState('');
+    const [podId, setPodId] = useState('');
 
     async function getAllEpis() {
         let res = await axios.get(
-            `${apiCall}/api/allepisodes/${userId}`,
-            config
+            `${apiCall}/api/allepisodes/${props.userId}`
         );
         setEpisodes(res.data);
     };
 
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
-    };
-
-    useEffect(() => {
-        getToken();
-        insertUser();
-    });
-
     useEffect(() => {
         getAllEpis();
-    }, [userId, accessToken]);
+    }, []);
 
     const handleClick = (e) => {
         setPodId(e.target.value);
@@ -106,7 +72,7 @@ function AllEpis () {
                         </td>
                         <td id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
-                            {Math.round(item.podcasts.episodes.duration / 60)} min.
+                            {item.podcasts.episodes.duration} min.
                         </td>
                         <td id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>

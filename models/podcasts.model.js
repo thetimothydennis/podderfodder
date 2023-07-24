@@ -1,6 +1,5 @@
-import { parseFeed, parseFeedURL } from '../functions/feed-functions.js'
 import * as reformat from '../functions/data-type-manipulation.js'
-import { Podcast, Episodes } from '../pod-schema.js';
+import { Podcast, Episodes } from './user-schema.js';
 import mongoose from 'mongoose';
 
 // mongodb aggregate pipeline constant
@@ -99,7 +98,6 @@ const oneEpiProject = (onePodResponse, epiId) => {
 
 const epiHandler = async (itemsArr) => {
     let newEpis = [];
-    console.log(itemsArr[0].itunes.duration)
     for (let i = 0;(i < 20) && (i < itemsArr.length); i++) {
         let duration = itemsArr[i].itunes.duration;
         let url = itemsArr[i].enclosure.url;
@@ -110,15 +108,15 @@ const epiHandler = async (itemsArr) => {
             link,
             content
             } = episode;
-        let length = Math.round(duration / 60);
         let web_url = link;
-        let epi_url = url;        
+        let epi_url = url;
         if (content.match(/(<([^>]+)>)/gi)) {
             content = reformat.removeHTML(content);
         };
         if (duration.match(/:/gi)) {
             duration = reformat.deColonDuration(duration);
         };
+        duration = Math.round(duration / 60);
         let itemCheck = await Podcast.find({
             "episodes.epi_url": url
         }, {

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
+import { apiCall } from '../functions/api-call.jsx';
 
 function OneEpi (props) {
-    const { user, getAccessTokenSilently } = useAuth0();
-    const [accessToken, setAccessToken] = useState("");
-
     const [showTitle, setShowTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [image, setImage] = useState('');
@@ -14,30 +11,11 @@ function OneEpi (props) {
     const [date, setDate] = useState('');
     const [audio, setAudio] = useState('');
     const [content, setContent] = useState('');
-    const [podId, setPodId] = useState("");
-    const [userId, setUserId] = useState("");
-
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-    let config = { 
-        headers: { 
-            Authorization: `Bearer ${accessToken}` 
-        } 
-    };
-
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`,
-            {name: user.name, email: user.email},
-            config
-        );
-        setUserId(res.data._id);
-    };
+    const [podId, setPodId] = useState('');
 
     const getEpisode = async () => {
         let res = await axios.get(
-            `${apiCall}/api/user/${userId}/${props.epiId}`,
-            config
+            `${apiCall}/api/user/${props.userId}/${props.epiId}`
         );
         setShowTitle(res.data[0].podcasts.show_title);
         setAuthor(res.data[0].podcasts.author);
@@ -49,22 +27,9 @@ function OneEpi (props) {
         setPodId(res.data[0].podcasts.pod_id);
     };
 
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
-    };
-
-    useEffect(() => {
-        getToken();
-        insertUser();
-    });
-
     useEffect(() => {
         getEpisode();
-    }, [accessToken, getEpisode, userId, insertUser]);
+    }, []);
 
     return (
         <div className="Epi">

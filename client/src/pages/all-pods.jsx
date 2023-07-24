@@ -1,52 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import axios from 'axios';
+import { apiCall } from '../functions/api-call.jsx';
 
-function AllPods() {
-    const { user, getAccessTokenSilently } = useAuth0();
+function AllPods(props) {
     const [podcasts, setPodcasts] = useState([]);
     const [podId, setPodId] = useState("");
-    const [userId, setUserId] = useState("");
-    const [accessToken, setAccessToken] = useState("")
 
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-    let config = { 
-        headers: { 
-            Authorization: `Bearer ${accessToken}` 
-        } 
-    };
-
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`,
-            {name: user.name, email: user.email},
-            config
+    async function getPods() {
+        let res = await axios.get(
+            `${apiCall}/api/user/${props.userId}/`
         );
-        setPodcasts(res.data.podcasts);
-        setUserId(res.data._id);
-    };
-
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
+        setPodcasts(res.data[0].podcasts);
     };
 
     useEffect(() => {
-        getToken();
-    }, [user]);
-
-    useEffect(() => {
-        insertUser();
-    }, [accessToken])
+        getPods();
+    }, []);
 
     async function handleDeleteClick(e) {
         await axios.delete(
-            `${apiCall}/api/user/${userId}/${e.target.value}`,
-            config
+            `${apiCall}/api/user/${props.userId}/${e.target.value}`
         );
     };
 

@@ -1,33 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import { apiCall } from '../functions/api-call.jsx';
 
-function PodSearch () {
-    const { user, getAccessTokenSilently } = useAuth0();
-    const [accessToken, setAccessToken] = useState("");
-
+function PodSearch (props) {
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
     const [feedInput, setFeedInput] = useState('');
-    const [render, setRender] = useState()
-    const [userId, setUserId] = useState("");
-
-    const apiCall = `${import.meta.env.VITE_API_BASE_URL}${import.meta.env.VITE_API_PORT}`
-
-    let config = { 
-        headers: { 
-            Authorization: `Bearer ${accessToken}` 
-        } 
-    };
-
-    async function insertUser() {
-        let res = await axios.post(
-            `${apiCall}/api/user`,
-            {name: user.name, email: user.email},
-            config
-        );
-        setUserId(res.data._id);
-    };
+    const [render, setRender] = useState();
 
     async function getSearch(inputStr) {
         let res = await axios.get(
@@ -36,22 +15,9 @@ function PodSearch () {
         setResponse(res.data.results);
     };
 
-    function getToken () {
-        getAccessTokenSilently().then(
-            res => {
-                setAccessToken(res);
-            }
-        );
-    };
-
-    useEffect(() => {
-        getToken();
-        insertUser();
-    });
-
     useEffect(() => {
         getSearch(input);
-    }, [input])
+    }, [input]);
 
     useEffect(() => {
         setRender(response.map((item) => (
@@ -90,11 +56,10 @@ function PodSearch () {
 
     const handleSubmit = async (inputArg) => {
         await axios.post(
-            `${apiCall}/api/user/${userId}`, 
+            `${apiCall}/api/user/${props.userId}`, 
             {
                 feedUrl: inputArg
-            },
-            config
+            }
         );
     };
    
@@ -150,7 +115,7 @@ function PodSearch () {
                 </tbody>
             </table>
         </div>
-    )
+    );
 };
 
 export default PodSearch;

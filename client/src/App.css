@@ -5,14 +5,25 @@
   text-align: center;
 }
 
+body {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+  font-size: 1.25rem
+}
+
 .NavBar {
   display: flex;
-  flex-flow: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
 
 .NavBar li {
-  list-style: none
+  display: flex;
+  list-style: none;
+}
+
+h1 {
+  font-size: .25em
 }
 
 tr:hover {

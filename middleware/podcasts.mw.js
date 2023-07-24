@@ -7,16 +7,17 @@ export const ingestPod = async (req, res, next) => {
     try {
         let checkPod = await podcasts.findByFeedUrl(req.body.feedurl);
         if (checkPod.length > 0) {
-            console.log(checkPod)
             req.feedIngestRes = checkPod;
+            console.log('pod is in db')
             next();
         }
         else {
             let feedUrl = req.body.feedUrl;
+            req.feedurl = feedUrl;
             let insertPod = await feedFunctions.parseFeed(feedUrl);
             let feedResponse = await podcasts.ingestFeed(insertPod);
-            console.log(feedResponse)
             req.feedIngestRes = feedResponse;
+            console.log('pod added to db')
             next();
         };
     }
