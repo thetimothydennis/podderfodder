@@ -15,6 +15,7 @@ export function UserLogin () {
                 </p>
                 <button type="submit">Login</button>
             </form>
+            <p>Don't have an account yet? Create one <a href="/register">here</a>.</p>
         </div>
     );
 };

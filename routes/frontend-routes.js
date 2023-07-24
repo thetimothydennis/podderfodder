@@ -23,5 +23,7 @@ router.get("/register", appRoute);
 
 router.get("/app", isAuthenticated, appRoute);
 
+router.get('/changepassword', appRoute);
+
 // exports the router for index.js
 export default router;

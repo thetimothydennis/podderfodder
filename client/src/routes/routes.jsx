@@ -4,6 +4,7 @@ import MainUi from '../MainUi.jsx';
 import { HomePage } from '../pages/interstitials.jsx';
 import { UserLogin } from '../pages/login.jsx';
 import { UserRegister } from '../pages/register.jsx';
+import { ChangePassword } from '../pages/change-password.jsx';
 
 // main user interface component
 export function RoutesUi() {
@@ -20,6 +21,8 @@ export function RoutesUi() {
                 <Route path="/login" element={<UserLogin />} />
                 {/* app route for registering */}
                 <Route path="/register" element={<UserRegister />} /> 
+                {/* app route for changing password */}
+                <Route path="/changepassword" element={<ChangePassword />} />
             </Routes>
         </div>
     );

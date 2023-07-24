@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 import { User } from '../models/user-schema.js';
-import * as emailValidator from 'node-email-validation';
+import { is_email_valid } from 'node-email-validation';
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.post('/api/login', passport.authenticate('local', {
 router.post('/api/register', async (req, res) => {
     if (req.body.password !== req.body.passwordMatch) {
         res.redirect('/register');
-    } else if (emailValidator.is_email_valid(req.body.email) === false) {
+    } else if (is_email_valid(req.body.email) === false) {
         res.redirect('/register');
     } else {
         const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })
@@ -42,6 +42,28 @@ router.get('/api/user-data', (req, res) => {
         res.json({
             user_id: req.user._id
         })
+    };
+});
+
+router.post('/api/changepassword', async (req, res) => {
+    let { username, oldpassword, newpassword, newpassmatch } = req.body;
+    if (newpassword !== newpassmatch) {
+        console.log('error 0')
+        res.redirect('/changepassword');
+    } else {
+        await User.findByUsername(username, (err, user) => {
+            if (err) {
+                res.send(err);
+            } else {
+                user.changePassword(oldpassword, newpassword, (err) => {
+                    if (err) {
+                        res.send(err);
+                    } else {
+                        res.redirect(`/login`);
+                    };
+                });
+            };
+        });
     };
 });
 

@@ -22,7 +22,7 @@ export function UserRegister () {
                     <input type="password" name="password" id="password" />
                 </p>
                 <p>
-                    <label htmlFor="password">password</label>
+                    <label htmlFor="password">re-enter password</label>
                     <input type="password" name="passwordMatch" id="passwordMatch" />
                 </p>
                 <button type="submit">Register</button>
