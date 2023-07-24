@@ -2,6 +2,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import Cookies from 'universal-cookie';
 import { appRoute} from '../controllers/frontend-controller.js';
 import isAuthenticated from '../middleware/is-authenticated.js';
 
@@ -19,6 +20,7 @@ router.get("/login", appRoute);
     // register route
 router.get("/register", appRoute);
     // authenticated app route
+
 router.get("/app", isAuthenticated, appRoute);
 
 // exports the router for index.js

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 import NavBar from './pages/pod-nav-bar.jsx';
 import PodSearch from './pages/pod-search.jsx';
 import AllPods from './pages/all-pods.jsx';
@@ -16,12 +17,18 @@ function MainUi() {
   const [epiId, setEpiId] = useState('');
   const [render, setRender] = useState(<Welcome />)
   const [userId, setUserId] = useState('');
+  const cookie = new Cookies();
 
   async function getUserId() {
-      let res = await axios.get(
-          `${apiCall}/api/user-data`
-      );
-      setUserId(res.data.user_id);
+    if (cookie.get('userId') == undefined) {
+        let res = await axios.get(
+            `${apiCall}/api/user-data`
+        );
+        setUserId(res.data.user_id);
+        cookie.set('userId', res.data.user_id);
+    } else {
+        setUserId(cookie.get('userId'));
+    };
   };
 
   useEffect(() => {
