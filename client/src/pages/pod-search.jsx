@@ -21,7 +21,7 @@ function PodSearch (props) {
 
     useEffect(() => {
         setRender(response.map((item) => (
-            <div className="row" key={item.collectionId}>
+            <div className="row epiRow" key={item.collectionId}>
                 <div className="col">
                     {item.collectionName}
                 </div>
@@ -96,7 +96,7 @@ function PodSearch (props) {
                 </div>
                 <div className="container">
 
-                        <div className="row">
+                        <div className="row epiRow">
                             <div className="col">
                                 Podcast Name
                             </div>
@@ -113,9 +113,7 @@ function PodSearch (props) {
                                 Link to RSS
                             </div>
                         </div>
-
                     {render}
-
             </div>
         </div>
     );

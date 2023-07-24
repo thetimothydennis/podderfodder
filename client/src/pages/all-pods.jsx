@@ -33,27 +33,8 @@ function AllPods(props) {
                     All Podcasts
                 </h1>
                 <div className="container">
-
-                        <div className="row">
-                            <div className="col">
-                                Artwork
-                            </div>
-                            <div className="col">
-                                Title
-                            </div>
-                            <div className="col">
-                                Author
-                            </div>
-                            <div className="col">
-                                Description
-                            </div>
-                            <div className="col">
-                            </div>
-                        </div>
-
-
                     {podcasts.map((item, x) => (
-                            <div className="row" 
+                            <div className="row epiRow" 
                                 key={x}
                                 id={item._id}
                             >

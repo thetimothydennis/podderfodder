@@ -14,10 +14,6 @@ body {
   color: #ddd
 }
 
-button {
-  color: #987;
-}
-
 div {
   text-align: center;
   margin: auto;
@@ -28,28 +24,36 @@ div {
   padding-top: 1.25%;
 }
 
-.row:hover {
-  background-color: #666666;
-}
-
 .NavBar {
+  width: 100%;
   display: flex;
-  justify-content: space-between;
+  background-color: #1d1d1d;
+  justify-content: space-evenly;
+  margin: 0;
+  padding: 0;
 }
 
-.NavBar li {
+.NavBar .col-3 {
   display: flex;
   list-style: none;
+  width: 25%;
+  justify-content: space-evenly;
 }
 
-.NavBar ul {
+.NavBar .row {
   display: flex;
+  justify-content: space-evenly
 }
 
 h1 {
-  font-size: .25em
+  font-size: .25em;
+  padding-top: 2.5%;
 }
 
-li:hover {
-  background-color: #666666;
+div.col-3:hover {
+  background-color: #444444;
+}
+
+.epiRow:hover {
+  background-color: #444444;
 }

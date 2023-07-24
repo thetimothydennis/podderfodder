@@ -28,32 +28,10 @@ function AllEpis (props) {
             <h1>
                 All Episodes
             </h1>
+        
             <div className="container">
-
-                    <div className="row">
-                        <div className="col">
-                            Title
-                        </div>
-                        <div className="col">
-                            Show
-                        </div>
-                        <div className="col">
-                            Author
-                        </div>
-                        <div className="col">
-                            Duration
-                        </div>
-                        <div className="col">
-                            Description
-                        </div>
-                        <div className="col">
-                            Date
-                        </div>
-                    </div>
-                </div>
-
                 {episodes.map((item, x) => (
-                    <div className="row" 
+                    <div className="row epiRow" 
                         onClick={handleClick} 
                         key={x} 
                         id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
@@ -85,7 +63,7 @@ function AllEpis (props) {
                     </div>
                     ))}
 
-          
+            </div>
         </div>
     );
 };

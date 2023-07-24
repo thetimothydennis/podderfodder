@@ -8,29 +8,29 @@ function NavBar () {
     };
 
     return (
-        <div className="NavBar, Epi, Fixed">
-                <ul className="NavBar">
-                    <li id={-3}>
+        <div className="container NavBar">
+                <div className="row NavBar">
+                    <div className="col-3" id={-3}>
                         <b id={-3}>
                             Search and Add
                         </b>
-                    </li>
-                    <li id={-1} >
+                    </div>
+                    <div className="col-3" id={-1} >
                         <b id={-1}>
                             All Podcasts
                         </b>
-                    </li>
-                    <li id={-2}>
+                    </div>
+                    <div className="col-3" id={-2}>
                         <b id={-2}>
                             All Episodes
                         </b>
-                    </li>
-                    <li>
+                    </div>
+                    <div className="col-3">
                         <b>
                             <a onClick={handleClick} href="/api/logout">Logout</a>
                         </b>
-                    </li>
-                </ul>
+                    </div>
+                </div>
         </div>
     );
 };

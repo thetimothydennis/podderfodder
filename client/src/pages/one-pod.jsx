@@ -73,26 +73,8 @@ function OnePod(props) {
             </button>
             <p>{showDesc}</p>
             <div className="container">
-
-                    <div className="row">
-                        <div className="col">
-                            Title
-                        </div>
-                        <div className="col">
-                            Duration
-                        </div>
-                        <div className="col">
-                            Date
-                        </div>
-                        <div className="col">
-                            Description
-                        </div>
-                        <div className="col">
-                        </div>
-                    </div>
-
                 {episodes.map((item, x) => (
-                    <div className="row" 
+                    <div className="row epiRow" 
                         key={x} 
                         value={item._id}
                         id={`${props.podId}/${item._id}`}
