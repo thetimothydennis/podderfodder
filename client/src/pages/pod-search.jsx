@@ -66,16 +66,18 @@ function PodSearch (props) {
     };
    
     return (
-        <div className="Epi">
+        <div>
             <h1>Search for Podcasts</h1>
-                <div className="inputForms">
-                    <form onSubmit={(e) => e.preventDefault()}>
-                        <label htmlFor="feedInput">Input RSS feed URL</label>
+                <div className="container">
+                    <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
+                        <label className="col form-control" htmlFor="feedInput">Input RSS feed URL
                         <input name="feedInput" 
                                 type="text" 
                                 value={feedInput} 
                                 onChange={e => setFeedInput(e.target.value)} 
-                        />
+                                className="col form-control"
+                        /></label>
+                    </form>
                         <button id={-4}
                                 type="button"
                                 className="btn btn-dark"
@@ -83,15 +85,15 @@ function PodSearch (props) {
                         >
                             Submit feed
                         </button>
-                    </form>
                     <p>or</p>
-                    <form onSubmit={(e) => e.preventDefault()}>
-                        <label htmlFor="searchInput">Type search term</label>
+                    <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
+                        <label className="col form-control" htmlFor="searchInput">Type search term
                         <input name="searchInput" 
                                 type="text" 
                                 value={input} 
                                 onChange={e => setInput(e.target.value)} 
-                        />
+                                className="col form-control"
+                        /></label>
                     </form>
                 </div>
                 <div className="container">

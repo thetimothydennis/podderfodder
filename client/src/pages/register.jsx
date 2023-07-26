@@ -4,26 +4,26 @@ export function UserRegister () {
     return (
         <div className="Epi">
             <h1>Podder Fodder Registration</h1>
-            <form method="POST" action="/api/register">
-                <p>
-                    <label htmlFor="name">name</label>
-                    <input type="text" name="name" id="name" />
+            <form className="container" method="POST" action="/api/register">
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="name">name
+                    <input className="col form-control" type="text" name="name" id="name" /></label>
                 </p>
-                <p>
-                    <label htmlFor="email">email</label>
-                    <input type="text" name="email" id="email" />
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="email">email
+                    <input className="col form-control" type="text" name="email" id="email" /></label>
                 </p>
-                <p>
-                    <label htmlFor="username">username</label>
-                    <input type="text" name="username" id="username" />
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="username">username
+                    <input className="col form-control" type="text" name="username" id="username" /></label>
                 </p>
-                <p>
-                    <label htmlFor="password">password</label>
-                    <input type="password" name="password" id="password" />
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="password">password
+                    <input className="col form-control" type="password" name="password" id="password" /></label>
                 </p>
-                <p>
-                    <label htmlFor="password">re-enter password</label>
-                    <input type="password" name="passwordMatch" id="passwordMatch" />
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="password">re-enter password
+                    <input className="col form-control" type="password" name="passwordMatch" id="passwordMatch" /></label>
                 </p>
                 <button type="submit" className="btn btn-dark">Register</button>
             </form>

@@ -14,6 +14,24 @@ body {
   color: #ddd
 }
 
+label.col {
+  background-color: #1d1d1d;
+  color: #ccc
+}
+
+
+input.col[type='text'], input.col[type='password'] {
+  background-color: #9a9a9a;
+  color: #000;
+  font-weight: bold;
+}
+
+input.col[type='text']:active, input.col[type='password']:active {
+  background-color: #666;
+  color: #000;
+  font-weight: bold;
+}
+
 div {
   text-align: center;
   margin: auto;

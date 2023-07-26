@@ -4,22 +4,22 @@ export function ChangePassword () {
     return (
         <div className="Epi">
             <h1>Change Password</h1>
-            <form method="POST" action="/api/changepassword">
-                <p>
-                    <label htmlFor="username">username</label>
-                    <input type="text" name="username" id="username" />
+            <form className="container" method="POST" action="/api/changepassword">
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="username">username
+                    <input className="col form-control" type="text" name="username" id="username" /></label>
                 </p>
-                <p>
-                    <label htmlFor="oldpassword">old password</label>
-                    <input type="password" name="oldpassword" id="oldpassword" />
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="oldpassword">old password
+                    <input className="col form-control" type="password" name="oldpassword" id="oldpassword" /></label>
                 </p>
-                <p>
-                    <label htmlFor="newpassword">new password</label>
-                    <input type="password" name="newpassword" id="newpassword" />
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="newpassword">new password
+                    <input className="col form-control" type="password" name="newpassword" id="newpassword" /></label>
                 </p>
-                <p>
-                    <label htmlFor="newpassmatch">new password match</label>
-                    <input type="password" name="newpassmatch" id="newpassmatch" />
+                <p className="row form-group">
+                    <label className="col form-control" htmlFor="newpassmatch">new password match
+                    <input className="col form-control" type="password" name="newpassmatch" id="newpassmatch" /></label>
                 </p>
                 <button type="submit" className="btn btn-dark">Change password</button>
             </form>
