@@ -20,7 +20,8 @@ function MainUi() {
   const cookie = new Cookies();
 
   async function getUserId() {
-    if (cookie.get('userId') == undefined) {
+    console.log(cookie.get('userId'))
+    if (cookie.get('userId') === "") {
         let res = await axios.get(
             `${apiCall}/api/user-data`
         );

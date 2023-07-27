@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie';
 function NavBar () {
     const handleClick = (e) => {
         const cookie = new Cookies();
-        cookie.removeCookie('userId');
+        cookie.set('userId', "");
     };
 
     return (
