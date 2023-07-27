@@ -24,11 +24,9 @@ function MainUi() {
         let res = await axios.get(
             `${apiCall}/api/user-data`
         );
-        setUserId(res.data.user_id);
         cookie.set('userId', res.data.user_id);
-    } else {
-        setUserId(cookie.get('userId'));
     };
+    setUserId(cookie.get('userId'));
   };
 
   useEffect(() => {
