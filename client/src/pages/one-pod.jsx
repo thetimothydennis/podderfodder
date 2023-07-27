@@ -10,6 +10,7 @@ function OnePod(props) {
     const [showAuthor, setShowAuthor] = useState('');
     const [podObj, setPodObj] = useState({});
     const [podId, setPodId] = useState("");
+    const [render, setRender] = useState(<></>)
 
     const getPodcasts = async () => {
         let res = await axios.get(
@@ -31,10 +32,13 @@ function OnePod(props) {
     };
 
     const updatePod = async () => {
-        let res = await axios.put(
+        await axios.put(
             `${apiCall}/api/user/${props.userId}/${props.podId}`
-        );
-        setEpisodes(res.data);
+        ).then((res) => {
+            console.log(res.data[0].podcasts.pod_id)
+            props.setPodId(res.data[0].podcasts.pod_id);
+            props.setDisplay('onePod');
+        });
     };
     
     useEffect(() => {
@@ -50,6 +54,8 @@ function OnePod(props) {
             `${apiCall}/api/user/${props.userId}/${e.target.value}`
         );
     };
+
+ 
 
     return (
         <div className="Epi">

@@ -3,7 +3,7 @@ import React from 'react';
 export function UpdatePod () {
     return (
         <div className="Epi">
-            <p>Podcast updated!</p>
+            <p>Updating pod. You will be redirected shortly.</p>
         </div>
     );
 };
@@ -27,7 +27,7 @@ export function DeleteEpi () {
 export function ImportedPod () {
     return (
         <div className="Epi">
-            <p>Podcast submitted</p>
+            <p>Adding pod. You will be redirected momentarily.</p>
         </div>
     );
 };

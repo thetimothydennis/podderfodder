@@ -11,7 +11,7 @@ import { apiCall } from './functions/api-call.jsx';
 import { UpdatePod, DeletePod, DeleteEpi, ImportedPod, Welcome } from './pages/interstitials.jsx';
 import './App.css';
 
-function MainUi() {
+function MainUi(props) {
   const [display, setDisplay] = useState('welcome');
   const [podId, setPodId] = useState('');
   const [epiId, setEpiId] = useState('');
@@ -35,42 +35,42 @@ function MainUi() {
 
     //logic for re-rendering the current display
     useEffect(() => {
+            switch (display) {
+                case 'allPods':
+                    setRender(<AllPods userId={userId}/>);
+                    break;
+                case 'onePod':
+                    setRender(<OnePod userId={userId} podId={podId} setPodId={setPodId} setDisplay={setDisplay} />);
+                    break;
+                case 'oneEpi':
+                    setRender(<OneEpi userId={userId} podId={podId} epiId={epiId} />);
+                    break;
+                case 'allEpis':
+                    setRender(<AllEpis userId={userId} />);
+                    break;
+                case 'searchPods':
+                    setRender(<PodSearch userId={userId} setPodId={setPodId} setDisplay={setDisplay} />);
+                    break;
+                case 'updatePod':
+                    setRender(<UpdatePod />);
+                    break;
+                case 'deletePod':
+                    setRender(<DeletePod />);
+                    break;
+                case 'deleteEpi':
+                    setRender(<DeleteEpi />);
+                    break;
+                case 'submitPod':
+                    setRender(<ImportedPod />);
+                    break;
+                case 'welcome':
+                    setRender(<Welcome />);
+                    break;
+                default:
+                    setRender(<Welcome userId={userId} />)
+        };
 
-      switch (display) {
-          case 'allPods':
-              setRender(<AllPods userId={userId}/>);
-              break;
-          case 'onePod':
-              setRender(<OnePod userId={userId} podId={podId} />);
-              break;
-          case 'oneEpi':
-              setRender(<OneEpi userId={userId} podId={podId} epiId={epiId} />);
-              break;
-          case 'allEpis':
-              setRender(<AllEpis userId={userId} />);
-              break;
-          case 'searchPods':
-              setRender(<PodSearch userId={userId} />);
-              break;
-          case 'updatePod':
-              setRender(<UpdatePod />);
-              break;
-          case 'deletePod':
-              setRender(<DeletePod />);
-              break;
-          case 'deleteEpi':
-              setRender(<DeleteEpi />);
-              break;
-          case 'submitPod':
-              setRender(<ImportedPod />);
-              break;
-          case 'welcome':
-              setRender(<Welcome />);
-              break;
-          default:
-              setRender(<Welcome userId={userId} />)
-      };
-  }, [display, epiId, podId, userId]);
+  }, [display, epiId, podId, userId, props]);
 
   // logic for telling the app to re-render the display
   const handleClick = (e) => {
@@ -106,6 +106,7 @@ function MainUi() {
           };
       };
   };
+
 
   return (
     <>

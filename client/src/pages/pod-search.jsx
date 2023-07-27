@@ -57,12 +57,17 @@ function PodSearch (props) {
     }, [input, response]);
 
     const handleSubmit = async (inputArg) => {
+        setRender(<p>Waiting</p>)
         await axios.post(
             `${apiCall}/api/user/${props.userId}`, 
             {
                 feedUrl: inputArg
             }
-        );
+        ).then((res) => {
+            let pod_id = res.data[0].podcasts.pod_id;
+            props.setPodId(pod_id);
+            props.setDisplay('onePod')
+        })
     };
    
     return (
