@@ -66,7 +66,7 @@ function PodSearch (props) {
         ).then((res) => {
             let pod_id = res.data[0].podcasts.pod_id;
             props.setPodId(pod_id);
-            props.setDisplay('onePod')
+            props.setDisplay('onePod');
         })
     };
    

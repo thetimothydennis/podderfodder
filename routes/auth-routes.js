@@ -30,6 +30,7 @@ router.post('/api/register', async (req, res) => {
 });
 
 router.get('/api/logout', (req, res) => {
+    req.session.destroy();
     req.logout(() => {
         res.redirect("/");
     });
