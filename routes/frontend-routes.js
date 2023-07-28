@@ -25,7 +25,17 @@ router.get("/register", appRoute);
 
 router.get('/forgotpassword', appRoute);
 
-router.get('/resetpassword/:token', appRoute);
+router.get('/resetpassword/:token', async (req, res) => {
+    let { token } = req.params;
+    let checkToken = await User.find({resetPasswordToken: token});
+    console.log(checkToken)
+    if (checkToken.length === 0) {
+        res.redirect('/login')
+    } else {
+        res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
+    };
+});
+
 router.post('/api/resetpassword/:token', async (req, res) => {
 
     let { token } = req.params;

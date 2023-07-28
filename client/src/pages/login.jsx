@@ -16,6 +16,7 @@ export function UserLogin () {
                 <button type="submit" className="btn btn-dark">Login</button>
             </form>
             <p>Don't have an account yet? Create one <a href="/register">here</a>.</p>
+            <p>Forgot your password? Click <a href="/forgotpassword">here</a>.</p>
         </div>
     );
 };
