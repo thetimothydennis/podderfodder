@@ -1,5 +1,7 @@
 import express from 'express';
 import passport from 'passport';
+import crypto from 'crypto';
+import { appRoute} from '../controllers/frontend-controller.js';
 import { User } from '../models/user-schema.js';
 import { is_email_valid } from 'node-email-validation';
 
@@ -68,14 +70,46 @@ router.post('/api/changepassword', async (req, res) => {
     };
 });
 
-router.post('/api/forgotpassword', (req, res) => {
-    console.log(req.body);
+router.post('/api/forgotpassword', async (req, res) => {
+    let { email } = req.body;
+    const token = (crypto.randomBytes)(20).toString('hex');
+    console.log(token)
+    const user = await User.findOneAndUpdate({email: email}, {resetPasswordToken: token});
+
+    console.log(user);
+    
+
+    const resetEmail = {
+        to: user.email,
+        from: `donut-reply@timothyddennis.com`,
+        subject: `password reset`,
+        text: `
+            You are receiving this because a password reset has been requested for your account.
+            Please click on the following link, or paste into your browser to complete the process.
+            https://timothyddennis.com:9000/resetpassword/${token}
+            If you didn't request a password, ignore this email and your password will remain unchanged
+            `,
+    };
+    console.log(resetEmail)
+    // await transport.sendMail(resetEmail);
+
     res.redirect('/forgotpassword');
 });
 
 router.post('/api/resetpassword', (req, res) => {
     console.log(req.body);
-    res.redirect('/resetpassword');
+    let { newpassword, newpassmatch } = req.body;
+    if (newpassword !== newpassmatch) {
+        res.send(`passwords don't match`);
+    } else {
+        res.redirect('/resetpassword');
+    };
 });
 
+// router.route('/resetpassword/:token')
+//     .get((req, res) => {
+//         let { token } = req.params;
+//         console.log(token)
+//         res.redirect('/forgotpassword')
+//     })
 export default router;

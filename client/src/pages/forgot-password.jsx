@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router';
 
 export function ForgotPassword () {
     return (
@@ -16,10 +17,12 @@ export function ForgotPassword () {
 };
 
 export function ResetPassword () {
+    const { token } = useParams();
+    console.log(token)
     return (
         <div className="Epi">
             <h1>Reset Password</h1>
-            <form className="container" method="POST" action="/api/resetpassword">
+            <form className="container" method="POST" action={`/api/resetpassword/${token}`}>
                 <p className="row form-group">
                     <label className="col form-control" htmlFor="newpassword">new password
                     <input className="col form-control" type="password" name="newpassword" id="newpassword" /></label>

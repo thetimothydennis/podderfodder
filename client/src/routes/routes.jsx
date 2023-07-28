@@ -6,6 +6,7 @@ import { UserLogin } from '../pages/login.jsx';
 import { UserRegister } from '../pages/register.jsx';
 import { ChangePassword } from '../pages/change-password.jsx';
 import { ForgotPassword, ResetPassword } from '../pages/forgot-password.jsx';
+import { withCookies } from 'react-cookie';
 
 // main user interface component
 export function RoutesUi() {
@@ -27,7 +28,7 @@ export function RoutesUi() {
                 {/* route for step 1 in forgot password workflow */}
                 <Route path="/forgotpassword" element={<ForgotPassword />} />
                 {/* route for step 2 in forgot password workflow */}
-                <Route path="/resetpassword" element={<ResetPassword />} />
+                <Route path="/resetpassword/:token" element={<ResetPassword />} />
             </Routes>
         </div>
     );

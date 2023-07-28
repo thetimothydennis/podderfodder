@@ -63,6 +63,9 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    resetPasswordToken: {
+        type: String
+    },
     podcasts: [PodcastSchema]
 });
 

@@ -2,9 +2,12 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import mongoose from 'mongoose';
 import Cookies from 'universal-cookie';
 import { appRoute} from '../controllers/frontend-controller.js';
+import crypto from 'crypto';
 import isAuthenticated from '../middleware/is-authenticated.js';
+import { User } from '../models/user-schema.js';
 
 // stores __dirname for use within ES6 modules
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -22,7 +25,26 @@ router.get("/register", appRoute);
 
 router.get('/forgotpassword', appRoute);
 
-router.get('/resetpassword', appRoute);
+router.get('/resetpassword/:token', appRoute);
+router.post('/api/resetpassword/:token', async (req, res) => {
+
+    let { token } = req.params;
+    let { newpassword, newpassmatch } = req.body;
+    let user = await User.find({resetPasswordToken: token});
+    let username = user[0].username;
+    let updateUser;
+    if (user.length === 0) {
+        res.redirect(`/forgotpassword`)
+    } else if (newpassword !== newpassmatch) {
+        res.redirect(`/api/resetpassword/${token}`)
+    } else {
+        updateUser = await User.findOne({username: username});
+        updateUser.setPassword(newpassword, async () => {
+            await updateUser.save();
+        }); 
+        res.redirect('/login');
+    }
+})
 
 // authenticated app route
 router.get("/app", isAuthenticated, appRoute);
