@@ -68,4 +68,14 @@ router.post('/api/changepassword', async (req, res) => {
     };
 });
 
+router.post('/api/forgotpassword', (req, res) => {
+    console.log(req.body);
+    res.redirect('/forgotpassword');
+});
+
+router.post('/api/resetpassword', (req, res) => {
+    console.log(req.body);
+    res.redirect('/resetpassword');
+});
+
 export default router;
