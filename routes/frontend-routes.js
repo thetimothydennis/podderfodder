@@ -42,6 +42,7 @@ router.post('/api/resetpassword/:token', async (req, res) => {
         updateUser.setPassword(newpassword, async () => {
             await updateUser.save();
         }); 
+        await User.findOneAndUpdate({username: username}, {resetPasswordToken: ''});
         res.redirect('/login');
     }
 })
