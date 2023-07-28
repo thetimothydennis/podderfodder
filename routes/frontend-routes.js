@@ -2,12 +2,10 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import mongoose from 'mongoose';
-import Cookies from 'universal-cookie';
 import { appRoute} from '../controllers/frontend-controller.js';
-import crypto from 'crypto';
 import isAuthenticated from '../middleware/is-authenticated.js';
 import { User } from '../models/user-schema.js';
+
 
 // stores __dirname for use within ES6 modules
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

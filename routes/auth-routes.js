@@ -1,9 +1,12 @@
 import express from 'express';
 import passport from 'passport';
 import crypto from 'crypto';
-import { appRoute} from '../controllers/frontend-controller.js';
 import { User } from '../models/user-schema.js';
-import { is_email_valid } from 'node-email-validation';
+import MailService from '@sendgrid/mail';
+
+const SG_API_KEY = process.env.SENDGRID_API_KEY;
+
+MailService.setApiKey(SG_API_KEY);
 
 const router = express.Router();
 
@@ -15,8 +18,6 @@ router.post('/api/login', passport.authenticate('local', {
 
 router.post('/api/register', async (req, res) => {
     if (req.body.password !== req.body.passwordMatch) {
-        res.redirect('/register');
-    } else if (is_email_valid(req.body.email) === false) {
         res.redirect('/register');
     } else {
         const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })
@@ -73,11 +74,7 @@ router.post('/api/changepassword', async (req, res) => {
 router.post('/api/forgotpassword', async (req, res) => {
     let { email } = req.body;
     const token = (crypto.randomBytes)(20).toString('hex');
-    console.log(token)
     const user = await User.findOneAndUpdate({email: email}, {resetPasswordToken: token});
-
-    console.log(user);
-    
 
     const resetEmail = {
         to: user.email,
@@ -86,12 +83,19 @@ router.post('/api/forgotpassword', async (req, res) => {
         text: `
             You are receiving this because a password reset has been requested for your account.
             Please click on the following link, or paste into your browser to complete the process.
-            https://timothyddennis.com:9000/resetpassword/${token}
+            ${process.env.LOCAL_BASE_URL}${process.env.PORT}/resetpassword/${token}
             If you didn't request a password, ignore this email and your password will remain unchanged
             `,
     };
-    console.log(resetEmail)
-    // await transport.sendMail(resetEmail);
+    
+    MailService.send(resetEmail)
+        .then(response => {
+            console.log(response[0].statusCode);
+            console.log(response[0].headers);
+        })
+        .catch(error => {
+            console.log(error);
+        });
 
     res.redirect('/forgotpassword');
 });
@@ -106,10 +110,4 @@ router.post('/api/resetpassword', (req, res) => {
     };
 });
 
-// router.route('/resetpassword/:token')
-//     .get((req, res) => {
-//         let { token } = req.params;
-//         console.log(token)
-//         res.redirect('/forgotpassword')
-//     })
 export default router;
