@@ -15,15 +15,19 @@ const router = express.Router();
 router.use(express.static(path.join(__dirname, "..", "client", "dist")));
 
 // frontend routes
-    // login route
+// login route
 router.get("/login", appRoute);
-    // register route
+// register route
 router.get("/register", appRoute);
-    // authenticated app route
 
+router.get('/forgotpassword', appRoute);
+
+router.get('/resetpassword', appRoute);
+
+// authenticated app route
 router.get("/app", isAuthenticated, appRoute);
 
-router.get('/changepassword', appRoute);
+router.get('/changepassword', isAuthenticated, appRoute);
 
 // exports the router for index.js
 export default router;
