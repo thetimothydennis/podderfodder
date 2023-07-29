@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
 import { apiCall } from '../functions/api-call.jsx';
@@ -48,6 +49,13 @@ function OneEpi (props) {
             </div>
         </div>
     );
+}
+
+OneEpi.propTypes = {
+    userId: PropTypes.string,
+    epiId: PropTypes.string,
+    setPodId: PropTypes.func,
+    podId: PropTypes.string
 }
 
 export default OneEpi;

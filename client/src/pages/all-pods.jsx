@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
@@ -77,6 +78,11 @@ function AllPods(props) {
             </div>
         </div>
     );
+}
+
+AllPods.propTypes = {
+    userId: PropTypes.string,
+    setPodId: PropTypes.func
 }
 
 export default AllPods;

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
@@ -124,6 +125,12 @@ function PodSearch (props) {
             </div>
         </div>
     );
+}
+
+PodSearch.propTypes = {
+    userId: PropTypes.string,
+    setPodId: PropTypes.func,
+    setDisplay: PropTypes.func
 }
 
 export default PodSearch;
