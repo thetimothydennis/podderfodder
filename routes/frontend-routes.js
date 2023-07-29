@@ -1,9 +1,11 @@
 // package imports
 import express from 'express';
-import { appRoute, resetPasswordPage } from '../controllers/frontend-controller.js';
-import isAuthenticated from '../middleware/is-authenticated.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+// auth middleware import
+import isAuthenticated from '../middleware/is-authenticated.js';
+// frontend controller import
+import { appRoute, resetPasswordPage } from '../controllers/frontend-controller.js';
 
 // instantiates the frontend router
 const router = express.Router();
