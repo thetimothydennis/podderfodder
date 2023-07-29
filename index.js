@@ -1,5 +1,6 @@
 import express from 'express';
 import 'dotenv/config';
+import http from 'http';
 import https from 'https';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -16,7 +17,7 @@ import { User } from './models/user-schema.js';
 const options = {
     key: process.env.SSL_KEY,
     cert: process.env.SSL_CERT,
-    //ca: process.env.SSL_CA
+    ca: process.env.SSL_CA
 };
 
 const sessionOptions = {
@@ -27,12 +28,14 @@ const sessionOptions = {
 };
 
 const app = express();
+const httpApp = express();
 
 passport.use(User.createStrategy());
 app.use(session(sessionOptions));
 
 // establishes environment variables for auth0 as local constants
 const PORT = process.env.PORT;
+const httpPORT = process.env.HTTP_PORT;
 
 app.use(cors());
 
@@ -40,6 +43,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+
 
 https.createServer(options, app)
     .listen(PORT, () => {
@@ -54,4 +59,11 @@ app.use(authRoutes);
 app.use(FrontendRoutes);
 app.use(UsersRouter);
 
+httpApp.get('*', (req, res) => {
+    res.redirect(`https://${req.headers.host}:${PORT}${req.path}`);
+});
 
+http.createServer(httpApp)
+    .listen(httpPORT, () => {
+        console.log(`http app listening on port ${httpPORT}`);
+    });
