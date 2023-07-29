@@ -10,7 +10,7 @@ function OneEpi (props) {
     const [image, setImage] = useState('');
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
-    const [audio, setAudio] = useState('');
+    const [epi, setEpi] = useState('');
     const [content, setContent] = useState('');
 
     const getEpisode = useCallback(async () => {
@@ -22,7 +22,7 @@ function OneEpi (props) {
         setImage(res.data[0].podcasts.image);
         setTitle(res.data[0].podcasts.episodes.title);
         setDate(res.data[0].podcasts.episodes.pubDate);
-        setAudio(res.data[0].podcasts.episodes.epi_url);
+        setEpi(res.data[0].podcasts.episodes.epi_url);
         setContent(res.data[0].podcasts.episodes.content);
         props.setPodId(res.data[0].podcasts.pod_id);
     }, [props]);
@@ -30,6 +30,22 @@ function OneEpi (props) {
     useEffect(() => {
         getEpisode();
     }, [getEpisode]);
+
+    // playButton.addEventListener('pointerup', function(event) {
+    //     let audio = document.querySelector('audio');
+
+    //     audio.play()
+    //         .then(() => {
+    //             if ('mediaSession' in navigator) {
+    //                 navigator.mediaSession.metadata = new MediaMetadata({
+    //                     title: title,
+    //                     artist: author,
+    //                     album: showTitle,
+    //                     artwork: image
+    //                 })
+    //             }
+    //         })
+    // })
 
     return (
         <div className="Epi">
@@ -44,7 +60,7 @@ function OneEpi (props) {
                             height="250em"
                 />
                 <br />
-                <ReactAudioPlayer src={audio} title={`${showTitle} - ${title}`} controls />
+                <ReactAudioPlayer src={epi} title={`${showTitle} - ${title}`} artwork={image} controls />
                 <p>{content}</p>
             </div>
         </div>
