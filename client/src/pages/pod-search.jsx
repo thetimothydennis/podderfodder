@@ -77,18 +77,17 @@ function PodSearch (props) {
                 <div className="container">
                     <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
                         <label className="col form-control" htmlFor="feedInput">Input RSS feed URL
-                        <input name="feedInput" 
-                                type="text" 
-                                value={feedInput} 
-                                onChange={e => setFeedInput(e.target.value)} 
-                                className="col form-control"
-                        /></label>
+                            <input name="feedInput" 
+                                    type="text" 
+                                    value={feedInput} 
+                                    onChange={e => setFeedInput(e.target.value)} 
+                                    className="col form-control"/>
+                        </label>
                     </form>
                         <button id={-4}
                                 type="button"
                                 className="btn btn-dark"
-                                onClick={() => handleSubmit(feedInput)}
-                        >
+                                onClick={() => handleSubmit(feedInput)}>
                             Submit feed
                         </button>
                     <p>or</p>
@@ -103,7 +102,6 @@ function PodSearch (props) {
                     </form>
                 </div>
                 <div className="container">
-
                         <div className="row epiRow">
                             <div className="col">
                                 Podcast Name

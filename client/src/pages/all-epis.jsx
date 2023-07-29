@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
@@ -6,16 +6,16 @@ import { apiCall } from '../functions/api-call.jsx';
 function AllEpis (props) {
     const [episodes, setEpisodes] = useState([]);
 
-    async function getAllEpis() {
+    const getAllEpis = useCallback(async () => {
         let res = await axios.get(
             `${apiCall}/api/allepisodes/${props.userId}`
         );
         setEpisodes(res.data);
-    }
+    }, [props.userId])
 
     useEffect(() => {
         getAllEpis();
-    });
+    }, [getAllEpis]);
 
     const handleClick = (e) => {
         props.setPodId(e.target.value);
@@ -60,8 +60,7 @@ function AllEpis (props) {
                             {item.podcasts.episodes.pubDate.toString().slice(0, 10)}
                         </div>
                     </div>
-                    ))}
-
+                ))}
             </div>
         </div>
     );

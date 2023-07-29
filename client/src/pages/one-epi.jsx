@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
@@ -13,7 +13,7 @@ function OneEpi (props) {
     const [audio, setAudio] = useState('');
     const [content, setContent] = useState('');
 
-    const getEpisode = async () => {
+    const getEpisode = useCallback(async () => {
         let res = await axios.get(
             `${apiCall}/api/user/${props.userId}/${props.epiId}`
         );
@@ -25,11 +25,11 @@ function OneEpi (props) {
         setAudio(res.data[0].podcasts.episodes.epi_url);
         setContent(res.data[0].podcasts.episodes.content);
         props.setPodId(res.data[0].podcasts.pod_id);
-    };
+    }, [props]);
 
     useEffect(() => {
         getEpisode();
-    });
+    }, [getEpisode]);
 
     return (
         <div className="Epi">

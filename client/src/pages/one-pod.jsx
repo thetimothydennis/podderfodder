@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
@@ -10,7 +10,7 @@ function OnePod(props) {
     const [showImg, setShowImg] = useState('');
     const [showAuthor, setShowAuthor] = useState('');
     
-    const getPodcasts = async () => {
+    const getPodcasts = useCallback(async () => {
         let res = await axios.get(
             `${apiCall}/api/user/${props.userId}/${props.podId}`
         );
@@ -26,7 +26,7 @@ function OnePod(props) {
         setShowImg(image);
         setEpisodes(episodes);
         setShowAuthor(author);
-    };
+    }, [props]);
 
     const updatePod = async () => {
         await axios.put(
@@ -40,7 +40,7 @@ function OnePod(props) {
     
     useEffect(() => {
         getPodcasts();
-    });
+    }, [getPodcasts]);
 
     const handleClick = async (e) => {
         await axios.delete(
@@ -66,8 +66,7 @@ function OnePod(props) {
             <button id={-8} 
                     onClick={updatePod}
                     type="button"
-                    className="btn btn-dark"
-            >
+                    className="btn btn-dark">
                 Update Pod Feed
             </button>
             <p>{showDesc}</p>
@@ -76,8 +75,7 @@ function OnePod(props) {
                     <div className="row epiRow" 
                         key={x} 
                         value={item._id}
-                        id={`${props.podId}/${item._id}`}
-                    >
+                        id={`${props.podId}/${item._id}`}>
                         <div className="col" id={`${props.podId}/${item._id}`} >
                             {item.title}
                         </div>
@@ -100,8 +98,8 @@ function OnePod(props) {
                                 Delete episode
                             </button>
                         </div>
-                    </div>))}
-
+                    </div>
+                ))}
             </div>
         </div>
     );

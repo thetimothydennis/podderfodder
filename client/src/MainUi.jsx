@@ -37,7 +37,7 @@ function MainUi(props) {
     useEffect(() => {
             switch (display) {
                 case 'allPods':
-                    setRender(<AllPods setPodId={setPodId} userId={userId}/>);
+                    setRender(<AllPods setPodId={setPodId} userId={userId} setDisplay={setDisplay} />);
                     break;
                 case 'onePod':
                     setRender(<OnePod userId={userId} podId={podId} setPodId={setPodId} setDisplay={setDisplay} />);

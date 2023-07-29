@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
@@ -6,21 +6,21 @@ import { apiCall } from '../functions/api-call.jsx';
 function AllPods(props) {
     const [podcasts, setPodcasts] = useState([]);
 
-    async function getPods() {
+    const getPods = useCallback(async () => {
         let res = await axios.get(
             `${apiCall}/api/user/${props.userId}/`
         );
         setPodcasts(res.data[0].podcasts);
-    }
+    }, [props.userId])
 
     useEffect(() => {
         getPods();
-    });
+    }, [getPods]);
 
     async function handleDeleteClick(e) {
         await axios.delete(
             `${apiCall}/api/user/${props.userId}/${e.target.value}`
-        );
+        ).then(props.setDisplay('allPods'));
     }
 
     async function handlePodClick(e) {
@@ -74,7 +74,7 @@ function AllPods(props) {
                                 </button>
                             </div>
                         </div>
-                        ))}
+                    ))}
             </div>
         </div>
     );
@@ -82,7 +82,8 @@ function AllPods(props) {
 
 AllPods.propTypes = {
     userId: PropTypes.string,
-    setPodId: PropTypes.func
+    setPodId: PropTypes.func,
+    setDisplay: PropTypes.func
 }
 
 export default AllPods;
