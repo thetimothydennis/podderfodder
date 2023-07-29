@@ -46,7 +46,7 @@ function OnePod(props) {
         await axios.delete(
             `${apiCall}/api/user/${props.userId}/${e.target.value}`
         ).then(() => {
-            props.setDisplay('onePod')
+            props.setDisplay('onePod');
         });
     };
 

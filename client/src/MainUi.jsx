@@ -37,13 +37,13 @@ function MainUi(props) {
     useEffect(() => {
             switch (display) {
                 case 'allPods':
-                    setRender(<AllPods setPodId={setPodId} userId={userId} setDisplay={setDisplay} />);
+                    setRender(<AllPods userId={userId} setPodId={setPodId} setDisplay={setDisplay} />);
                     break;
                 case 'onePod':
                     setRender(<OnePod userId={userId} podId={podId} setPodId={setPodId} setDisplay={setDisplay} />);
                     break;
                 case 'oneEpi':
-                    setRender(<OneEpi setPodId={setPodId} userId={userId} podId={podId} epiId={epiId} />);
+                    setRender(<OneEpi userId={userId} podId={podId} epiId={epiId} setPodId={setPodId} />);
                     break;
                 case 'allEpis':
                     setRender(<AllEpis userId={userId} setPodId={setPodId} setEpiId={setEpiId} setDisplay={setDisplay} />);

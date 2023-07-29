@@ -11,7 +11,7 @@ function AllPods(props) {
             `${apiCall}/api/user/${props.userId}/`
         );
         setPodcasts(res.data[0].podcasts);
-    }, [props.userId])
+    }, [props.userId]);
 
     useEffect(() => {
         getPods();
