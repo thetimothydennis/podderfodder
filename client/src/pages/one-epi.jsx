@@ -44,7 +44,7 @@ function OneEpi (props) {
                             height="250em"
                 />
                 <br />
-                <ReactAudioPlayer src={audio} title={title} controls />
+                <ReactAudioPlayer src={audio} title={`${showTitle} - ${title}`} controls />
                 <p>{content}</p>
             </div>
         </div>
