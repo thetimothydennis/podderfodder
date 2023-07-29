@@ -31,22 +31,6 @@ function OneEpi (props) {
         getEpisode();
     }, [getEpisode]);
 
-    // playButton.addEventListener('pointerup', function(event) {
-    //     let audio = document.querySelector('audio');
-
-    //     audio.play()
-    //         .then(() => {
-    //             if ('mediaSession' in navigator) {
-    //                 navigator.mediaSession.metadata = new MediaMetadata({
-    //                     title: title,
-    //                     artist: author,
-    //                     album: showTitle,
-    //                     artwork: image
-    //                 })
-    //             }
-    //         })
-    // })
-
     return (
         <div className="Epi">
             <div>
@@ -57,10 +41,10 @@ function OneEpi (props) {
                 <img className="epiImg" 
                             alt="podcast_image" 
                             src={image}
-                            height="250em"
+                            height="250em" 
                 />
                 <br />
-                <ReactAudioPlayer src={epi} title={`${showTitle} - ${title}`} artwork={image} controls />
+                <ReactAudioPlayer src={epi} title={`${title} - ${showTitle}`} controls />
                 <p>{content}</p>
             </div>
         </div>

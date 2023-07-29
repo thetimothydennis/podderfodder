@@ -1,9 +1,9 @@
 // middlewsre for determining whether a request is authenticated or not
 export default function isAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
-        let requestedUser = req.url.split('/')
-        let userIdCheck = req.headers.cookie.split('userId=')[1];
-        let verifiedAuthorizedUser = requestedUser.find(item => item == userIdCheck);
+        let userId = req.headers.cookie.match(/userId=.{24}/)[0].split("=")[1];
+        let requestedUser = req.url.split('/');
+        let verifiedAuthorizedUser = requestedUser.find(item => item == userId);
         if (verifiedAuthorizedUser) {
             next();
         } else {
