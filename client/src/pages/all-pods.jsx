@@ -20,7 +20,9 @@ function AllPods(props) {
     async function handleDeleteClick(e) {
         await axios.delete(
             `${apiCall}/api/user/${props.userId}/${e.target.value}`
-        ).then(props.setDisplay('allPods'));
+        ).then(() => {
+            props.setDisplay('allPods');
+        });
     }
 
     async function handlePodClick(e) {

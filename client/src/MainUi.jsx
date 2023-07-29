@@ -46,7 +46,7 @@ function MainUi(props) {
                     setRender(<OneEpi setPodId={setPodId} userId={userId} podId={podId} epiId={epiId} />);
                     break;
                 case 'allEpis':
-                    setRender(<AllEpis userId={userId} setPodId={setPodId} setEpiId={setEpiId}/>);
+                    setRender(<AllEpis userId={userId} setPodId={setPodId} setEpiId={setEpiId} setDisplay={setDisplay} />);
                     break;
                 case 'searchPods':
                     setRender(<PodSearch userId={userId} setPodId={setPodId} setDisplay={setDisplay} />);
