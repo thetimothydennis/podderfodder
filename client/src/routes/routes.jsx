@@ -6,7 +6,6 @@ import { UserLogin } from '../pages/login.jsx';
 import { UserRegister } from '../pages/register.jsx';
 import { ChangePassword } from '../pages/change-password.jsx';
 import { ForgotPassword, ResetPassword } from '../pages/forgot-password.jsx';
-import { withCookies } from 'react-cookie';
 
 // main user interface component
 export function RoutesUi() {

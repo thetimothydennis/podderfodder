@@ -15,7 +15,8 @@ import { User } from './models/user-schema.js';
 
 const options = {
     key: process.env.SSL_KEY,
-    cert: process.env.SSL_CERT
+    cert: process.env.SSL_CERT,
+    //ca: process.env.SSL_CA
 };
 
 const sessionOptions = {
