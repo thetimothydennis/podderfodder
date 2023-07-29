@@ -1,8 +1,7 @@
-import React from 'react';
 import { Cookies } from 'react-cookie';
 
 function NavBar () {
-    const handleClick = (e) => {
+    const handleClick = () => {
         const cookie = new Cookies();
         cookie.set('userId', "");
     };
@@ -33,6 +32,6 @@ function NavBar () {
                 </div>
         </div>
     );
-};
+}
 
 export default NavBar;

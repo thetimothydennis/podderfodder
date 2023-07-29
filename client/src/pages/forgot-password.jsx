@@ -1,4 +1,3 @@
-import React from 'react';
 import { useParams } from 'react-router';
 
 export function ForgotPassword () {
@@ -14,7 +13,7 @@ export function ForgotPassword () {
             </form>
         </div>
     );
-};
+}
 
 export function ResetPassword () {
     const { token } = useParams();
@@ -35,4 +34,4 @@ export function ResetPassword () {
             </form>
         </div>
     );
-};
+}

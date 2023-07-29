@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactAudioPlayer from 'react-audio-player';
 import { apiCall } from '../functions/api-call.jsx';
@@ -11,7 +11,6 @@ function OneEpi (props) {
     const [date, setDate] = useState('');
     const [audio, setAudio] = useState('');
     const [content, setContent] = useState('');
-    const [podId, setPodId] = useState('');
 
     const getEpisode = async () => {
         let res = await axios.get(
@@ -24,17 +23,17 @@ function OneEpi (props) {
         setDate(res.data[0].podcasts.episodes.pubDate);
         setAudio(res.data[0].podcasts.episodes.epi_url);
         setContent(res.data[0].podcasts.episodes.content);
-        setPodId(res.data[0].podcasts.pod_id);
+        props.setPodId(res.data[0].podcasts.pod_id);
     };
 
     useEffect(() => {
         getEpisode();
-    }, []);
+    });
 
     return (
         <div className="Epi">
             <div>
-                <h1 id={podId}>{showTitle}</h1>
+                <h1 id={props.podId}>{showTitle}</h1>
                 <h2>{title}</h2>
                 <h4>{new Date(date).toString().slice(0, 15)}</h4>
                 <h3>{author}</h3>
@@ -49,6 +48,6 @@ function OneEpi (props) {
             </div>
         </div>
     );
-};
+}
 
 export default OneEpi;

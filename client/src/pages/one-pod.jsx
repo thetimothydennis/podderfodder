@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
@@ -8,10 +8,7 @@ function OnePod(props) {
     const [showDesc, setShowDesc] = useState('');
     const [showImg, setShowImg] = useState('');
     const [showAuthor, setShowAuthor] = useState('');
-    const [podObj, setPodObj] = useState({});
-    const [podId, setPodId] = useState("");
-    const [render, setRender] = useState(<></>)
-
+    
     const getPodcasts = async () => {
         let res = await axios.get(
             `${apiCall}/api/user/${props.userId}/${props.podId}`
@@ -23,7 +20,6 @@ function OnePod(props) {
             author,
             episodes
         } = res.data[0].podcasts;
-        setPodObj(res.data[0].podcasts);
         setShowTitle(show_title);
         setShowDesc(description);
         setShowImg(image);
@@ -43,11 +39,7 @@ function OnePod(props) {
     
     useEffect(() => {
         getPodcasts();
-    }, []);
-
-    useEffect(() => {
-        setPodId(episodes._id);
-    }, [getPodcasts, episodes])
+    });
 
     const handleClick = async (e) => {
         await axios.delete(
@@ -112,6 +104,6 @@ function OnePod(props) {
             </div>
         </div>
     );
-};
+}
 
 export default OnePod;

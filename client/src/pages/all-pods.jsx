@@ -1,31 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
 function AllPods(props) {
     const [podcasts, setPodcasts] = useState([]);
-    const [podId, setPodId] = useState("");
 
     async function getPods() {
         let res = await axios.get(
             `${apiCall}/api/user/${props.userId}/`
         );
         setPodcasts(res.data[0].podcasts);
-    };
+    }
 
     useEffect(() => {
         getPods();
-    }, []);
+    });
 
     async function handleDeleteClick(e) {
         await axios.delete(
             `${apiCall}/api/user/${props.userId}/${e.target.value}`
         );
-    };
+    }
 
     async function handlePodClick(e) {
-        setPodId(e.target.id);
-    };
+        props.setPodId(e.target.id);
+    }
 
         return (
             <div className="Epi">
@@ -78,6 +77,6 @@ function AllPods(props) {
             </div>
         </div>
     );
-};
+}
 
 export default AllPods;

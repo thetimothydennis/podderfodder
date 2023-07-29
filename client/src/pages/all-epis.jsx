@@ -1,26 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
 function AllEpis (props) {
     const [episodes, setEpisodes] = useState([]);
-    const [epiId, setEpiId] = useState('');
-    const [podId, setPodId] = useState('');
 
     async function getAllEpis() {
         let res = await axios.get(
             `${apiCall}/api/allepisodes/${props.userId}`
         );
         setEpisodes(res.data);
-    };
+    }
 
     useEffect(() => {
         getAllEpis();
-    }, []);
+    });
 
     const handleClick = (e) => {
-        setPodId(e.target.value);
-        setEpiId(e.target.id);
+        props.setPodId(e.target.value);
+        props.setEpiId(e.target.id);
     };
 
     return (
@@ -66,6 +64,6 @@ function AllEpis (props) {
             </div>
         </div>
     );
-};
+}
 
 export default AllEpis;

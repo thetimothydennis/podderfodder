@@ -1,12 +1,10 @@
-import React from 'react';
-
 export function UpdatePod () {
     return (
         <div className="Epi">
             <p>Updating pod. You will be redirected shortly.</p>
         </div>
     );
-};
+}
 
 export function DeletePod () {
     return (
@@ -14,7 +12,7 @@ export function DeletePod () {
             <p>Podcast deleted</p>
         </div>
     );
-};
+}
 
 export function DeleteEpi () {
     return (
@@ -22,7 +20,7 @@ export function DeleteEpi () {
             <p>Episode deleted</p>
         </div>
     );
-};
+}
 
 export function ImportedPod () {
     return (
@@ -30,7 +28,7 @@ export function ImportedPod () {
             <p>Adding pod. You will be redirected momentarily.</p>
         </div>
     );
-};
+}
 
 export function Welcome () {
     return (
@@ -40,7 +38,7 @@ export function Welcome () {
             <p>You can change your password <a href="/changepassword">here</a>.</p>
         </div>
     );
-};
+}
 
 export function HomePage() {
     return (
@@ -51,4 +49,4 @@ export function HomePage() {
             <p>NOTE: you must have cookies and JavaScript enabled to use this site.</p>
         </div>
     );
-};
+}

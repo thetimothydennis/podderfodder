@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import React from 'react';
 import MainUi from '../MainUi.jsx';
 import { HomePage } from '../pages/interstitials.jsx';
 import { UserLogin } from '../pages/login.jsx';
@@ -31,5 +30,6 @@ export function RoutesUi() {
             </Routes>
         </div>
     );
-};
+}
+
 export default RoutesUi;

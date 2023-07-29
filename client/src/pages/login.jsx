@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function UserLogin () {
     return (
         <div className="Epi">
@@ -15,8 +13,8 @@ export function UserLogin () {
                 </p>
                 <button type="submit" className="btn btn-dark">Login</button>
             </form>
-            <p>Don't have an account yet? Create one <a href="/register">here</a>.</p>
+            <p>Don&apos;t have an account yet? Create one <a href="/register">here</a>.</p>
             <p>Forgot your password? Click <a href="/forgotpassword">here</a>.</p>
         </div>
     );
-};
+}

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function UserRegister () {
     return (
         <div className="Epi">
@@ -29,4 +27,4 @@ export function UserRegister () {
             </form>
         </div>
     );
-};
+}

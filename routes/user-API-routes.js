@@ -10,11 +10,11 @@ import { search } from '../controllers/search-pods-controller.js';
 
 const router = express.Router();
 
-// attaches auth middleware to all API routes
-router.use(isAuthenticated);
-
 // route for pod search function
 router.get('/api/search/', search);
+
+// attaches auth middleware to all API routes
+router.use(isAuthenticated);
 
 router.route('/api/user/:id')
     // gets all podcasts for user

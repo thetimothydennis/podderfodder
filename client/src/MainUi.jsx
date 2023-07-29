@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import NavBar from './pages/pod-nav-bar.jsx';
@@ -25,9 +25,9 @@ function MainUi(props) {
             `${apiCall}/api/user-data`
         );
         cookie.set('userId', res.data.user_id);
-    };
+    }
     setUserId(cookie.get('userId'));
-  };
+  }
 
   useEffect(() => {
     getUserId();
@@ -37,16 +37,16 @@ function MainUi(props) {
     useEffect(() => {
             switch (display) {
                 case 'allPods':
-                    setRender(<AllPods userId={userId}/>);
+                    setRender(<AllPods setPodId={setPodId} userId={userId}/>);
                     break;
                 case 'onePod':
                     setRender(<OnePod userId={userId} podId={podId} setPodId={setPodId} setDisplay={setDisplay} />);
                     break;
                 case 'oneEpi':
-                    setRender(<OneEpi userId={userId} podId={podId} epiId={epiId} />);
+                    setRender(<OneEpi setPodId={setPodId} userId={userId} podId={podId} epiId={epiId} />);
                     break;
                 case 'allEpis':
-                    setRender(<AllEpis userId={userId} />);
+                    setRender(<AllEpis userId={userId} setPodId={setPodId} setEpiId={setEpiId}/>);
                     break;
                 case 'searchPods':
                     setRender(<PodSearch userId={userId} setPodId={setPodId} setDisplay={setDisplay} />);
@@ -68,7 +68,7 @@ function MainUi(props) {
                     break;
                 default:
                     setRender(<Welcome userId={userId} />)
-        };
+        }
 
   }, [display, epiId, podId, userId, props]);
 
@@ -103,8 +103,8 @@ function MainUi(props) {
               setEpiId(0);
               setPodId(e.target.id);
               setDisplay('onePod');
-          };
-      };
+          }
+      }
   };
 
 
@@ -116,6 +116,6 @@ function MainUi(props) {
       </div>
     </>
   );
-};
+}
 
 export default MainUi;

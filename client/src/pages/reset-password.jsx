@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function RequestPassword () {
     return (
         <div className="Epi">
@@ -13,4 +11,4 @@ export function RequestPassword () {
             </form>
         </div>
     );
-};
+}

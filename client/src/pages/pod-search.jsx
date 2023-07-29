@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
@@ -13,7 +13,21 @@ function PodSearch (props) {
             `${apiCall}/api/search?q=${inputStr}`
         );
         setResponse(res.data.results);
-    };
+    }
+
+    const handleSubmit = useCallback(async (inputArg) => {
+        setRender(<p>Waiting</p>)
+        await axios.post(
+            `${apiCall}/api/user/${props.userId}`, 
+            {
+                feedUrl: inputArg
+            }
+        ).then((res) => {
+            let pod_id = res.data[0].podcasts.pod_id;
+            props.setPodId(pod_id);
+            props.setDisplay('onePod');
+        })
+    }, [props]);
 
     useEffect(() => {
         getSearch(input);
@@ -54,21 +68,7 @@ function PodSearch (props) {
                 </div>
             </div>
         )));
-    }, [input, response]);
-
-    const handleSubmit = async (inputArg) => {
-        setRender(<p>Waiting</p>)
-        await axios.post(
-            `${apiCall}/api/user/${props.userId}`, 
-            {
-                feedUrl: inputArg
-            }
-        ).then((res) => {
-            let pod_id = res.data[0].podcasts.pod_id;
-            props.setPodId(pod_id);
-            props.setDisplay('onePod');
-        })
-    };
+    }, [input, response, handleSubmit]);
    
     return (
         <div>
@@ -124,6 +124,6 @@ function PodSearch (props) {
             </div>
         </div>
     );
-};
+}
 
 export default PodSearch;
