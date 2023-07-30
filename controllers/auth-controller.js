@@ -7,6 +7,10 @@ import { errHandler } from '../functions/err-handler.js';
 
 MailService.setApiKey(process.env.SENDGRID_API_KEY);
 
+function testPassword (password) {
+    return password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,15}$/);
+}
+
 // user login handler
 export const postLogin = passport.authenticate('local', {
     failureRedirect: '/login',
@@ -17,9 +21,8 @@ export const postLogin = passport.authenticate('local', {
 export const postRegister = async (req, res) => {
     try {
         let verifyEmail = await checkEmail(req.body.email);
-        let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,15}$/;
-        let testPassword = req.body.password.match(passwordRegex);
-        if ((req.body.password !== req.body.passwordMatch) || (verifyEmail.isValid === false) || (testPassword === null)) {
+        let testPass = testPassword(req.body.password);
+        if ((req.body.password !== req.body.passwordMatch) || (verifyEmail.isValid === false) || (testPass === null)) {
             res.redirect('/register');
         } else {
             const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })
@@ -61,7 +64,8 @@ export const getUserData = (req, res) => {
 export const postChangePassword = async (req, res) => {
     try {
         let { username, oldpassword, newpassword, newpassmatch } = req.body;
-        if (newpassword !== newpassmatch) {
+        let testNewPass = testPassword(newpassword)
+        if ((newpassword !== newpassmatch) || (testNewPass === null)) {
             res.redirect('/changepassword');
         } else {
             await User.findByUsername(username, (err, user) => {
@@ -124,12 +128,13 @@ export const postResetPassword = async (req, res) => {
     try {
         let { token } = req.params;
         let { newpassword, newpassmatch } = req.body;
+        let testResetPass = testPassword(newpassword);
         let user = await User.find({resetPasswordToken: token});
         let username = user[0].username;
         let updateUser;
         if (user.length === 0) {
             res.redirect(`/forgotpassword`)
-        } else if (newpassword !== newpassmatch) {
+        } else if ((newpassword !== newpassmatch) || (testResetPass === null)) {
             res.redirect(`/api/resetpassword/${token}`)
         } else {
             updateUser = await User.findOne({username: username});
