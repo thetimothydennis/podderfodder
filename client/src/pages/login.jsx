@@ -2,6 +2,7 @@ export function UserLogin () {
     return (
         <div className="Epi">
             <h1>Podder Fodder Login</h1>
+            <p>You must log in before accessing the platform.</p>
             <form className="container" method="POST" action="/api/login">
                 <p className="row form-group">
                     <label className="col form-control" htmlFor="username">username

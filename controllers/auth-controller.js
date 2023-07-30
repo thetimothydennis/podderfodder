@@ -1,6 +1,7 @@
 import passport from 'passport';
 import { User } from '../models/user-schema.js';
 import crypto from 'crypto';
+import { checkEmail, isEmailFormatValid, isMXRecordValid, isBlacklisted } from 'email-validator-node';
 import MailService from '@sendgrid/mail';
 import { errHandler } from '../functions/err-handler.js';
 
@@ -15,7 +16,8 @@ export const postLogin = passport.authenticate('local', {
 // user registration handler
 export const postRegister = async (req, res) => {
     try {
-        if (req.body.password !== req.body.passwordMatch) {
+        let verifyEmail = await checkEmail(req.body.email);
+        if ((req.body.password !== req.body.passwordMatch) || (verifyEmail.isValid === false)) {
             res.redirect('/register');
         } else {
             const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })

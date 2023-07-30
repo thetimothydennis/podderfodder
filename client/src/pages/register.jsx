@@ -2,6 +2,7 @@ export function UserRegister () {
     return (
         <div className="Epi">
             <h1>Podder Fodder Registration</h1>
+            <p>Provide your name, a valid email address, a username and enter your password twice to register.</p>
             <form className="container" method="POST" action="/api/register">
                 <p className="row form-group">
                     <label className="col form-control" htmlFor="name">name
@@ -25,6 +26,7 @@ export function UserRegister () {
                 </p>
                 <button type="submit" className="btn btn-dark">Register</button>
             </form>
+            <p>If you provide an invalid email address, or your passwords don't match, you will be redirected back here</p>
         </div>
     );
 }
