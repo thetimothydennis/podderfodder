@@ -35,7 +35,7 @@ export function ResetPassword () {
                 </p>
                 <button type="submit" className="btn btn-dark">Reset password</button>
             </form>
-            <p>If the provided passwords don't match, you will be redirected back to this page.</p>
+            <p>If the provided passwords don&apos;t match, you will be redirected back to this page.</p>
         </div>
     );
 }

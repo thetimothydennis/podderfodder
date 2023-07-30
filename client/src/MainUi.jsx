@@ -12,10 +12,10 @@ import { UpdatePod, DeletePod, DeleteEpi, ImportedPod, Welcome } from './pages/i
 import './App.css';
 
 function MainUi(props) {
-  const [display, setDisplay] = useState('welcome');
+  const [display, setDisplay] = useState('');
   const [podId, setPodId] = useState('');
   const [epiId, setEpiId] = useState('');
-  const [render, setRender] = useState(<Welcome />)
+  const [render, setRender] = useState(<p>Please wait, loading your user profile.</p>)
   const [userId, setUserId] = useState('');
   const cookie = new Cookies();
 
@@ -32,6 +32,11 @@ function MainUi(props) {
   useEffect(() => {
     getUserId();
   });
+
+  useEffect(() => {
+    setDisplay('welcome');
+    setRender(<Welcome userId={userId} />);
+  }, [userId])
 
     //logic for re-rendering the current display
     useEffect(() => {
@@ -66,8 +71,11 @@ function MainUi(props) {
                 case 'welcome':
                     setRender(<Welcome />);
                     break;
+                case '':
+                    setRender(<p>Please wait, loading your user profile.</p>);
+                    break;
                 default:
-                    setRender(<Welcome userId={userId} />)
+                    setRender(<p>Please wait, loading your user profile.</p>);
         }
 
   }, [display, epiId, podId, userId, props]);

@@ -17,7 +17,9 @@ export const postLogin = passport.authenticate('local', {
 export const postRegister = async (req, res) => {
     try {
         let verifyEmail = await checkEmail(req.body.email);
-        if ((req.body.password !== req.body.passwordMatch) || (verifyEmail.isValid === false)) {
+        let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,15}$/;
+        let testPassword = req.body.password.match(passwordRegex);
+        if ((req.body.password !== req.body.passwordMatch) || (verifyEmail.isValid === false) || (testPassword === null)) {
             res.redirect('/register');
         } else {
             const user = new User({ username: req.body.username, email: req.body.email, name: req.body.name })

@@ -16,6 +16,12 @@ export function UserRegister () {
                     <label className="col form-control" htmlFor="username">username
                     <input className="col form-control" type="text" name="username" id="username" /></label>
                 </p>
+                <ul className="ruleList">Password requirements: 
+                    <li className="ruleItem">between 7 and 15 characters</li>
+                    <li className="ruleItem">one uppercase letter</li>
+                    <li className="ruleItem">one lowercase letter</li>
+                    <li className="ruleItem">one numeric digit</li>
+                </ul>
                 <p className="row form-group">
                     <label className="col form-control" htmlFor="password">password
                     <input className="col form-control" type="password" name="password" id="password" /></label>
@@ -26,7 +32,7 @@ export function UserRegister () {
                 </p>
                 <button type="submit" className="btn btn-dark">Register</button>
             </form>
-            <p>If you provide an invalid email address, or your passwords don't match, you will be redirected back here</p>
+            <p>If you provide an invalid email address or password, or if your passwords don&apos;t match,<br /> you will be redirected back here</p>
         </div>
     );
 }
