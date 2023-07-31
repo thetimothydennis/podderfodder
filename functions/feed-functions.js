@@ -12,6 +12,7 @@ export const parseFeed = async (feedUrl) => {
         const parsedFeed = await parser.parseURL(feedUrl);
         // destructures data from the parsed feed
         let { title, description, lastBuildDate, items } = parsedFeed;
+
         // regex to remove HTML tags from the description if they are present in the feed
         if (description.match(/(<([^>]+)>)/gi)) {
             description = reformat.removeHTML(description);
@@ -35,26 +36,6 @@ export const parseFeed = async (feedUrl) => {
     }
     catch (error) {
         console.log(error);
-        return error.message;
-    };
-};
-
-export const parseFeedURL = async (feedUrl) => {
-    let parsedFeed = await parser.parseURL(feedUrl);
-    return parsedFeed;
-};
-
-// function for parsing episodes from the podcast feed
-    // feedurl passed in from earlier in the controller
-export const parseEpis = async (feedUrl) => {
-    try {
-        // uses the feed url to parse the feed for episodes
-        const parseEpis = await parseFeedURL(feedUrl);
-        // returns the episodes from the feed
-        return parseEpis.items;
-    }
-    catch (error) {
-        console.log(error.message);
         return error.message;
     };
 };

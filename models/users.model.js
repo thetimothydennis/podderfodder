@@ -125,197 +125,256 @@ const aggrPodsProjection = () => {
 
 // get all user pods
 export const getAllUserPods = async (userId) => {
-    let userPods = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodsProjection()
-        ]
-    );
-    return userPods;
+    try {
+        let userPods = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodsProjection()
+            ]
+        );
+        return userPods;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // get one user pod
 export const getAUserPod = async (userId, podId) => {
-    let userPods = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrPodIdMatch(podId),
-            aggrPodsProjection()
-        ]
-    );
-    return userPods;
+    try {
+        let userPods = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodUnwind(),
+                aggrPodIdMatch(podId),
+                aggrPodsProjection()
+            ]
+        );
+        return userPods;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // get a user by id
 export const getUserById = async (id) => {
-    let user = await User.findById(id);
-    return user;
+    try {
+        let user = await User.findById(id);
+        return user;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // update a user with new podcasts and episodes - for POST route
 export const addPodsToUser = async (userId, feedRes) => {
-    let feedData = feedRes;
-    let podCheck = await User.find({
-        $and: [ {_id: userId },{ "podcasts._id": feedRes[0]._id }]
-    },
-    {
-        name: 1,
-        email: 1,
-        _id: 1,
-        "podcasts.$": 1
+    try {
+        let feedData = feedRes;
+        let podCheck = await User.find({
+            $and: [ {_id: userId },{ "podcasts._id": feedRes[0]._id }]
+        },
+        {
+            name: 1,
+            email: 1,
+            _id: 1,
+            "podcasts.$": 1
+        }
+        );
+        if (podCheck.length > 0) {
+            return podCheck;
+        }
+        else {
+            await User.findOneAndUpdate({
+                _id: userId
+            }, {
+                $push: {
+                    podcasts: feedData
+                }
+            });
+            let userReturn = await User.findById(userId);
+            return userReturn;
+        };
     }
-    );
-    if (podCheck.length > 0) {
-        return podCheck;
-    }
-    else {
-        await User.findOneAndUpdate({
-            _id: userId
-        }, {
-            $push: {
-                podcasts: feedData
-            }
-        });
-        let userReturn = await User.findById(userId);
-        return userReturn;
+    catch (err) {
+        console.log(err);
     };
 };
 
 // find podcast for user by feed URL
 export const checkPodByURL = async (userId, feedURL) => {
-    const checkURL = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrFeedURLMatch(feedURL),
-            aggrStdProjection(),
-        ]
-    );
-    return checkURL;
+    try {
+        const checkURL = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodUnwind(),
+                aggrFeedURLMatch(feedURL),
+                aggrStdProjection(),
+            ]
+        );
+        return checkURL;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // update podcast and episodes for user - for PUT route
 export const updateUserPodAndEpis = async (userId, podId, feedObj) => {
-    let userPodUrlGet = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrPodIdMatch(podId),
-            aggrStdProjection(),
-        ]
-    );
-    if (userPodUrlGet.length == 0) {
-        return ["podcast added to user"];
-    } else {
-        let feedUrl = userPodUrlGet[0].podcasts.feedurl;
-        await deleteAUserPod(userId, podId);
-        await User.findOneAndUpdate({
-            _id: userId
-        }, {
-            $push: {
-                podcasts: feedObj
-            }
-        });
-        let updatedPodReturn = await User.aggregate(
+    try {
+        let userPodUrlGet = await User.aggregate(
             [
                 aggrUserIdMatch(userId),
                 aggrPodUnwind(),
-                aggrFeedURLMatch(feedUrl),
-                aggrStdProjection()
+                aggrPodIdMatch(podId),
+                aggrStdProjection(),
             ]
         );
-        return updatedPodReturn;
+        if (userPodUrlGet.length == 0) {
+            return ["podcast added to user"];
+        } else {
+            let feedUrl = userPodUrlGet[0].podcasts.feedurl;
+            await deleteAUserPod(userId, podId);
+            await User.findOneAndUpdate({
+                _id: userId
+            }, {
+                $push: {
+                    podcasts: feedObj
+                }
+            });
+            let updatedPodReturn = await User.aggregate(
+                [
+                    aggrUserIdMatch(userId),
+                    aggrPodUnwind(),
+                    aggrFeedURLMatch(feedUrl),
+                    aggrStdProjection()
+                ]
+            );
+            return updatedPodReturn;
+        };
     }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // get a podcast for a user
 export const getUserPodcast = async (userId, podId) => {
-    const podFind = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrPodIdMatch(podId),
-            aggrEpiUnwind(),
-            aggrStdProjection()
-        ]
-    );
-    return podFind;
+    try {
+        const podFind = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodUnwind(),
+                aggrPodIdMatch(podId),
+                aggrEpiUnwind(),
+                aggrStdProjection()
+            ]
+        );
+        return podFind;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // get all podcasts for user
 export const getUserPodcasts = async (userId) => {
-    // let getPods = await User.findById(userId);
-    const getPods = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrEpiUnwind(),
-            aggrStdProjection()
-        ]
-    );
-    return getPods;
+    try {
+        const getPods = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodUnwind(),
+                aggrEpiUnwind(),
+                aggrStdProjection()
+            ]
+        );
+        return getPods;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // get all episodes for all user podcasts
 export const getAllUserEpisodes = async (userId) => {
-    let getEpisodes = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrEpiUnwind(),
-            aggrStdProjection(),
-            {
-                $sort: {
-                    "podcasts.episodes.pubDate": -1
+    try {
+        let getEpisodes = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodUnwind(),
+                aggrEpiUnwind(),
+                aggrStdProjection(),
+                {
+                    $sort: {
+                        "podcasts.episodes.pubDate": -1
+                    }
                 }
-            }
-        ]
-    );
-    return getEpisodes;
+            ]
+        );
+        return getEpisodes;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // get an episode from a podcast from user
 export const getUserEpisode = async (userId, podId, epiId) => {
-    let getEpisode = await User.aggregate(
-        [
-            aggrUserIdMatch(userId),
-            aggrPodUnwind(),
-            aggrPodIdMatch(podId),
-            aggrEpiUnwind(),
-            aggrEpiIdMatch(epiId),
-            aggrStdProjection()
-        ]
-    );
-    return getEpisode;
+    try {
+        let getEpisode = await User.aggregate(
+            [
+                aggrUserIdMatch(userId),
+                aggrPodUnwind(),
+                aggrPodIdMatch(podId),
+                aggrEpiUnwind(),
+                aggrEpiIdMatch(epiId),
+                aggrStdProjection()
+            ]
+        );
+        return getEpisode;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // delete an episode from a podcast from user
 export const deleteAUserEpi = async (userId, podId, epiId) => {
-    const getEpiFromDb = await getUserEpisode(userId, podId, epiId);
-    let epiUrl = getEpiFromDb[0].podcasts.episodes.epi_url;
-    const deleteOneUserEpi = await User.updateOne({ _id: userId, 'podcasts.episodes.epi_url': epiUrl }, {
-        $pull: {
-            'podcasts.$.episodes': {
-                epi_url: epiUrl
+    try {
+        const getEpiFromDb = await getUserEpisode(userId, podId, epiId);
+        let epiUrl = getEpiFromDb[0].podcasts.episodes.epi_url;
+        const deleteOneUserEpi = await User.updateOne({ _id: userId, 'podcasts.episodes.epi_url': epiUrl }, {
+            $pull: {
+                'podcasts.$.episodes': {
+                    epi_url: epiUrl
+                }
             }
-        }
-    });
-    return deleteOneUserEpi;
+        });
+        return deleteOneUserEpi;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };
 
 // delete a podcast and episodes from user
 export const deleteAUserPod = async (userId, podId) => {
-    const deleteUserPod = await User.updateOne(
-        { _id: userId },
-        {
-            $pull:
+    try {
+        const deleteUserPod = await User.updateOne(
+            { _id: userId },
             {
-                "podcasts": {
-                    _id: podId
+                $pull:
+                {
+                    "podcasts": {
+                        _id: podId
+                    }
                 }
             }
-        }
-    );
-    return deleteUserPod;
+        );
+        return deleteUserPod;
+    }
+    catch (err) {
+        console.log(err);
+    };
 };

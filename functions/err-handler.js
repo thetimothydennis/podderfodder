@@ -1,6 +1,6 @@
 // error handling
 function errConsole (error) {
-    return console.log(error.message)
+    return console.log(error)
 };
 
 function err404 (error, res) {
