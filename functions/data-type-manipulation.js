@@ -3,8 +3,8 @@ import he from 'he';
 
 // strips HTML formatted characters and tags from input parameter
 export const removeHTML = (content) => {
-    content = content.replace(/(<([^>]+)>)/gi, " ");
-    content = content.replace(/(undefined)/gi, " ");
+    content = content.replace(/(<([^>]+)>)/gi, "");
+    content = content.replace(/(undefined)/gi, "");
     content = he.decode(content);
     return content;
 };

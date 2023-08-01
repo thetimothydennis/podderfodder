@@ -1,4 +1,4 @@
-import { removeHTML, deColonDuration } from "./functions/data-type-manipulation";
+import { removeHTML, deColonDuration } from "../functions/data-type-manipulation";
 
 describe('removeHTML', () => {
     test('input <a href="http://google.com" target="_blank">Link</a> and get back Link', () => {

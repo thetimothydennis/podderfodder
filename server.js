@@ -19,10 +19,18 @@ const PORT = process.env.PORT;
 const httpPORT = process.env.HTTP_PORT;
 
 // starts the http redirect server
-http.createServer(httpApp)
+if (process.env.NODE_ENV === "prod") {
+    http.createServer(httpApp)
     .listen(httpPORT, () => {
         console.log(`http app listening on port ${httpPORT}`);
     });
+} else {
+    http.createServer(app)
+        .listen(httpPORT, () => {
+            console.log(`app listening on port ${httpPORT}`)
+        });
+};
+
 
 // starts the https server
 https.createServer(ssl_options, app)

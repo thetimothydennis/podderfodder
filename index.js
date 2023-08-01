@@ -7,6 +7,7 @@ import cors from 'cors';
 import passport from 'passport';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
+import helmet from 'helmet';
 
 // router imports
 import authRoutes from './routes/auth-routes.js';
@@ -31,6 +32,9 @@ const sessionOptions = {
 
 // app and hattpApp instantiations
 const app = express();
+
+app.disable('x-powered-by');
+app.use(helmet({ contentSecurityPolicy: false}))
 
 // initializing the User strategy with passport
 passport.use(User.createStrategy());
