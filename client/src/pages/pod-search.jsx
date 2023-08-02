@@ -37,26 +37,26 @@ function PodSearch (props) {
     useEffect(() => {
         setRender(response.map((item) => (
             <div className="row epiRow" key={item.collectionId}>
-                <div className="col">
-                    {item.collectionName}
+                <div className="col-sm">
+                    <b>{item.collectionName}</b>
                 </div>
-                <div className="col">
+                <div className="col-sm">
                     <img alt="podcast_image" 
                         src={item.artworkUrl100} 
                     />
                 </div>
-                <div className="col">
+                <div className="col-sm allEpiAuthor">
                     {item.artistName}
                 </div>
-                <div className="col">
+                <div className="col-sm">
                     <a href={item.collectionViewUrl} 
                         target="_blank" 
                         rel="noreferrer"
                     >
-                        Link
+                        More details
                     </a>
                 </div>
-                <div className="col">
+                <div className="col-sm">
                     <button id={-4}
                             type="button"
                             className="btn btn-dark"
@@ -76,12 +76,12 @@ function PodSearch (props) {
             <h1>Search for Podcasts</h1>
                 <div className="container">
                     <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
-                        <label className="col form-control" htmlFor="feedInput">Input RSS feed URL
+                        <label className="col-sm form-control" htmlFor="feedInput">Input RSS feed URL
                             <input name="feedInput" 
                                     type="text" 
                                     value={feedInput} 
                                     onChange={e => setFeedInput(e.target.value)} 
-                                    className="col form-control"/>
+                                    className="col-sm form-control"/>
                         </label>
                     </form>
                         <button id={-4}
@@ -92,33 +92,16 @@ function PodSearch (props) {
                         </button>
                     <p>or</p>
                     <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
-                        <label className="col form-control" htmlFor="searchInput">Type search term
+                        <label className="col-sm form-control" htmlFor="searchInput">Type search term
                         <input name="searchInput" 
                                 type="text" 
                                 value={input} 
                                 onChange={e => setInput(e.target.value)} 
-                                className="col form-control"
+                                className="col-sm form-control"
                         /></label>
                     </form>
                 </div>
                 <div className="container">
-                        <div className="row epiRow">
-                            <div className="col">
-                                Podcast Name
-                            </div>
-                            <div className="col">
-                                Artwork
-                            </div>
-                            <div className="col">
-                                Artist
-                            </div>
-                            <div className="col">
-                                Preview feed
-                            </div>
-                            <div className="col">
-                                Link to RSS
-                            </div>
-                        </div>
                     {render}
             </div>
         </div>

@@ -36,11 +36,11 @@ function AllPods(props) {
                 </h1>
                 <div className="container">
                     {podcasts.map((item, x) => (
-                            <div className="row epiRow" 
-                                key={x}
-                                id={item._id}
-                            >
-                            <div className="col" onClick={handlePodClick} 
+                        <div className="row epiRow" 
+                              key={x}
+                              id={item._id}
+                        >
+                            <div className="col-sm" onClick={handlePodClick} 
                             id={item._id} 
                             >
                                 <img alt="podcast_show_image"
@@ -48,22 +48,22 @@ function AllPods(props) {
                                 src={item.image} 
                             />
                             </div>
-                            <div className="col" onClick={handlePodClick} 
+                            <div className="col-sm" onClick={handlePodClick} 
                                 id={item._id} 
                             >
-                                {item.show_title}
+                                <b>{item.show_title}</b>
                             </div >
-                            <div className="col" onClick={handlePodClick} 
+                            <div className="col-sm allEpiAuthor" onClick={handlePodClick} 
                                 id={item._id}
                             >
                                 {item.author}
                             </div>
-                            <div className="col" onClick={handlePodClick} 
+                            <div className="col-sm" onClick={handlePodClick} 
                                 id={item._id}
                             >
                                 {item.description.slice(0, 250)}
                             </div>
-                            <div className="col" id={item._id} 
+                            <div className="col-sm" id={item._id} 
                                 onClick={handleDeleteClick}
                             >
                                 <button id='-6'

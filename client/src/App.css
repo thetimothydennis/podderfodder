@@ -14,14 +14,14 @@ body {
   color: #ddd
 }
 
-label.col {
+label.col-sm {
   background-color: #1d1d1d;
   color: #ccc;
   margin: -1.5%
 }
 
 
-input.col[type='text'], input.col[type='password'] {
+input.col-sm[type='text'], input.col-sm[type='password'] {
   background-color: #9a9a9a;
   color: #000;
   font-weight: bold;
@@ -97,4 +97,13 @@ li.ruleItem {
   list-style:disc;
   position: relative;
   left: 7.5%
+}
+
+.allEpiAuthor {
+  font-size: smaller;
+  font-style: italic;
+}
+
+.allEpiDuration {
+  font-size: smaller;
 }

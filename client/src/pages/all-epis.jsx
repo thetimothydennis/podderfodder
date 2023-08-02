@@ -35,27 +35,27 @@ function AllEpis (props) {
                         key={x} 
                         id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                     >
-                        <div className="col" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+                        <div className="col-sm" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
-                            {item.podcasts.episodes.title}
+                            <b>{item.podcasts.episodes.title}</b>
                         </div>
-                        <div className="col" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+                        <div className="col-sm allEpiAuthor" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
                             {item.podcasts.show_title}
                         </div>
-                        <div className="col" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+                        <div className="col-sm allEpiAuthor" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
                             { item.podcasts.author.slice(0, 25) }
                         </div>
-                        <div className="col" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+                        <div className="col-sm allEpiDuration" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
                             {item.podcasts.episodes.duration} min.
                         </div>
-                        <div className="col" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+                        <div className="col-sm" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
                             {item.podcasts.episodes.content.slice(0, 100)}
                         </div>
-                        <div className="col" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+                        <div className="col-sm allEpiDuration" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
                             {item.podcasts.episodes.pubDate.toString().slice(0, 10)}
                         </div>

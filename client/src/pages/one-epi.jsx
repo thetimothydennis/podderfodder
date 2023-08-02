@@ -36,8 +36,8 @@ function OneEpi (props) {
             <div>
                 <h1 id={props.podId}>{showTitle}</h1>
                 <h2>{title}</h2>
-                <h4>{new Date(date).toString().slice(0, 15)}</h4>
-                <h3>{author}</h3>
+                <h4 className="allEpiDuration">{new Date(date).toString().slice(0, 15)}</h4>
+                <h3 className="allEpiAuthor">{author}</h3>
                 <img className="epiImg" 
                             alt="podcast_image" 
                             src={image}

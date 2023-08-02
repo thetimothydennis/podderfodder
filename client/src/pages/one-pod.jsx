@@ -78,16 +78,16 @@ function OnePod(props) {
                         key={x} 
                         value={item._id}
                         id={`${props.podId}/${item._id}`}>
-                        <div className="col" id={`${props.podId}/${item._id}`} >
-                            {item.title}
+                        <div className="col-sm" id={`${props.podId}/${item._id}`} >
+                            <b>{item.title}</b>
                         </div>
-                        <div className="col" id={`${props.podId}/${item._id}`}>
+                        <div className="col-sm allEpiDuration" id={`${props.podId}/${item._id}`}>
                             {item.duration} min.
                         </div>
-                        <div className="col" id={`${props.podId}/${item._id}`}>
+                        <div className="col-sm allEpiDuration" id={`${props.podId}/${item._id}`}>
                             { item.pubDate.toString().slice(0, 10) }
                         </div>
-                        <div className="col" id={`${props.podId}/${item._id}`}>
+                        <div className="col-sm" id={`${props.podId}/${item._id}`}>
                             {item.content.slice(0, 200)}...
                         </div>
                         <div>
