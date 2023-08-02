@@ -5,12 +5,12 @@ export function UserLogin () {
             <p>You must log in before accessing the platform.</p>
             <form className="container" method="POST" action="/api/login">
                 <p className="row form-group">
-                    <label className="col form-control" htmlFor="username">username
-                    <input className="col form-control" type="text" name="username" id="username" /></label>
+                    <label className="col-sm form-control" htmlFor="username">username
+                    <input className="col-sm form-control" type="text" name="username" id="username" /></label>
                 </p>
                 <p className="row form-group">
-                    <label className="col form-control" htmlFor="password">password
-                    <input className="col form-control" type="password" name="password" id="password" /></label>
+                    <label className="col-sm form-control" htmlFor="password">password
+                    <input className="col-sm form-control" type="password" name="password" id="password" /></label>
                 </p>
                 <button type="submit" className="btn btn-dark">Login</button>
             </form>

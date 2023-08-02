@@ -7,8 +7,8 @@ export function ForgotPassword () {
             <p>To start the password recovery process, provide the email address you used during sign-up.</p>
             <form className="container" method="POST" action="/api/forgotpassword">
                 <p className="row form-group">
-                    <label className="col form-control" htmlFor="email">email
-                    <input className="col form-control" type="text" name="email" id="email" /></label>
+                    <label className="col-sm form-control" htmlFor="email">email
+                    <input className="col-sm form-control" type="text" name="email" id="email" /></label>
                 </p>
                 <button type="submit" className="btn btn-dark">Send reset link</button>
             </form>
@@ -32,12 +32,12 @@ export function ResetPassword () {
                     <li className="ruleItem">one numeric digit</li>
                 </ul>
                 <p className="row form-group">
-                    <label className="col form-control" htmlFor="newpassword">new password
-                    <input className="col form-control" type="password" name="newpassword" id="newpassword" /></label>
+                    <label className="col-sm form-control" htmlFor="newpassword">new password
+                    <input className="col-sm form-control" type="password" name="newpassword" id="newpassword" /></label>
                 </p>
                 <p className="row form-group">
-                    <label className="col form-control" htmlFor="newpassmatch">new password again
-                    <input className="col form-control" type="password" name="newpassmatch" id="newpassmatch" /></label>
+                    <label className="col-sm form-control" htmlFor="newpassmatch">new password again
+                    <input className="col-sm form-control" type="password" name="newpassmatch" id="newpassmatch" /></label>
                 </p>
                 <button type="submit" className="btn btn-dark">Reset password</button>
             </form>
