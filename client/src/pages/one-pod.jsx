@@ -68,7 +68,7 @@ function OnePod(props) {
             <button id={-8} 
                     onClick={updatePod}
                     type="button"
-                    className="btn btn-dark">
+                    className="btn btn-dark onePodBtn">
                 Update Pod Feed
             </button>
             <p>{showDesc}</p>
