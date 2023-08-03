@@ -15,6 +15,7 @@ export function UserLogin () {
                 <button type="submit" className="btn btn-dark">Login</button>
                 <p>Or, you can login with one of these social providers:</p>
                 <a type="btn" className="btn btn-secondary" href="/github">Login with Github</a>
+                <a type="btn" className="btn btn-secondary" href="/google">Login with Google</a>
             </form>
             <p>Don&apos;t have an account yet? Create one <a href="/register">here</a>.</p>
             <p>Forgot your password? Click <a href="/forgotpassword">here</a>.</p>

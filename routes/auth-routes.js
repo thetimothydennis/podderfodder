@@ -22,5 +22,9 @@ router.post('/api/resetpassword/:token', AuthCTRL.postResetPassword);
 router.get('/oauth/github/callback', AuthCTRL.handleGithubCallback);
 // route for logging in with github
 router.get('/github', AuthCTRL.handleGithubLogin);
+// callback route for google oauth
+router.get('/oauth/google/callback', AuthCTRL.handleGoogleCallback)
+// route for logging in with google
+router.get('/google', AuthCTRL.handleGoogleLogin);
 
 export default router;

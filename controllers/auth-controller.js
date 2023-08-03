@@ -162,3 +162,13 @@ export const handleGithubCallback = passport.authenticate(
 );
 
 export const handleGithubLogin = passport.authenticate('github');
+
+export const handleGoogleCallback = passport.authenticate(
+    "google",
+    {
+        failureRedirect: '/login',
+        successRedirect: '/app'
+    }
+);
+
+export const handleGoogleLogin = passport.authenticate('google', { scope: ['profile', 'email'] });

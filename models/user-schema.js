@@ -69,6 +69,9 @@ const userSchema = new mongoose.Schema({
     githubId: {
         type: String
     },
+    googleId: {
+        type: String
+    },
     podcasts: [PodcastSchema]
 });
 
