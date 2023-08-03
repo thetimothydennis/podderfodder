@@ -15,25 +15,28 @@ export function configurePassport (passport) {
         githubConfig,
         async (accessToken, refreshToken, profile, done) => {
             try {
-                console.log(user)
                 let user = await User.findOne({ githubId: profile.id });
+                console.log(user)
                 if (user) {
                     return done(null, user)
-                };
-                const newUser = new User({
-                    githubId: profile.id
-                });
-                if (profile.emails && profile.emails.length > 0) {
-                    newUser.email = profile.emails[0].value;
-                }
-                if (profile.displayName) {
-                    newUser.name = profile.displayName;
                 } else {
-                    newUser.name = profile.username;
+                    console.log(profile)
+                    const newUser = new User({
+                        githubId: profile.id
+                    });
+                    if (profile.emails && profile.emails.length > 0) {
+                        newUser.email = profile.emails[0].value;
+                    }
+                    if (profile.displayName) {
+                        newUser.name = profile.displayName;
+                    } else {
+                        newUser.name = profile.username;
+                    }
+                    newUser.username = profile.username;
+                    console.log(newUser)
+                    await newUser.save();
+                    return done(null, newUser);
                 }
-                newUser.username = profile.username;
-                await newUser.save();
-                done(null, newUser)
             } catch (err) {
                 ;
             };

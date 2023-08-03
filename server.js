@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 dotenv.config({ path: `./.env.${process.env.NODE_ENV}`})
 
 import http from 'http';
-import https from 'https';
+import https, { globalAgent } from 'https';
+
+globalAgent.options.rejectUnauthorized = false;
 
 import app from './index.js';
 import httpApp from './httpApp.js';

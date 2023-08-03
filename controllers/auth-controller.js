@@ -157,7 +157,7 @@ export const handleGithubCallback = passport.authenticate(
     "github",
     {
         failureRedirect: '/login',
-        successRedirect: '/'
+        successRedirect: '/app'
     }
 );
 
