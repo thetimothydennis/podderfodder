@@ -6,13 +6,7 @@ import https from 'https';
 
 import app from './index.js';
 import httpApp from './httpApp.js';
-
-// certificate options for https server
-const ssl_options = {
-    key: process.env.SSL_KEY,
-    cert: process.env.SSL_CERT,
-    ca: process.env.SSL_CA
-};
+import { ssl_options } from './config/certs.js';
 
 // imports port environment variables for https and http servers
 const PORT = process.env.PORT;
@@ -30,7 +24,6 @@ if (process.env.NODE_ENV === "prod") {
             console.log(`app listening on port ${httpPORT}`)
         });
 };
-
 
 // starts the https server
 https.createServer(ssl_options, app)

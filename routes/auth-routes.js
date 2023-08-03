@@ -18,5 +18,9 @@ router.post('/api/changepassword', AuthCTRL.postChangePassword);
 router.post('/api/forgotpassword', AuthCTRL.postForgotPassword);
 // route for resetting password after recovery email is sent
 router.post('/api/resetpassword/:token', AuthCTRL.postResetPassword);
+// callback route for github oauth
+router.get('/oauth/github/callback', AuthCTRL.handleGithubCallback);
+// route for logging in with github
+router.get('/github', AuthCTRL.handleGithubLogin);
 
 export default router;

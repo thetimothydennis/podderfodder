@@ -67,6 +67,9 @@ const userSchema = new mongoose.Schema({
     resetPasswordToken: {
         type: String
     },
+    githubId: {
+        type: String
+    },
     podcasts: [PodcastSchema]
 });
 

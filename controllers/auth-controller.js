@@ -1,9 +1,12 @@
 import passport from 'passport';
+import { configurePassport } from '../config/passport.js';
 import { User } from '../models/user-schema.js';
 import crypto from 'crypto';
 import { checkEmail, isEmailFormatValid, isMXRecordValid, isBlacklisted } from 'email-validator-node';
 import MailService from '@sendgrid/mail';
 import { errHandler } from '../functions/err-handler.js';
+
+configurePassport(passport);
 
 MailService.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -149,3 +152,13 @@ export const postResetPassword = async (req, res) => {
         errHandler(err, res);
     };
 };
+
+export const handleGithubCallback = passport.authenticate(
+    "github",
+    {
+        failureRedirect: '/login',
+        successRedirect: '/'
+    }
+);
+
+export const handleGithubLogin = passport.authenticate('github');
