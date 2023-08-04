@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/api/search/', search);
 
 // attaches auth middleware to all API routes
-router.use(isAuthenticated);
+// router.use(isAuthenticated);
 
 router.route('/api/user/:id')
     // gets all podcasts for user

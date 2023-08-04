@@ -45,7 +45,7 @@ function OneEpi (props) {
                 />
                 <br />
                 <ReactAudioPlayer className="audioPlayer" src={epi} title={`${title} - ${showTitle}`} controls />
-                <p>{content}</p>
+                <p className="oneEpiContent">{content}</p>
             </div>
         </div>
     );
