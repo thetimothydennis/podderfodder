@@ -64,15 +64,6 @@ const aggrEpiUnwind = () => {
     };
 };
 
-// set podcasts array to empty
-const aggrDeleteAllPOds = () => {
-    return {
-        $set: {
-            podcasts: []
-        }
-    };
-};
-
 // standard aggregate projection
 const aggrStdProjection = () => {
     return {

@@ -120,10 +120,10 @@ const epiHandler = async (itemsArr) => {
                     } = episode;
                 let web_url = link;
                 let epi_url = url;
-                if (content.match(/(<([^>]+)>)/gi)) {
+                if (content && content.match(/(<([^>]+)>)/gi)) {
                     content = reformat.removeHTML(content);
                 };
-                if (duration.match(/:/gi)) {
+                if (duration && duration.match(/:/gi)) {
                     duration = reformat.deColonDuration(duration);
                 };
                 duration = Math.round(duration / 60);
@@ -168,7 +168,7 @@ export const ingestFeed = async (feedObj) => {
             categories,
             items
         } = feedObj;
-        if (description.match(/(<([^>]+)>)/gi)) {
+        if (description && description.match(/(<([^>]+)>)/gi)) {
             description = reformat.removeHTML(description);
         };
         let checkPod = await Podcast.find({ feedurl: feedUrl });
@@ -306,7 +306,7 @@ export const updatePodFeed = async (feedObj) => {
             id
         } = feedObj;
         // use the destructured elements to find the podcast, update the values
-        let updates = await Podcast.findByIdAndUpdate({ _id: id }, {
+        await Podcast.findByIdAndUpdate({ _id: id }, {
             show_title: title,
             description: description,
             author: author,
@@ -327,7 +327,6 @@ export const updatePodFeed = async (feedObj) => {
             }
         });
         // return the updated podcast
-        // let response = await aggregatePipeline(feedUrlMatch(feedUrl), standardProject);
         return response;
     }
     catch (err) {
