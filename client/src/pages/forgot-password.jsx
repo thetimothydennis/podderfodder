@@ -25,7 +25,7 @@ export function ResetPassword () {
             <h1>Reset Password</h1>
             <p>Enter a new password twice to regain access to your account.</p>
             <form className="container" method="POST" action={`/api/resetpassword/${token}`}>
-                <ul className="ruleList">Password requirements: 
+                <ul className="ruleList"><b>Password requirements: </b>
                     <li className="ruleItem">between 7 and 15 characters</li>
                     <li className="ruleItem">one uppercase letter</li>
                     <li className="ruleItem">one lowercase letter</li>

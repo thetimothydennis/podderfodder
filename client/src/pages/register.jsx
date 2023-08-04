@@ -1,8 +1,10 @@
 export function UserRegister () {
     return (
-        <div className="Epi">
+        <div>
             <h1>Podder Fodder Registration</h1>
             <p>Provide your name, a valid email address, a username and enter your password twice to register.</p>
+
+            <div className="Epi">
             <form className="container" method="POST" action="/api/register">
                 <p className="row form-group">
                     <label className="col-sm form-control" htmlFor="name">name
@@ -16,7 +18,7 @@ export function UserRegister () {
                     <label className="col-sm form-control" htmlFor="username">username
                     <input className="col-sm form-control" type="text" name="username" id="username" /></label>
                 </p>
-                <ul className="ruleList">Password requirements: 
+                <ul className="ruleList"><b>Password requirements: </b>
                     <li className="ruleItem">between 7 and 15 characters</li>
                     <li className="ruleItem">one uppercase letter</li>
                     <li className="ruleItem">one lowercase letter</li>
@@ -32,7 +34,8 @@ export function UserRegister () {
                 </p>
                 <button type="submit" className="btn btn-dark">Register</button>
             </form>
-            <p>If you provide an invalid email address or password, or if your passwords don&apos;t match,<br /> you will be redirected back here</p>
         </div>
+        <p>If you provide an invalid email address or password, or if your passwords don&apos;t match, you will be redirected back here</p>
+    </div>
     );
 }

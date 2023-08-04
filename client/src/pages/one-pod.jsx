@@ -87,7 +87,7 @@ function OnePod(props) {
                         <div className="col-sm allEpiDuration" id={`${props.podId}/${item._id}`}>
                             { item.pubDate.toString().slice(0, 10) }
                         </div>
-                        <div className="col-sm" id={`${props.podId}/${item._id}`}>
+                        <div className="col-sm epiContent" id={`${props.podId}/${item._id}`}>
                             {item.content.slice(0, 200)}...
                         </div>
                         <div>

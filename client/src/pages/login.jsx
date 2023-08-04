@@ -1,4 +1,17 @@
+import { useState } from 'react';
+
 export function UserLogin () {
+    const [gitSrc, setGitSrc] = useState('/buttons/github_normal.png');
+    const [googSrc, setGoogSrc] = useState('/buttons/google_normal.png');
+
+    const handleGHClick = () => {
+        setGitSrc('/buttons/github_pressed.png');
+    };
+
+    const handleGoogClick = () => {
+        setGoogSrc('/buttons/google_pressed.png');
+    };
+
     return (
         <div className="Epi">
             <h1>Podder Fodder Login</h1>
@@ -13,14 +26,20 @@ export function UserLogin () {
                     <input className="col-sm form-control" type="password" name="password" id="password" /></label>
                 </p>
                 <button type="submit" className="btn btn-dark">Login</button>
+                <p>Don&apos;t have an account yet? Create one <a href="/register">here</a>.</p>
+                <p>Forgot your password? Click <a href="/forgotpassword">here</a>.</p>
                 <p>Or, you can login with one of these social providers:</p>
                 <div className="row">
-                    <a className="col-sm" href="/github"><img height="45px" alt="login with github" src="/buttons/github_normal.png" /></a>
-                    <a className="col-sm" href="/google"><img height="45px" alt="login with google" src="/buttons/google_normal.png" /></a>
+                    <a className="col-sm" href="/github" onClick={handleGHClick}>
+                        <img id="github" height="45px" alt="login with github" src={gitSrc} />
+                    </a>
+                    <a className="col-sm" href="/google" onClick={handleGoogClick}>
+                        <img id="google" height="45px" alt="login with google" src={googSrc} />
+                    </a>
                 </div>
+                <p className="note">NOTE: If you've already used a Google email address to sign up, you will not be able to sign in with Google using that account.</p>
             </form>
-            <p>Don&apos;t have an account yet? Create one <a href="/register">here</a>.</p>
-            <p>Forgot your password? Click <a href="/forgotpassword">here</a>.</p>
+
         </div>
     );
 }
