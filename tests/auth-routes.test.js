@@ -32,6 +32,32 @@ describe('unauthenticated routes', () => {
 });
 
 describe('authenticated routes', () => {
+    const agent = req.agent(app);
+    beforeAll(async () => {
+        const response = await agent.post('/api/login')
+        .type('form')
+        .send({ username: process.env.TEST_USER, password: process.env.TEST_PASS })
+        .expect(302);
+        expect(response.header.location).toBe('/app');
+    });
+
+    test('access /changepassword after login', async () => {
+        const response = await agent.get('/changepassword');
+        expect(response.statusCode).toBe(200)
+    });
+
+    test('access /app after login', async () => {
+        const response = await agent.get('/app');
+        expect(response.statusCode).toBe(200);
+    });
+
+    test('get user data after login', async () => {
+        const response = await agent.get('/api/user-data');
+        expect(response.statusCode).toBe(200);
+    });
+});
+
+describe('test api routes after login', () => {
     const agent = req.agent(app)
     beforeAll(async () => {
         const response = await agent.post('/api/login')
@@ -39,10 +65,12 @@ describe('authenticated routes', () => {
         .send({ username: process.env.TEST_USER, password: process.env.TEST_PASS })
         .expect(302)
         expect(response.header.location).toBe('/app')
-    })
+    });
 
-    test('access /app after login', async () => {
-        const response = await agent.get('/changepassword');
-        expect(response.statusCode).toBe(200)
-    })
+    test('get user and podcasts', async () => {
+        const response = await agent.get('/api/user/64c3f9c28cd1da806e118c75');
+        expect(response.statusCode).toBe(200);
+        expect(response.body.length > 0);
+        expect(response.body[0].podcasts.length >= 0);
+    });
 });
