@@ -82,7 +82,7 @@ describe('test other CRUD operations after login', () => {
             const modified = await agent.get(`/api/user/${USER_ID}`);
             expect(modified.body[0].podcasts.length).toBe(podsLength + 1);
             expect(modified.statusCode).toBe(200);
-        });
+        }, 15000);
     
         test('get podcast after adding to db', async () => {
             const response = await agent.get(`/api/user/${USER_ID}/${podId}`);

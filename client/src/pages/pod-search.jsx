@@ -21,7 +21,7 @@ function PodSearch (props) {
         await axios.post(
             `${apiCall}/api/user/${props.userId}`, 
             {
-                feedUrl: inputArg
+                feedurl: inputArg
             }
         ).then((res) => {
             let pod_id = res.data[0].podcasts.pod_id;
