@@ -43,6 +43,11 @@ describe('test api get routes after login', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(2);
     });
+
+    test("attempting to access another user's account throws an error", async () => {
+        const response = await agent.get(`/api/user/${process.env.TEST_USER2_ID}`);
+        expect(response.statusCode).toBe(401);
+    });
 });
 
 describe('test other CRUD operations after login', () => {
