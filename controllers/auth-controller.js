@@ -66,23 +66,16 @@ export const getUserData = (req, res) => {
 // handler for changing authenticated user password
 export const postChangePassword = async (req, res) => {
     try {
-        let { username, oldpassword, newpassword, newpassmatch } = req.body;
-        let testNewPass = testPassword(newpassword)
+        let { username } = req.user;
+        let { newpassword, newpassmatch } = req.body;
+        let testNewPass = testPassword(newpassword);
         if ((newpassword !== newpassmatch) || (testNewPass === null)) {
             res.redirect('/changepassword');
         } else {
-            await User.findByUsername(username, (err, user) => {
-                if (err) {
-                    res.send(err);
-                } else {
-                    user.changePassword(oldpassword, newpassword, (err) => {
-                        if (err) {
-                            res.send(err);
-                        } else {
-                            res.redirect(`/login`);
-                        };
-                    });
-                };
+            let updateUser = await User.findOne({username: username});
+            updateUser.setPassword(newpassword, async () => {
+                await updateUser.save();
+                res.redirect('/login')
             });
         };
     }
