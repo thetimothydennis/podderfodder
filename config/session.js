@@ -4,7 +4,7 @@ import MongoStore from 'connect-mongo';
 dotenv.config({ path: `../.env.${process.env.NODE_ENV}`})
 
 // options for setting up the user session, storing it in mongoDB
-export const sessionOptions = {
+let sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
@@ -14,3 +14,12 @@ export const sessionOptions = {
         maxAge: parseInt(process.env.SESSION_COOKIE_MAX_AGE)
     }
 };
+
+export function configureSession() {
+    if (process.env.NODE_ENV === "test") {
+        return sessionOptions;
+    } else {
+        sessionOptions.cookie.secure = true;
+        return sessionOptions;
+    }
+}

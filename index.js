@@ -13,7 +13,7 @@ import authRoutes from './routes/auth-routes.js';
 import UsersRouter from './routes/user-API-routes.js';
 import FrontendRoutes from './routes/frontend-routes.js';
 
-import { sessionOptions } from './config/session.js';
+import { configureSession } from './config/session.js';
 
 dotenv.config({ path: `./.env.${process.env.NODE_ENV}`})
 configurePassport(passport);
@@ -25,7 +25,7 @@ app.disable('x-powered-by');
 app.use(helmet({ contentSecurityPolicy: false}))
 
 // initializing the user session with express-session
-app.use(session(sessionOptions));
+app.use(session(configureSession()));
 
 // attaches cors middleware to allow for cross origin requests
 app.use(cors());
