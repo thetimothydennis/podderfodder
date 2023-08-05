@@ -115,7 +115,7 @@ export const postForgotPassword = async (req, res) => {
                 console.log(error);
             });
     
-        res.redirect('/forgotpassword');
+        res.redirect('/login');
     }
     catch (err) {
         errHandler(err, res);
