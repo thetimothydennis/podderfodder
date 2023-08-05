@@ -12,7 +12,7 @@ export const ingestPod = async (req, res, next) => {
             next();
         }
         else {
-            let feedUrl = req.body.feedUrl;
+            let feedUrl = req.body.feedurl;
             req.feedurl = feedUrl;
             let insertPod = await feedFunctions.parseFeed(feedUrl);
             let feedResponse = await podcasts.ingestFeed(insertPod);

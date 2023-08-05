@@ -11,16 +11,15 @@ export const addUserPods = async (req, res, next) => {
         const feedUrl = feedDb[0].feedurl;
         const checkUserPod = await users.checkPodByURL(userId, feedUrl);
         if (checkUserPod.length > 0) {
-            res.send(checkUserPod);
+            let podId = checkUserPod[0].podcasts.pod_id;
+            await users.deleteAUserPod(userId, podId)
         }
-        else {
             await users.addPodsToUser(userId, feedDb);
             const getAddedPod = await users.checkPodByURL(userId, feedUrl);
-            req.podid = getAddedPod[0].podcasts.pod_id;
-            req.id = userId;
+            req.params.podid = getAddedPod[0].podcasts.pod_id;
+            req.params.userid = userId;
             console.log('pod added to user')
             next();
-        };
     }
     catch (error) {
         errHandler(error, res);
@@ -33,13 +32,6 @@ export const updateOnePodcast = async (req, res, next) => {
     try {
         // destructure req.params object
         let {podid, userid} = req.params;
-        if (req.podid) {
-            req.podid = req.podid.toString();
-            podid = req.podid;
-        };
-        if (req.id) {
-            userid = req.id;
-        };
         // get the feed url for the pod from db
         let feedUrl;
         if (req.podid || req.id) {

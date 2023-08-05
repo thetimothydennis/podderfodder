@@ -184,6 +184,7 @@ export const ingestFeed = async (feedObj) => {
                 categories: categories,
                 episodes: []
             });
+            console.log(insertPod)
             await insertPod.save();
             // inserting episodes
             let newEpis = await epiHandler(items);
