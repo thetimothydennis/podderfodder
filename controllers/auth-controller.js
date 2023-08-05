@@ -75,7 +75,10 @@ export const postChangePassword = async (req, res) => {
             let updateUser = await User.findOne({username: username});
             updateUser.setPassword(newpassword, async () => {
                 await updateUser.save();
-                res.redirect('/login')
+                req.session.destroy();
+                req.logout(() => {
+                    res.redirect("/login");
+                });
             });
         };
     }
