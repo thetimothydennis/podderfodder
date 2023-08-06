@@ -7,7 +7,6 @@ function Player (props) {
 
     useEffect(() => {
         setPodart(artwork)
-        console.log(podart)
     }, [artwork])
 
 
@@ -17,7 +16,7 @@ function Player (props) {
             artist={author}
             album={showTitle}
             artwork={[
-                podart
+                {src: podart}
             ]}
             onPlay={audio.play}
             onPause={audio.pause}

@@ -4,21 +4,35 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 import Player from '../../components/audio-player.jsx';
 
-
-const loadImage = (image, setImageDimensions, setImageExtension) => {
+function convertImageToBase64(imgUrl, setImgSrc) {
     const img = new Image();
-    img.src = image;
     img.onload = () => {
-        setImageDimensions({
-            height: img.height,
-            width: img.width
-        })
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.height = img.naturalHeight;
+        canvas.width = img.naturalWidth;
+        ctx.drawImage(img, 0, 0);
+        let base64 = canvas.toDataURL();
+        setImgSrc(base64);
     }
-    let imgSrcArr = img.src.split('/');
-    let imgSrcName = imgSrcArr[imgSrcArr.length - 1].split("?")
-    let imgExt = imgSrcName[0].split(".")[1]
-    setImageExtension(`image/${imgExt}`)
+    img.crossorigin = "anonymous";
+    img.src = imgUrl;
 }
+
+// const loadImage = (image, setImageDimensions, setImageExtension) => {
+//     const img = new Image();
+//     img.src = image;
+//     img.onload = () => {
+//         setImageDimensions({
+//             height: img.height,
+//             width: img.width
+//         })
+//     }
+//     let imgSrcArr = img.src.split('/');
+//     let imgSrcName = imgSrcArr[imgSrcArr.length - 1].split("?")
+//     let imgExt = imgSrcName[0].split(".")[1]
+//     setImageExtension(`image/${imgExt}`)
+// }
 
 function OneEpi (props) {
 
@@ -33,20 +47,11 @@ function OneEpi (props) {
     const [date, setDate] = useState(formatDate('2004-02-01T00:00:00Z'));
     const [epi, setEpi] = useState('');
     const [content, setContent] = useState('');
-    const [imageDimensions, setImageDimensions] = useState({});
-    const [imageExtension, setImageExtension] = useState('');
-    const [imgObj, setImgObj] = useState({ src: 'waiting.svg' })
+    const [imgSrc, setImgSrc] = useState('');
 
     useEffect(() => {
-        setImgObj({
-            src: image,
-            sizes: `${imageDimensions.height}x${imageDimensions.width}`,
-            type: imageExtension
-        })
-    }, [image, imageDimensions, imageExtension, setImgObj])
-
-    useEffect(() => {
-        loadImage(image, setImageDimensions, setImageExtension);
+        convertImageToBase64(image, setImgSrc);
+        console.log(imgSrc)
     }, [image])
 
     const getEpisode = useCallback(async () => {
@@ -82,7 +87,7 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <Player title={title} author={author} showTitle={showTitle} artwork={imgObj} audio={epi} />
+                <Player title={title} author={author} showTitle={showTitle} artwork={imgSrc} audio={epi} />
                 <audio className="audioPlayer" src={epi} controls />
 
                 <p className="oneEpiContent">{content}</p>
