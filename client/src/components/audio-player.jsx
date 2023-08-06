@@ -12,7 +12,7 @@ function Player (props) {
             artwork={[
                 {
                     src: {artwork},
-                    type: 'image/jpeg',
+                    type: 'image/*',
                     size: {dimensions}
                 }
             ]}

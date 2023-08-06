@@ -35,9 +35,11 @@ function OneEpi (props) {
 
     useEffect(() => {
         loadImage(setImageDimensions, image);
-        console.log(imageDimensions)
-        setComboImgDimensions(`${imageDimensions.height}x${imageDimensions.width}`)
     }, [image])
+
+    useEffect(() => {
+        setComboImgDimensions(`${imageDimensions.height}x${imageDimensions.width}`);
+    }, [imageDimensions])
 
     const getEpisode = useCallback(async () => {
         let res = await axios.get(
