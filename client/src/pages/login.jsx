@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export function UserLogin () {
     const [gitSrc, setGitSrc] = useState('/buttons/github_normal.png');
     const [googSrc, setGoogSrc] = useState('/buttons/google_normal.png');
+
+    useEffect(() => {
+        document.title = 'Login - Podder Fodder';
+    }, [])
 
     const handleGHClick = () => {
         setGitSrc('/buttons/github_pressed.png');

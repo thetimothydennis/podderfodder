@@ -5,11 +5,16 @@ import ReactAudioPlayer from 'react-audio-player';
 import { apiCall } from '../functions/api-call.jsx';
 
 function OneEpi (props) {
+
+    function formatDate (date) {
+        return new Date(date).toString().slice(0, 15);
+    };
+
     const [showTitle, setShowTitle] = useState('');
     const [author, setAuthor] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState('waiting.svg');
     const [title, setTitle] = useState('');
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(formatDate('2004-02-01T00:00:00Z'));
     const [epi, setEpi] = useState('');
     const [content, setContent] = useState('');
 
@@ -17,14 +22,16 @@ function OneEpi (props) {
         let res = await axios.get(
             `${apiCall}/api/user/${props.userId}/${props.epiId}`
         );
-        setShowTitle(res.data[0].podcasts.show_title);
-        setAuthor(res.data[0].podcasts.author);
-        setImage(res.data[0].podcasts.image);
-        setTitle(res.data[0].podcasts.episodes.title);
-        setDate(res.data[0].podcasts.episodes.pubDate);
-        setEpi(res.data[0].podcasts.episodes.epi_url);
-        setContent(res.data[0].podcasts.episodes.content);
-        props.setPodId(res.data[0].podcasts.pod_id);
+        let item = res.data[0].podcasts;
+        setShowTitle(item.show_title);
+        setAuthor(item.author);
+        setImage(item.image);
+        setTitle(item.episodes.title);
+        setDate(item.episodes.pubDate);
+        setEpi(item.episodes.epi_url);
+        setContent(item.episodes.content);
+        props.setPodId(item.pod_id);
+        props.setDocTitle(`${item.episodes.title} - Podder Fodder`)
     }, [props]);
 
     useEffect(() => {
@@ -36,7 +43,7 @@ function OneEpi (props) {
             <div>
                 <h1 id={props.podId}>{showTitle}</h1>
                 <h2>{title}</h2>
-                <h4 className="allEpiDuration">{new Date(date).toString().slice(0, 15)}</h4>
+                <h4 className="allEpiDuration">{formatDate(date)}</h4>
                 <h3 className="allEpiAuthor">{author}</h3>
                 <img className="epiImg" 
                             alt="podcast_image" 

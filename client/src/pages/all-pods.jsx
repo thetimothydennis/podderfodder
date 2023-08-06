@@ -17,6 +17,10 @@ function AllPods(props) {
         getPods();
     }, [getPods]);
 
+    useEffect(() => {
+        props.setDocTitle('All Podcasts - Podder Fodder')
+    }, []);
+
     async function handleDeleteClick(e) {
         await axios.delete(
             `${apiCall}/api/user/${props.userId}/${e.target.value}`

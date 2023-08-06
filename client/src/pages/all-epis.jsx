@@ -14,6 +14,10 @@ function AllEpis (props) {
     }, [props.userId])
 
     useEffect(() => {
+        props.setDocTitle('All Episodes - Podder Fodder')
+    }, [props]);
+
+    useEffect(() => {
         getAllEpis();
     }, [getAllEpis]);
 

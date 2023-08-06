@@ -1,4 +1,11 @@
+import { useEffect } from 'react';
+
 export function ChangePassword () {
+
+    useEffect(() => {
+        document.title = 'Registration - Podder Fodder';
+    }, [])
+
     return (
         <div className="Epi">
             <h1>Change Password</h1>

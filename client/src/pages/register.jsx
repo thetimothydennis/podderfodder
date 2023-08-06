@@ -1,4 +1,12 @@
+import { useEffect } from 'react';
+
+
 export function UserRegister () {
+
+    useEffect(() => {
+        document.title = 'Registration - Podder Fodder';
+    }, [])
+
     return (
         <div>
             <h1>Podder Fodder Registration</h1>

@@ -7,7 +7,7 @@ function OnePod(props) {
     const [episodes, setEpisodes] = useState([]);
     const [showTitle, setShowTitle] = useState('');
     const [showDesc, setShowDesc] = useState('');
-    const [showImg, setShowImg] = useState('');
+    const [showImg, setShowImg] = useState('waiting.svg');
     const [showAuthor, setShowAuthor] = useState('');
     
     const getPodcasts = useCallback(async () => {
@@ -26,6 +26,7 @@ function OnePod(props) {
         setShowImg(image);
         setEpisodes(episodes);
         setShowAuthor(author);
+        props.setDocTitle(`${show_title} - Podder Fodder`);
     }, [props]);
 
     const updatePod = async () => {

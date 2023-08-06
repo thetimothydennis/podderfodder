@@ -31,6 +31,10 @@ function PodSearch (props) {
     }, [props]);
 
     useEffect(() => {
+        props.setDocTitle('Search and Add - Podder Fodder')
+    }, [props]);
+
+    useEffect(() => {
         getSearch(input);
     }, [input]);
 

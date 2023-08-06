@@ -1,6 +1,12 @@
 import { useParams } from 'react-router';
+import { useEffect } from 'react';
 
 export function ForgotPassword () {
+
+    useEffect(() => {
+        document.title = 'Forgot Password - Podder Fodder';
+    }, [])
+    
     return (
         <div className="Epi">
             <h1>Forgot Password</h1>
@@ -18,8 +24,13 @@ export function ForgotPassword () {
 }
 
 export function ResetPassword () {
+
     const { token } = useParams();
-    console.log(token)
+
+    useEffect(() => {
+        document.title = 'Reset Password - Podder Fodder';
+    }, [])    
+
     return (
         <div className="Epi">
             <h1>Reset Password</h1>

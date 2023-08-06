@@ -17,6 +17,7 @@ function MainUi(props) {
   const [epiId, setEpiId] = useState('');
   const [render, setRender] = useState(<p>Please wait, loading your user profile.</p>)
   const [userId, setUserId] = useState('');
+  const [docTitle, setDocTitle] = useState('Podder Fodder')
   const cookie = new Cookies();
 
   async function getUserId() {
@@ -34,6 +35,10 @@ function MainUi(props) {
   });
 
   useEffect(() => {
+    document.title = docTitle;
+  }, [docTitle])
+
+  useEffect(() => {
     setDisplay('welcome');
     setRender(<Welcome userId={userId} />);
   }, [userId])
@@ -42,34 +47,34 @@ function MainUi(props) {
     useEffect(() => {
             switch (display) {
                 case 'allPods':
-                    setRender(<AllPods userId={userId} setPodId={setPodId} setDisplay={setDisplay} />);
+                    setRender(<AllPods userId={userId} setDocTitle={setDocTitle} setPodId={setPodId} setDisplay={setDisplay} />);
                     break;
                 case 'onePod':
-                    setRender(<OnePod userId={userId} podId={podId} setPodId={setPodId} setDisplay={setDisplay} />);
+                    setRender(<OnePod userId={userId} setDocTitle={setDocTitle} podId={podId} setPodId={setPodId} setDisplay={setDisplay} />);
                     break;
                 case 'oneEpi':
-                    setRender(<OneEpi userId={userId} podId={podId} epiId={epiId} setPodId={setPodId} />);
+                    setRender(<OneEpi userId={userId} setDocTitle={setDocTitle} podId={podId} epiId={epiId} setPodId={setPodId} />);
                     break;
                 case 'allEpis':
-                    setRender(<AllEpis userId={userId} setPodId={setPodId} setEpiId={setEpiId} setDisplay={setDisplay} />);
+                    setRender(<AllEpis userId={userId} setDocTitle={setDocTitle} setPodId={setPodId} setEpiId={setEpiId} setDisplay={setDisplay} />);
                     break;
                 case 'searchPods':
-                    setRender(<PodSearch userId={userId} setPodId={setPodId} setDisplay={setDisplay} />);
+                    setRender(<PodSearch userId={userId} setDocTitle={setDocTitle} setPodId={setPodId} setDisplay={setDisplay} />);
                     break;
                 case 'updatePod':
-                    setRender(<UpdatePod />);
+                    setRender(<UpdatePod setDocTitle={setDocTitle} />);
                     break;
                 case 'deletePod':
-                    setRender(<DeletePod />);
+                    setRender(<DeletePod setDocTitle={setDocTitle} />);
                     break;
                 case 'deleteEpi':
-                    setRender(<DeleteEpi />);
+                    setRender(<DeleteEpi setDocTitle={setDocTitle} />);
                     break;
                 case 'submitPod':
-                    setRender(<ImportedPod />);
+                    setRender(<ImportedPod setDocTitle={setDocTitle} />);
                     break;
                 case 'welcome':
-                    setRender(<Welcome />);
+                    setRender(<Welcome setDocTitle={setDocTitle} />);
                     break;
                 case '':
                     setRender(<p>Please wait, loading your user profile.</p>);
