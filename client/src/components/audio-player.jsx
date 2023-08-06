@@ -4,6 +4,10 @@ function Player (props) {
 
     const { title, author, showTitle, artwork, audio, dimensions, type } = props;
 
+    console.log(artwork)
+    console.log(dimensions)
+    console.log(type)
+
     return (
         <MediaSession
             title={title}
