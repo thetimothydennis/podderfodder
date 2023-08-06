@@ -4,6 +4,7 @@ import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
 function AllPods(props) {
+    const { setDocTitle } = props;
     const [podcasts, setPodcasts] = useState([]);
 
     const getPods = useCallback(async () => {
@@ -18,8 +19,8 @@ function AllPods(props) {
     }, [getPods]);
 
     useEffect(() => {
-        props.setDocTitle('All Podcasts - Podder Fodder')
-    }, []);
+        setDocTitle('All Podcasts - Podder Fodder')
+    });
 
     async function handleDeleteClick(e) {
         await axios.delete(
@@ -89,7 +90,8 @@ function AllPods(props) {
 AllPods.propTypes = {
     userId: PropTypes.string,
     setPodId: PropTypes.func,
-    setDisplay: PropTypes.func
+    setDisplay: PropTypes.func,
+    setDocTitle: PropTypes.func
 }
 
 export default AllPods;

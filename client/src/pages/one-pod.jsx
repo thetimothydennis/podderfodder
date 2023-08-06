@@ -112,7 +112,8 @@ OnePod.propTypes = {
     userId: PropTypes.string,
     podId: PropTypes.string,
     setPodId: PropTypes.func,
-    setDisplay: PropTypes.func
+    setDisplay: PropTypes.func,
+    setDocTitle: PropTypes.func
 }
 
 export default OnePod;

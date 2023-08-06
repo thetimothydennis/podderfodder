@@ -41,7 +41,7 @@ export function UserLogin () {
                         <img id="google" height="45px" alt="login with google" src={googSrc} />
                     </a>
                 </div>
-                <p className="note">NOTE: If you've already used a Google email address to sign up, you will not be able to sign in with Google using that account.</p>
+                <p className="note">NOTE: If you&apos;ve already used a Google email address to sign up, you will not be able to sign in with Google using that account.</p>
             </form>
 
         </div>

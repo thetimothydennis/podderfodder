@@ -8,7 +8,11 @@ import OnePod from './pages/one-pod.jsx';
 import OneEpi from './pages/one-epi.jsx';
 import AllEpis from './pages/all-epis.jsx';
 import { apiCall } from './functions/api-call.jsx';
-import { UpdatePod, DeletePod, DeleteEpi, ImportedPod, Welcome } from './pages/interstitials.jsx';
+import UpdatePod from './pages/update-pod.jsx';
+import DeletePod from './pages/delete-pod.jsx';
+import DeleteEpi from './pages/delete-epi.jsx';
+import ImportedPod from './pages/imported-pod.jsx';
+import Welcome from './pages/welcome.jsx';
 import './App.css';
 
 function MainUi(props) {

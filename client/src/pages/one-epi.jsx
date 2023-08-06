@@ -8,7 +8,7 @@ function OneEpi (props) {
 
     function formatDate (date) {
         return new Date(date).toString().slice(0, 15);
-    };
+    }
 
     const [showTitle, setShowTitle] = useState('');
     const [author, setAuthor] = useState('');
@@ -62,7 +62,8 @@ OneEpi.propTypes = {
     userId: PropTypes.string,
     epiId: PropTypes.string,
     setPodId: PropTypes.func,
-    podId: PropTypes.string
+    podId: PropTypes.string,
+    setDocTitle: PropTypes.func
 }
 
 export default OneEpi;

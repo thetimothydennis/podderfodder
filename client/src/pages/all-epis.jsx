@@ -73,7 +73,8 @@ function AllEpis (props) {
 AllEpis.propTypes = {
     userId: PropTypes.string,
     setPodId: PropTypes.func,
-    setEpiId: PropTypes.func
+    setEpiId: PropTypes.func,
+    setDocTitle: PropTypes.func
 }
 
 export default AllEpis;

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import MainUi from '../MainUi.jsx';
-import { HomePage } from '../pages/interstitials.jsx';
+import { HomePage } from '../pages/home-page.jsx';
 import { UserLogin } from '../pages/login.jsx';
 import { UserRegister } from '../pages/register.jsx';
 import { ChangePassword } from '../pages/change-password.jsx';

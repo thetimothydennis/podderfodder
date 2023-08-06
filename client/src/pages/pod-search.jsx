@@ -115,7 +115,8 @@ function PodSearch (props) {
 PodSearch.propTypes = {
     userId: PropTypes.string,
     setPodId: PropTypes.func,
-    setDisplay: PropTypes.func
+    setDisplay: PropTypes.func,
+    setDocTitle: PropTypes.func
 }
 
 export default PodSearch;
