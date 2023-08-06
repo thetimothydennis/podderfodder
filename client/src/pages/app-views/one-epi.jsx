@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { func, string } from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
+import Player from '../../components/audio-player.jsx';
 
 function OneEpi (props) {
 
@@ -50,7 +51,9 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <audio className="audioPlayer" src={epi} title={`${title} - ${showTitle}`} controls />
+                <Player title={title} artist={author} album={showTitle} artwork={image} audio={epi} />
+                <audio className="audioPlayer" src={epi} controls />
+
                 <p className="oneEpiContent">{content}</p>
             </div>
         </div>
