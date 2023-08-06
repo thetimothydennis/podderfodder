@@ -35,6 +35,7 @@ function OneEpi (props) {
     const [content, setContent] = useState('');
     const [imageDimensions, setImageDimensions] = useState({});
     const [imageExtension, setImageExtension] = useState('');
+<<<<<<< HEAD
     const [imgObj, setImgObj] = useState({ src: 'waiting.svg' })
 
     useEffect(() => {
@@ -48,6 +49,13 @@ function OneEpi (props) {
     useEffect(() => {
         loadImage(image, setImageDimensions, setImageExtension);
     }, [image])
+=======
+    const [imgObj, setImgObj] = useState({ src: '/waiting.svg', sizes: '800x800', type: 'image/svg' })
+
+    useEffect(() => {
+        loadImage(setImageDimensions, setImageExtension, setComboImgDimensions, imageDimensions, comboImgDimensions, imageExtension, setImgObj, image);
+    }, [image, comboImgDimensions])
+>>>>>>> 58ccca59e444e38724e94f0ca216458edf6e7ba0
 
     const getEpisode = useCallback(async () => {
         let res = await axios.get(

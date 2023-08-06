@@ -11,7 +11,6 @@ function Player (props) {
     }, [artwork])
 
 
-
     return (
         <MediaSession
             title={title}
