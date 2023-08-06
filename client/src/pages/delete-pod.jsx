@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 
 function DeletePod (props) {
 
@@ -17,7 +17,7 @@ function DeletePod (props) {
 }
 
 DeletePod.propTypes = {
-    setDocTitle: PropTypes.func
+    setDocTitle: func
 }
 
 export default DeletePod;

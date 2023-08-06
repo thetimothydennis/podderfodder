@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 
 function Welcome (props) {
 
@@ -17,7 +17,7 @@ function Welcome (props) {
 }
 
 Welcome.propTypes = {
-    setDocTitle: PropTypes.func
+    setDocTitle: func
 }
 
 export default Welcome;

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 
 function DeleteEpi (props) {
 
@@ -17,7 +17,7 @@ function DeleteEpi (props) {
 }
 
 DeleteEpi.propTypes = {
-    setDocTitle: PropTypes.func
+    setDocTitle: func
 }
 
 export default DeleteEpi;

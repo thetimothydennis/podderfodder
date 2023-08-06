@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { func, string } from 'prop-types';
 import axios from 'axios';
-import ReactAudioPlayer from 'react-audio-player';
 import { apiCall } from '../functions/api-call.jsx';
 
 function OneEpi (props) {
@@ -51,7 +50,7 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <ReactAudioPlayer className="audioPlayer" src={epi} title={`${title} - ${showTitle}`} controls />
+                <audio className="audioPlayer" src={epi} title={`${title} - ${showTitle}`} controls />
                 <p className="oneEpiContent">{content}</p>
             </div>
         </div>
@@ -59,11 +58,11 @@ function OneEpi (props) {
 }
 
 OneEpi.propTypes = {
-    userId: PropTypes.string,
-    epiId: PropTypes.string,
-    setPodId: PropTypes.func,
-    podId: PropTypes.string,
-    setDocTitle: PropTypes.func
+    userId: string,
+    epiId: string,
+    setPodId: func,
+    podId: string,
+    setDocTitle: func
 }
 
 export default OneEpi;

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import { func, string } from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../functions/api-call.jsx';
 
@@ -109,11 +109,11 @@ function OnePod(props) {
 }
 
 OnePod.propTypes = {
-    userId: PropTypes.string,
-    podId: PropTypes.string,
-    setPodId: PropTypes.func,
-    setDisplay: PropTypes.func,
-    setDocTitle: PropTypes.func
+    userId: string,
+    podId: string,
+    setPodId: func,
+    setDisplay: func,
+    setDocTitle: func
 }
 
 export default OnePod;
