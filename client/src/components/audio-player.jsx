@@ -2,7 +2,7 @@ import MediaSession from '@mebtte/react-media-session';
 
 function Player (props) {
 
-    const { title, author, showTitle, image, audio } = props;
+    const { title, author, showTitle, artwork, audio, dimensions } = props;
 
     return (
         <MediaSession
@@ -11,7 +11,9 @@ function Player (props) {
             album={showTitle}
             artwork={[
                 {
-                    src: {image}
+                    src: {artwork},
+                    type: 'image/jpeg',
+                    size: {dimensions}
                 }
             ]}
             onPlay={audio.play}

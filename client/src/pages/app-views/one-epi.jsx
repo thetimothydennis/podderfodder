@@ -4,6 +4,19 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 import Player from '../../components/audio-player.jsx';
 
+
+const loadImage = (setImageDimensions, image) => {
+    const img = new Image();
+    img.src = image;
+
+    img.onload = () => {
+        setImageDimensions({
+            height: img.height,
+            width: img.width
+        })
+    }
+}
+
 function OneEpi (props) {
 
     function formatDate (date) {
@@ -17,6 +30,14 @@ function OneEpi (props) {
     const [date, setDate] = useState(formatDate('2004-02-01T00:00:00Z'));
     const [epi, setEpi] = useState('');
     const [content, setContent] = useState('');
+    const [imageDimensions, setImageDimensions] = useState({});
+    const [comboImgDimensions, setComboImgDimensions] = useState('');
+
+    useEffect(() => {
+        loadImage(setImageDimensions, image);
+        console.log(imageDimensions)
+        setComboImgDimensions(`${imageDimensions.height}x${imageDimensions.width}`)
+    }, [image])
 
     const getEpisode = useCallback(async () => {
         let res = await axios.get(
@@ -51,7 +72,7 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <Player title={title} author={author} showTitle={showTitle} image={image} audio={epi} />
+                <Player title={title} author={author} showTitle={showTitle} artwork={image} dimensions={comboImgDimensions} audio={epi} />
                 <audio className="audioPlayer" src={epi} controls />
 
                 <p className="oneEpiContent">{content}</p>
