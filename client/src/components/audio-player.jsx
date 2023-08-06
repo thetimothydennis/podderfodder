@@ -2,7 +2,7 @@ import MediaSession from '@mebtte/react-media-session';
 
 function Player (props) {
 
-    const { title, author, showTitle, artwork, audio, dimensions } = props;
+    const { title, author, showTitle, artwork, audio, dimensions, type } = props;
 
     return (
         <MediaSession
@@ -12,7 +12,7 @@ function Player (props) {
             artwork={[
                 {
                     src: {artwork},
-                    type: 'image/*',
+                    type: {type},
                     size: {dimensions}
                 }
             ]}

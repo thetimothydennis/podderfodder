@@ -5,7 +5,7 @@ import { apiCall } from '../../functions/api-call.jsx';
 import Player from '../../components/audio-player.jsx';
 
 
-const loadImage = (setImageDimensions, image) => {
+const loadImage = (setImageDimensions, setImageExtension, image) => {
     const img = new Image();
     img.src = image;
 
@@ -14,6 +14,10 @@ const loadImage = (setImageDimensions, image) => {
             height: img.height,
             width: img.width
         })
+        let imgSrcArr = img.src.split('/');
+        let imgSrcName = imgSrcArr[imgSrcArr.length - 1].split("?")
+        let imgExt = imgSrcName[0].split(".")[1]
+        setImageExtension(`image/${imgExt}`)
     }
 }
 
@@ -32,9 +36,10 @@ function OneEpi (props) {
     const [content, setContent] = useState('');
     const [imageDimensions, setImageDimensions] = useState({});
     const [comboImgDimensions, setComboImgDimensions] = useState('');
+    const [imageExtension, setImageExtension] = useState('');
 
     useEffect(() => {
-        loadImage(setImageDimensions, image);
+        loadImage(setImageDimensions, setImageExtension, image);
     }, [image])
 
     useEffect(() => {
@@ -74,7 +79,7 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <Player title={title} author={author} showTitle={showTitle} artwork={image} dimensions={comboImgDimensions} audio={epi} />
+                <Player title={title} author={author} showTitle={showTitle} artwork={image} dimensions={comboImgDimensions} type={imageExtension} audio={epi} />
                 <audio className="audioPlayer" src={epi} controls />
 
                 <p className="oneEpiContent">{content}</p>
