@@ -1,4 +1,4 @@
-import MediaSession from '@mebtte/react-media-session';
+import { useMediaSession } from '@mebtte/react-media-session';
 
 function Player (props) {
 
@@ -7,16 +7,18 @@ function Player (props) {
     console.log(artwork)
 
     return (
-        <MediaSession
-            title={title}
-            artist={author}
-            album={showTitle}
-            artwork={[
+        useMediaSession({
+
+            title: {title},
+            artist: {author},
+            album: {showTitle},
+            artwork: [
                 artwork
-            ]}
-            onPlay={audio.play}
-            onPause={audio.pause}
-        />
+            ],
+            onPlay: audio.play,
+            onPause: audio.pause
+        })
+        
     )
 }
 
