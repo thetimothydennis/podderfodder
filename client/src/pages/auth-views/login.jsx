@@ -34,10 +34,10 @@ export function UserLogin () {
                 <p>Forgot your password? Click <a href="/forgotpassword">here</a>.</p>
                 <p>Or, you can login with one of these social providers:</p>
                 <div className="row">
-                    <a className="col-sm" href="/github" onClick={handleGHClick}>
+                    <a className="col-sm" href="/github" style={{"pointer-events": "all"}} onClick={handleGHClick}>
                         <img id="github" height="45px" alt="login with github" src={gitSrc} />
                     </a>
-                    <a className="col-sm" href="/google" onClick={handleGoogClick}>
+                    <a className="col-sm" href="/google" style={{"pointer-events": "all"}} onClick={handleGoogClick}>
                         <img id="google" height="45px" alt="login with google" src={googSrc} />
                     </a>
                 </div>
