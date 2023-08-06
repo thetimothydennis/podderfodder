@@ -51,7 +51,7 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <Player title={title} artist={author} album={showTitle} artwork={image} audio={epi} />
+                <Player title={title} author={author} showTitle={showTitle} image={image} audio={epi} />
                 <audio className="audioPlayer" src={epi} controls />
 
                 <p className="oneEpiContent">{content}</p>

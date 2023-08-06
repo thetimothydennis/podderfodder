@@ -1,6 +1,6 @@
 import MediaSession from '@mebtte/react-media-session';
 
-function Player (props, children) {
+function Player (props) {
 
     const { title, author, showTitle, image, audio } = props;
 
