@@ -1,8 +1,7 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; 
-import dotenv from 'dotenv';
-dotenv.config({ path: `../.env.${process.env.NODE_ENV}` })
+import { config } from 'dotenv';
+config({ path: `../.env.${process.env.NODE_ENV}` })
 import req from 'supertest';
-import * as cheerio from 'cheerio';
 import app from '../index.js';
 
 describe('unauthenticated routes', () => {

@@ -12,7 +12,7 @@ MailService.setApiKey(process.env.SENDGRID_API_KEY);
 
 function testPassword (password) {
     return password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,15}$/);
-}
+};
 
 // user login handler
 export const postLogin = passport.authenticate('local', {

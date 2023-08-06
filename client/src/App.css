@@ -8,6 +8,7 @@
 body {
   display: flex;
   flex-flow: column;
+  align-items: center;
   width: 100%;
   font-size: 1.25rem;
   background-color: #0a0a0a;
@@ -126,6 +127,13 @@ li.ruleItem {
 }
 
 .oneEpiContent {
-  max-width: 600px;
+  max-width: 80vw;
   overflow-wrap: break-word
+}
+
+.oneEpi {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
 }

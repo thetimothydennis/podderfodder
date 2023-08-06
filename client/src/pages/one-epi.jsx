@@ -39,7 +39,7 @@ function OneEpi (props) {
 
     return (
         <div className="Epi">
-            <div>
+            <div className="oneEpi">
                 <h1 id={props.podId}>{showTitle}</h1>
                 <h2>{title}</h2>
                 <h4 className="allEpiDuration">{formatDate(date)}</h4>
