@@ -19,7 +19,9 @@ const loadImage = (setImageDimensions, setImageExtension, comboImgDimensions, im
         let imgExt = imgSrcName[0].split(".")[1]
         setImageExtension(`image/${imgExt}`)
         setImgObj({
-            src: image
+            src: image,
+            sizes: comboImgDimensions,
+            type: imageExtension
         })
     }
 }
@@ -40,7 +42,7 @@ function OneEpi (props) {
     const [imageDimensions, setImageDimensions] = useState({});
     const [comboImgDimensions, setComboImgDimensions] = useState('');
     const [imageExtension, setImageExtension] = useState('');
-    const [imgObj, setImgObj] = useState({ src: 'waiting.svg' })
+    const [imgObj, setImgObj] = useState({ src: 'waiting.svg', sizes: '800x800', type: 'image/svg' })
 
     useEffect(() => {
         loadImage(setImageDimensions, setImageExtension, comboImgDimensions, imageExtension, setImgObj, image);
