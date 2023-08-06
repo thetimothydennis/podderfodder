@@ -35,7 +35,6 @@ function OneEpi (props) {
     const [content, setContent] = useState('');
     const [imageDimensions, setImageDimensions] = useState({});
     const [imageExtension, setImageExtension] = useState('');
-<<<<<<< HEAD
     const [imgObj, setImgObj] = useState({ src: 'waiting.svg' })
 
     useEffect(() => {
