@@ -108,6 +108,10 @@ li.ruleItem {
   font-size: smaller;
 }
 
+.allEpiContent {
+  max-width: 80vw
+}
+
 .onePodBtn {
   margin-top: 1%;
   margin-bottom: 1%

@@ -55,7 +55,7 @@ function AllEpis (props) {
                             value={item.podcasts.pod_id}>
                             {item.podcasts.episodes.duration} min.
                         </div>
-                        <div className="col-sm" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+                        <div className="col-sm allEpiContent" id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
                             value={item.podcasts.pod_id}>
                             {item.podcasts.episodes.content.slice(0, 100)}
                         </div>
