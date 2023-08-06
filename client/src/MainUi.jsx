@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import NavBar from './pages/pod-nav-bar.jsx';
-import PodSearch from './pages/pod-search.jsx';
-import AllPods from './pages/all-pods.jsx';
-import OnePod from './pages/one-pod.jsx';
-import OneEpi from './pages/one-epi.jsx';
-import AllEpis from './pages/all-epis.jsx';
-import { apiCall } from './functions/api-call.jsx';
-import UpdatePod from './pages/update-pod.jsx';
-import DeletePod from './pages/delete-pod.jsx';
-import DeleteEpi from './pages/delete-epi.jsx';
-import ImportedPod from './pages/imported-pod.jsx';
 import Welcome from './pages/welcome.jsx';
+import PodSearch from './pages/app-views/pod-search.jsx';
+import AllPods from './pages/app-views/all-pods.jsx';
+import OnePod from './pages/app-views/one-pod.jsx';
+import OneEpi from './pages/app-views/one-epi.jsx';
+import AllEpis from './pages/app-views/all-epis.jsx';
+import { apiCall } from './functions/api-call.jsx';
+import UpdatePod from './pages/app-views/update-pod.jsx';
+import DeletePod from './pages/app-views/delete-pod.jsx';
+import DeleteEpi from './pages/app-views/delete-epi.jsx';
+import ImportedPod from './pages/app-views/imported-pod.jsx';
 import './App.css';
 
 function MainUi(props) {

@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router-dom';
 import MainUi from '../MainUi.jsx';
 import { HomePage } from '../pages/home-page.jsx';
-import { UserLogin } from '../pages/login.jsx';
-import { UserRegister } from '../pages/register.jsx';
-import { ChangePassword } from '../pages/change-password.jsx';
-import { ForgotPassword, ResetPassword } from '../pages/forgot-password.jsx';
+import { UserLogin } from '../pages/auth-views/login.jsx';
+import { UserRegister } from '../pages/auth-views/register.jsx';
+import { ChangePassword } from '../pages/auth-views/change-password.jsx';
+import { ForgotPassword, ResetPassword } from '../pages/auth-views/forgot-password.jsx';
 
 // main user interface component
 export function RoutesUi() {

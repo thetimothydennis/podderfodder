@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { func, string } from 'prop-types';
 import axios from 'axios';
-import { apiCall } from '../functions/api-call.jsx';
+import { apiCall } from '../../functions/api-call.jsx';
 
 function OneEpi (props) {
 
