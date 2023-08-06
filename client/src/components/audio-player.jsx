@@ -1,10 +1,16 @@
 import MediaSession from '@mebtte/react-media-session';
+import { useState, useEffect } from 'react';
 
 function Player (props) {
-
     const { title, author, showTitle, artwork, audio } = props;
+    const [ podart, setPodart ] = useState({src: 'waiting.svg' });
 
-    console.log(artwork)
+    useEffect(() => {
+        setPodart(artwork)
+        console.log(podart)
+    }, [artwork])
+
+
 
     return (
         <MediaSession
@@ -12,7 +18,7 @@ function Player (props) {
             artist={author}
             album={showTitle}
             artwork={[
-                artwork
+                podart
             ]}
             onPlay={audio.play}
             onPause={audio.pause}

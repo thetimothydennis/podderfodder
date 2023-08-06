@@ -5,25 +5,19 @@ import { apiCall } from '../../functions/api-call.jsx';
 import Player from '../../components/audio-player.jsx';
 
 
-const loadImage = (setImageDimensions, setImageExtension, comboImgDimensions, imageExtension, setImgObj, image) => {
+const loadImage = (image, setImageDimensions, setImageExtension) => {
     const img = new Image();
     img.src = image;
-
     img.onload = () => {
         setImageDimensions({
             height: img.height,
             width: img.width
         })
-        let imgSrcArr = img.src.split('/');
-        let imgSrcName = imgSrcArr[imgSrcArr.length - 1].split("?")
-        let imgExt = imgSrcName[0].split(".")[1]
-        setImageExtension(`image/${imgExt}`)
-        setImgObj({
-            src: image,
-            sizes: comboImgDimensions,
-            type: imageExtension
-        })
     }
+    let imgSrcArr = img.src.split('/');
+    let imgSrcName = imgSrcArr[imgSrcArr.length - 1].split("?")
+    let imgExt = imgSrcName[0].split(".")[1]
+    setImageExtension(`image/${imgExt}`)
 }
 
 function OneEpi (props) {
@@ -40,17 +34,20 @@ function OneEpi (props) {
     const [epi, setEpi] = useState('');
     const [content, setContent] = useState('');
     const [imageDimensions, setImageDimensions] = useState({});
-    const [comboImgDimensions, setComboImgDimensions] = useState('');
     const [imageExtension, setImageExtension] = useState('');
-    const [imgObj, setImgObj] = useState({ src: 'waiting.svg', sizes: '', type: 'image/svg'})
+    const [imgObj, setImgObj] = useState({ src: 'waiting.svg' })
 
     useEffect(() => {
-        loadImage(setImageDimensions, setImageExtension, comboImgDimensions, imageExtension, setImgObj, image);
+        setImgObj({
+            src: image,
+            sizes: `${imageDimensions.height}x${imageDimensions.width}`,
+            type: imageExtension
+        })
+    }, [image, imageDimensions, imageExtension, setImgObj])
+
+    useEffect(() => {
+        loadImage(image, setImageDimensions, setImageExtension);
     }, [image])
-
-    useEffect(() => {
-        setComboImgDimensions(`${imageDimensions.height}x${imageDimensions.width}`);
-    }, [imageDimensions, imageExtension])
 
     const getEpisode = useCallback(async () => {
         let res = await axios.get(
