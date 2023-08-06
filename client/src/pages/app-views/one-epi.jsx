@@ -5,7 +5,7 @@ import { apiCall } from '../../functions/api-call.jsx';
 import Player from '../../components/audio-player.jsx';
 
 
-const loadImage = (setImageDimensions, setImageExtension, comboImgDimensions, imageExtension, setImgObj, image) => {
+const loadImage = (setImageDimensions, setImageExtension, setComboImgDimensions, imageDimensions, comboImgDimensions, imageExtension, setImgObj, image) => {
     const img = new Image();
     img.src = image;
 
@@ -18,6 +18,7 @@ const loadImage = (setImageDimensions, setImageExtension, comboImgDimensions, im
         let imgSrcName = imgSrcArr[imgSrcArr.length - 1].split("?")
         let imgExt = imgSrcName[0].split(".")[1]
         setImageExtension(`image/${imgExt}`)
+        setComboImgDimensions(`${imageDimensions.height}x${imageDimensions.width}`);
         setImgObj({
             src: image,
             sizes: comboImgDimensions,
@@ -42,15 +43,11 @@ function OneEpi (props) {
     const [imageDimensions, setImageDimensions] = useState({});
     const [comboImgDimensions, setComboImgDimensions] = useState('');
     const [imageExtension, setImageExtension] = useState('');
-    const [imgObj, setImgObj] = useState({ src: 'waiting.svg', sizes: '800x800', type: 'image/svg' })
+    const [imgObj, setImgObj] = useState({ src: '/waiting.svg', sizes: '800x800', type: 'image/svg' })
 
     useEffect(() => {
-        loadImage(setImageDimensions, setImageExtension, comboImgDimensions, imageExtension, setImgObj, image);
-    }, [image])
-
-    useEffect(() => {
-        setComboImgDimensions(`${imageDimensions.height}x${imageDimensions.width}`);
-    }, [imageDimensions, imageExtension])
+        loadImage(setImageDimensions, setImageExtension, setComboImgDimensions, imageDimensions, comboImgDimensions, imageExtension, setImgObj, image);
+    }, [image, comboImgDimensions])
 
     const getEpisode = useCallback(async () => {
         let res = await axios.get(
