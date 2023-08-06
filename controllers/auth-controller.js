@@ -1,8 +1,8 @@
 import passport from 'passport';
 import { configurePassport } from '../config/passport.js';
 import { User } from '../models/user-schema.js';
-import crypto from 'crypto';
-import { checkEmail, isEmailFormatValid, isMXRecordValid, isBlacklisted } from 'email-validator-node';
+import { randomBytes } from 'crypto';
+import { checkEmail } from 'email-validator-node';
 import MailService from '@sendgrid/mail';
 import { errHandler } from '../functions/err-handler.js';
 
@@ -91,7 +91,7 @@ export const postChangePassword = async (req, res) => {
 export const postForgotPassword = async (req, res) => {
     try {
         let { email } = req.body;
-        const token = (crypto.randomBytes)(20).toString('hex');
+        const token = (randomBytes)(20).toString('hex');
         const user = await User.findOneAndUpdate({email: email}, {resetPasswordToken: token});
     
         const resetEmail = {

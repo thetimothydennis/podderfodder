@@ -1,6 +1,6 @@
 // package imports
 import express from 'express';
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
 import passport from 'passport';
@@ -15,7 +15,7 @@ import FrontendRoutes from './routes/frontend-routes.js';
 
 import { configureSession } from './config/session.js';
 
-dotenv.config({ path: `./.env.${process.env.NODE_ENV}`})
+config({ path: `./.env.${process.env.NODE_ENV}`})
 configurePassport(passport);
 
 // app and httpApp instantiations

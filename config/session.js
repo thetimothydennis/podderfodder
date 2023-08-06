@@ -1,7 +1,7 @@
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 import MongoStore from 'connect-mongo';
 
-dotenv.config({ path: `../.env.${process.env.NODE_ENV}`})
+config({ path: `../.env.${process.env.NODE_ENV}`})
 
 // options for setting up the user session, storing it in mongoDB
 let sessionOptions = {

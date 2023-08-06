@@ -1,6 +1,6 @@
 // package imports
 import express from 'express';
-import path from 'path';
+import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 // auth middleware import
 import isAuthenticated from '../middleware/is-authenticated.js';
@@ -11,10 +11,10 @@ import { appRoute, resetPasswordPage } from '../controllers/frontend-controller.
 const router = express.Router();
 
 // stores __dirname for use within ES6 modules
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // static middleware for serving the frontend
-router.use(express.static(path.join(__dirname, "..", "client", "dist")));
+router.use(express.static(join(__dirname, "..", "client", "dist")));
 
 // login route
 router.get("/login", appRoute);

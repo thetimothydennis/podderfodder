@@ -1,4 +1,4 @@
-import express from 'express';
+import { Router } from 'express';
 // auth middleware import
 import isAuthenticated from '../middleware/api-is-authenticated.js';
 // other middleware imports
@@ -8,7 +8,7 @@ import * as MWpods from '../middleware/podcasts.mw.js';
 import * as CTRLusers from '../controllers/users-controller.js';
 import { search } from '../controllers/search-pods-controller.js';
 
-const router = express.Router();
+const router = Router();
 
 // route for pod search function
 router.get('/api/search/', search);

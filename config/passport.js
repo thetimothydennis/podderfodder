@@ -20,13 +20,11 @@ export function configurePassport (passport) {
                 if (user) {
                     return done(null, user)
                 } else {
-                    console.log(profile)
                     let newUser = new User({
                         googleId: profile.id
                     });
                     newUser.username = profile.emails[0].value;
                     newUser.email = profile.emails[0].value;
-                    console.log(newUser)
                     await newUser.save();
                     return done(null, newUser);
                 }
@@ -65,7 +63,6 @@ export function configurePassport (passport) {
                         newUser.name = profile.username;
                     }
                     newUser.username = profile.username;
-                    console.log(newUser)
                     await newUser.save();
                     return done(null, newUser);
                 }
