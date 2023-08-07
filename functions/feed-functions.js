@@ -12,29 +12,16 @@ export const parseFeed = async (feedUrl) => {
         const parsedFeed = await parser.parseURL(feedUrl);
         // destructures data from the parsed feed
         let { title, description, lastBuildDate, items } = parsedFeed;
-
         // regex to remove HTML tags from the description if they are present in the feed
-        if (description.match(/(<([^>]+)>)/gi)) {
-            description = reformat.removeHTML(description);
-        };
+        if (description.match(/(<([^>]+)>)/gi)) description = reformat.removeHTML(description);
         // destructures more data from the feed
         const { author, image } = parsedFeed.itunes;
         // creates a categories property from the feed
         let categories = parsedFeed.itunes.categories.join(", ");
-        let podObj = {
-            title,
-            description,
-            author,
-            image,
-            lastBuildDate,
-            categories,
-            feedUrl,
-            items
-        };
+        let podObj = { title, description, author, image, lastBuildDate, categories, feedUrl, items };
         // returns an object containing the pertinent information from the podcast feed
         return podObj;
-    }
-    catch (error) {
+    } catch (error) {
         console.log(error);
         return error.message;
     };

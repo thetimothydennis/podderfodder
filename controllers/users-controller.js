@@ -1,4 +1,6 @@
 import * as users from '../models/users.model.js';
+import * as podcasts from '../models/podcasts.model.js';
+import * as feedFunctions from '../functions/feed-functions.js';
 import { errHandler } from '../functions/err-handler.js';
 
 // updates a podcast for user in db - for user/ PUT route

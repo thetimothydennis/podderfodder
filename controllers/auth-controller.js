@@ -14,13 +14,25 @@ function testPassword (password) {
     return password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,15}$/);
 };
 
-// user login handler
-export const postLogin = passport.authenticate('local', {
-    failureRedirect: '/login',
-    successRedirect: '/app'
-});
+function handlePassportLogin (strategy) {
+    return passport.authenticate(strategy, {
+        faliureRedirect: '/login',
+        successRedirect: '/app'
+    });
+};
 
-// user registration handler
+// github login handlers
+export const handleGithubCallback = handlePassportLogin('github');
+export const handleGithubLogin = passport.authenticate('github');
+
+// google login handlers
+export const handleGoogleCallback = handlePassportLogin('google');
+export const handleGoogleLogin = passport.authenticate('google', { scope: ['profile', 'email'] });
+
+// local user login handler
+export const postLogin = handlePassportLogin('local');
+
+// local user registration handler
 export const postRegister = async (req, res) => {
     try {
         let verifyEmail = await checkEmail(req.body.email);
@@ -44,14 +56,6 @@ export const postRegister = async (req, res) => {
     };
 };
 
-// user logout handler
-export const getLogout = (req, res) => {
-    req.session.destroy();
-    req.logout(() => {
-        res.redirect("/");
-    });
-};
-
 // get user data for frontend handler
 export const getUserData = (req, res) => {
     if (req.user === undefined) {
@@ -63,7 +67,15 @@ export const getUserData = (req, res) => {
     };
 };
 
-// handler for changing authenticated user password
+// user logout handler
+export const getLogout = (req, res) => {
+    req.session.destroy();
+    req.logout(() => {
+        res.redirect("/");
+    });
+};
+
+// handler for changing authenticated local user password
 export const postChangePassword = async (req, res) => {
     try {
         let { username } = req.user;
@@ -148,23 +160,3 @@ export const postResetPassword = async (req, res) => {
         errHandler(err, res);
     };
 };
-
-export const handleGithubCallback = passport.authenticate(
-    "github",
-    {
-        failureRedirect: '/login',
-        successRedirect: '/app'
-    }
-);
-
-export const handleGithubLogin = passport.authenticate('github');
-
-export const handleGoogleCallback = passport.authenticate(
-    "google",
-    {
-        failureRedirect: '/login',
-        successRedirect: '/app'
-    }
-);
-
-export const handleGoogleLogin = passport.authenticate('google', { scope: ['profile', 'email'] });

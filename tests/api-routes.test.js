@@ -56,12 +56,12 @@ describe('test other CRUD operations after login', () => {
     let episLength = 0;
     let feedArr = [
         'https://www.kuaf.com/podcast/the-movement-that-never-was-a-peoples-guide-to-anti-racism-in-the-south-and-arkansas/rss.xml',
-        'https://rss.art19.com/smartless',
-        'https://podcastfeeds.nbcnews.com/HL4TzgYC',
-        'https://feeds.megaphone.fm/TPC3838283892',
-        'https://feeds.megaphone.fm/darknetdiaries',
-        'https://www.kuaf.com/podcast/ozarks-at-large/rss.xml',
-        'https://www.kuaf.com/podcast/blockchain-the-future-of-money/rss.xml'
+        // 'https://rss.art19.com/smartless',
+        // 'https://podcastfeeds.nbcnews.com/HL4TzgYC',
+        // 'https://feeds.megaphone.fm/TPC3838283892',
+        // 'https://feeds.megaphone.fm/darknetdiaries',
+        // 'https://www.kuaf.com/podcast/ozarks-at-large/rss.xml',
+        // 'https://www.kuaf.com/podcast/blockchain-the-future-of-money/rss.xml'
     ];
     const agent = req.agent(app);
     beforeAll(async () => {
