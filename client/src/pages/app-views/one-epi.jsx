@@ -4,36 +4,6 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 import Player from '../../components/audio-player.jsx';
 
-
-function convertImageToBase64(imgUrl, setImgSrc) {
-    let img = new Image();
-    img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.height = img.naturalHeight;
-        canvas.width = img.naturalWidth;
-        ctx.drawImage(img, 0, 0);
-        setImgSrc(canvas.toDataURL());
-    }
-    img.crossorigin = "anonymous";
-    img.src = imgUrl;
-}
-
-// const loadImage = (image, setImageDimensions, setImageExtension) => {
-//     const img = new Image();
-//     img.src = image;
-//     img.onload = () => {
-//         setImageDimensions({
-//             height: img.height,
-//             width: img.width
-//         })
-//     }
-//     let imgSrcArr = img.src.split('/');
-//     let imgSrcName = imgSrcArr[imgSrcArr.length - 1].split("?")
-//     let imgExt = imgSrcName[0].split(".")[1]
-//     setImageExtension(`image/${imgExt}`)
-// }
-
 function OneEpi (props) {
 
     function formatDate (date) {
@@ -47,11 +17,6 @@ function OneEpi (props) {
     const [date, setDate] = useState(formatDate('2004-02-01T00:00:00Z'));
     const [epi, setEpi] = useState('');
     const [content, setContent] = useState('');
-    const [imgSrc, setImgSrc] = useState('');
-
-    useEffect(() => {
-        convertImageToBase64(image, setImgSrc);
-    }, [image])
 
     const getEpisode = useCallback(async () => {
         let res = await axios.get(
@@ -86,7 +51,7 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <Player title={title} author={author} showTitle={showTitle} artwork={imgSrc} audio={epi} />
+                <Player title={title} author={author} showTitle={showTitle} artwork={image} audio={epi} />
                 <audio className="audioPlayer" src={epi} controls />
 
                 <p className="oneEpiContent">{content}</p>

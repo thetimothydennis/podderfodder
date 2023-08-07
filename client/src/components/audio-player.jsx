@@ -7,7 +7,6 @@ function Player (props) {
 
     useEffect(() => {
         setPodart(artwork)
-        console.log(artwork)
     }, [artwork])
 
     return (
