@@ -107,3 +107,4 @@ typings/
 certs
 .env.prod
 .env.test
+.env
