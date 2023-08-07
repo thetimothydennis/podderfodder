@@ -6,18 +6,14 @@ import Player from '../../components/audio-player.jsx';
 
 
 function convertImageToBase64(imgUrl, setImgSrc) {
-    const getBase64StringFromDataURL = (dataURL) => {
-        dataURL.replace('data:', '').replace(/^.+,/, '')
-    }
-    const img = new Image();
+    let img = new Image();
     img.onload = () => {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         canvas.height = img.naturalHeight;
         canvas.width = img.naturalWidth;
         ctx.drawImage(img, 0, 0);
-        let base64 = canvas.toDataURL().replace('data:', '').replace(/^.+,/, '')
-        setImgSrc(base64);
+        setImgSrc(canvas.toDataURL());
     }
     img.crossorigin = "anonymous";
     img.src = imgUrl;
