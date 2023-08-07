@@ -4,7 +4,11 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 import Player from '../../components/audio-player.jsx';
 
+
 function convertImageToBase64(imgUrl, setImgSrc) {
+    const getBase64StringFromDataURL = (dataURL) => {
+        dataURL.replace('data:', '').replace(/^.+,/, '')
+    }
     const img = new Image();
     img.onload = () => {
         const canvas = document.createElement('canvas');
@@ -12,7 +16,7 @@ function convertImageToBase64(imgUrl, setImgSrc) {
         canvas.height = img.naturalHeight;
         canvas.width = img.naturalWidth;
         ctx.drawImage(img, 0, 0);
-        let base64 = canvas.toDataURL();
+        let base64 = canvas.toDataURL().replace('data:', '').replace(/^.+,/, '')
         setImgSrc(base64);
     }
     img.crossorigin = "anonymous";
@@ -51,7 +55,6 @@ function OneEpi (props) {
 
     useEffect(() => {
         convertImageToBase64(image, setImgSrc);
-        console.log(imgSrc)
     }, [image])
 
     const getEpisode = useCallback(async () => {
