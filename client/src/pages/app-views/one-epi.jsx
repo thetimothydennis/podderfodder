@@ -50,7 +50,8 @@ function OneEpi (props) {
                             height="250em" 
                 />
                 <br />
-                <audio className="audioPlayer" src={epi} title={`${title} - ${showTitle}`} controls />
+                <audio className="audioPlayer" src={epi} controls />
+
                 <p className="oneEpiContent">{content}</p>
             </div>
         </div>
