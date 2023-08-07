@@ -58,7 +58,6 @@ export const updateOnePodcast = async (req, res, next) => {
         podid = updateOp._id;
         let updated = await podcasts.readPodcast(podid);
         req.params.updated = updated;
-        console.log('updated podcast object')
         next();
     }
     catch (error) {
