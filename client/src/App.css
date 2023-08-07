@@ -45,33 +45,19 @@ div {
   padding-top: 1.25%;
 }
 
-.NavBar {
+.NavBarContainer {
   width: 100%;
-  display: flex;
   background-color: #1d1d1d;
   justify-content: space-evenly;
-  margin: 0;
-  padding: 0;
 }
 
-.NavBar .col-3 {
-  display: flex;
-  list-style: none;
-  width: 25%;
-  justify-content: space-evenly;
-}
-
-.NavBar .row {
-  display: flex;
-  justify-content: space-evenly
-}
 
 h1 {
   font-size: .25em;
   padding-top: 2.5%;
 }
 
-div.col-3:hover {
+div.col-sm:hover {
   background-color: #444444;
 }
 

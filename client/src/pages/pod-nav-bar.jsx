@@ -7,8 +7,8 @@ function NavBar () {
     };
 
     return (
-        <div className="container NavBar">
-            <div className="row NavBar">
+        <div className="container NavBarContainer">
+            <div className="row NavBarRow">
                 <div className="col-sm" id={-3}>
                     <b id={-3}>
                         Search and Add
