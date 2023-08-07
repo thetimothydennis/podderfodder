@@ -4,6 +4,7 @@ import { errHandler } from '../functions/err-handler.js';
 // updates a podcast for user in db - for user/ PUT route
 export const updateUserPod = async (req, res) => {
     try {
+        
         let {
             userid,
             podid,

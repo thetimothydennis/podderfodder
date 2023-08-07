@@ -3,7 +3,6 @@ import { Router } from 'express';
 import isAuthenticated from '../middleware/api-is-authenticated.js';
 // other middleware imports
 import * as MWusers from '../middleware/user.mw.js';
-import * as MWpods from '../middleware/podcasts.mw.js';
 // controller imports
 import * as CTRLusers from '../controllers/users-controller.js';
 import { search } from '../controllers/search-pods-controller.js';
@@ -20,7 +19,7 @@ router.route('/api/user/:id')
     // gets all podcasts for user
     .get(CTRLusers.getUserPods)
     // adds a podcast and episodes for a user in db
-    .post(MWpods.ingestPod, MWusers.addUserPods, MWusers.updateOnePodcast, CTRLusers.updateUserPod)
+    .post(MWusers.addUserPods, MWusers.updateOnePodcast, CTRLusers.updateUserPod)
 
 router.route('/api/user/:userid/:podid')
     // gets a single podcast for a user

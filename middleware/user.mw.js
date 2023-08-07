@@ -6,20 +6,29 @@ import { errHandler } from '../functions/err-handler.js';
 // update user by adding pod with epis to db - for user/ POST route
 export const addUserPods = async (req, res, next) => {
     try {
+        let feedDb;
+        let feedUrl = req.body.feedurl;
         const userId = req.params.id;
-        const feedDb = req.feedIngestRes;
-        const feedUrl = feedDb[0].feedurl;
+        let checkPod = await podcasts.findByFeedUrl(req.body.feedurl);
+        if (checkPod.length > 0) {
+            feedDb = checkPod;
+        }
+        else {
+            let feedUrl = req.body.feedurl;
+            req.feedurl = feedUrl;
+            let insertPod = await feedFunctions.parseFeed(feedUrl);
+            feedDb = await podcasts.ingestFeed(insertPod);
+        };
         const checkUserPod = await users.checkPodByURL(userId, feedUrl);
         if (checkUserPod.length > 0) {
             let podId = checkUserPod[0].podcasts.pod_id;
             await users.deleteAUserPod(userId, podId)
         }
-            await users.addPodsToUser(userId, feedDb);
-            const getAddedPod = await users.checkPodByURL(userId, feedUrl);
-            req.params.podid = getAddedPod[0].podcasts.pod_id;
-            req.params.userid = userId;
-            console.log('pod added to user')
-            next();
+        await users.addPodsToUser(userId, feedDb);
+        const getAddedPod = await users.checkPodByURL(userId, feedUrl);
+        req.params.podid = getAddedPod[0].podcasts.pod_id;
+        req.params.userid = userId;
+        next();
     }
     catch (error) {
         errHandler(error, res);
