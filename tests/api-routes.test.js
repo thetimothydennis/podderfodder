@@ -23,7 +23,7 @@ describe('test api get routes after login', () => {
     });
 
     test('get user podcast', async () => {
-        const response = await agent.get(`/api/user/${USER_ID}/64ce961806886d34bdf632ae`);
+        const response = await agent.get(`/api/user/${USER_ID}/64d14d4a90a13438e4396cf6`);
         expect(response.statusCode).toBe(200);
         expect(response.body.length > 0);
         expect(response.body[0].podcasts.feedurl).toBe('https://www.kuaf.com/podcast/the-new-classroom-podcast/rss.xml');
@@ -31,7 +31,7 @@ describe('test api get routes after login', () => {
     });
 
     test('get user podcast episode', async () => {
-        const response = await agent.get(`/api/user/${USER_ID}/64ce961806886d34bdf632ae/64ce961806886d34bdf632b0`);
+        const response = await agent.get(`/api/user/${USER_ID}/64d14d4a90a13438e4396cf6/64d14d4a90a13438e4396cf8`);
         expect(response.statusCode).toBe(200);
         expect(response.body.length > 0);
         expect(response.body[0].podcasts.episodes.epi_url).toBe('https://cpa.ds.npr.org/kuaf/audio/2020/10/the_new_classroom_episode_1.mp3');

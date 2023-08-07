@@ -6,28 +6,23 @@ import { errHandler } from '../functions/err-handler.js';
 // update user by adding pod with epis to db - for user/ POST route
 export const addUserPods = async (req, res, next) => {
     try {
-        let feedDb;
         let feedUrl = req.body.feedurl;
-        const userId = req.params.id;
-        let checkPod = await podcasts.findByFeedUrl(req.body.feedurl);
+        const userId = req.params.userid;
+        let insertPod = await feedFunctions.parseFeed(feedUrl);
+        let checkPod = await podcasts.findByFeedUrl(feedUrl);
         if (checkPod.length > 0) {
-            feedDb = checkPod;
+            let podId = checkPod[0]._id;
+            await podcasts.deletePodcast(podId)
         }
-        else {
-            let feedUrl = req.body.feedurl;
-            req.feedurl = feedUrl;
-            let insertPod = await feedFunctions.parseFeed(feedUrl);
-            feedDb = await podcasts.ingestFeed(insertPod);
-        };
+        let feedDb = await podcasts.ingestFeed(insertPod);
         const checkUserPod = await users.checkPodByURL(userId, feedUrl);
         if (checkUserPod.length > 0) {
             let podId = checkUserPod[0].podcasts.pod_id;
             await users.deleteAUserPod(userId, podId)
         }
-        await users.addPodsToUser(userId, feedDb);
+        let addPod = await users.addPodsToUser(userId, feedDb);
         const getAddedPod = await users.checkPodByURL(userId, feedUrl);
         req.params.podid = getAddedPod[0].podcasts.pod_id;
-        req.params.userid = userId;
         next();
     }
     catch (error) {
@@ -40,15 +35,10 @@ export const addUserPods = async (req, res, next) => {
 export const updateOnePodcast = async (req, res, next) => {
     try {
         // destructure req.params object
-        let {podid, userid} = req.params;
+        let { podid, userid } = req.params;
         // get the feed url for the pod from db
-        let feedUrl;
-        if (req.podid || req.id) {
-            feedUrl = req.feedurl;
-        } else {
-            let feedUrlToUpdate = await users.getUserPodcast(userid, podid);
-            feedUrl = feedUrlToUpdate[0].podcasts.feedurl;
-        }
+        let feedUrlToUpdate = await users.getUserPodcast(userid, podid);
+        let feedUrl = feedUrlToUpdate[0].podcasts.feedurl;
         // use feedurl to parse the RSS
         const updateParsedFeed = await feedFunctions.parseFeed(feedUrl);
         // add the podcast id from db into the newly parsed feed object
@@ -58,7 +48,6 @@ export const updateOnePodcast = async (req, res, next) => {
         podid = updateOp._id;
         let updated = await podcasts.readPodcast(podid);
         req.params.updated = updated;
-        console.log('updated podcast object')
         next();
     }
     catch (error) {

@@ -4,19 +4,9 @@ import { errHandler } from '../functions/err-handler.js';
 // updates a podcast for user in db - for user/ PUT route
 export const updateUserPod = async (req, res) => {
     try {
-        
-        let {
-            userid,
-            podid,
-            updated
-        } = req.params;
-        if (req.id && req.podid) {
-            userid = req.id;
-            podid = req.podid.toString();
-        };
+        let { userid, podid, updated } = req.params;
         // pass off updated feed object to the model
         let updatedUserPod = await users.updateUserPodAndEpis(userid, podid, updated);
-        console.log(`updated user pod`)
         res.send(updatedUserPod);
     }
     catch (error) {
@@ -40,7 +30,7 @@ export const getUserPod = async (req, res) => {
 // get all pods for user
 export const getUserPods = async (req, res) => {
     try {
-        let userId = req.params.id;
+        let userId = req.params.userid;
         // let getPodcasts = await users.getUserPodcasts(userId);
         let getPodcasts = await users.getAllUserPods(userId);
         res.send(getPodcasts);
@@ -71,11 +61,7 @@ export const getAllUserEpis = async (req, res) => {
 
 // delete a single episode for a user
 export const deleteUserEpi = async (req, res) => {
-    const {
-        userid,
-        podid,
-        epiid
-    } = req.params;
+    const { userid, podid, epiid } = req.params;
     try {
         const deletedEpi = await users.deleteAUserEpi(userid, podid, epiid);
         res.send(deletedEpi);
@@ -87,10 +73,7 @@ export const deleteUserEpi = async (req, res) => {
 
 // delete a user pod
 export const deleteUserPod = async (req, res) => {
-    const {
-        userid,
-        podid
-    } = req.params;
+    const { userid, podid } = req.params;
     try {
         let deletePod = await users.deleteAUserPod(userid, podid);
         res.send(deletePod)
