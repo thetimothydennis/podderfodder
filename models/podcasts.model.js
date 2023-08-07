@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 // mongodb aggregate pipeline constant
 const aggregatePipeline = async (matchObj, projection) => {
     try {
+
         let aggResult = await Podcast.aggregate(
             [
                 matchObj,
@@ -111,7 +112,12 @@ const epiHandler = async (itemsArr) => {
                 let duration = itemsArr[i].itunes.duration;
                 let url = itemsArr[i].enclosure.url;
                 let episode = itemsArr[i];
-                let { title, pubDate, link, content } = episode;
+                let {
+                    title,
+                    pubDate,
+                    link,
+                    content
+                    } = episode;
                 let web_url = link;
                 let epi_url = url;
                 if (content && content.match(/(<([^>]+)>)/gi)) {
@@ -146,14 +152,22 @@ const epiHandler = async (itemsArr) => {
     catch (err) {
         console.log(err);
         return err;
-    };
-};
+    }
+}
 
 // create a podcast with episodes
 export const ingestFeed = async (feedObj) => {
     try {
         // inserting podcast
-        let { title, description, author, image, feedUrl, categories, items } = feedObj;
+        let {
+            title,
+            description,
+            author,
+            image,
+            feedUrl,
+            categories,
+            items
+        } = feedObj;
         if (description && description.match(/(<([^>]+)>)/gi)) {
             description = reformat.removeHTML(description);
         };
@@ -204,6 +218,7 @@ export const readPodcast = async (id) => {
 // read a podcast and one episode
 export const readOneEpisode = async (id) => {
     try {
+
         let onePodResponse = await Podcast.find({
             "episodes._id": id
         }, {
@@ -229,6 +244,7 @@ export const readOneEpisode = async (id) => {
 // delete one episode from podcast
 export const deleteOneEpisode = async (podId, epiId) => {
     try {
+
         const deleteUpdate = await Podcast.updateOne(
             {
                 _id: podId
@@ -279,7 +295,16 @@ export const findByFeedUrl = async (feedUrl) => {
 export const updatePodFeed = async (feedObj) => {
     try {
         // destructure the needed elements from the feed object
-        const { title, description, author, image, feedUrl, categories, items, id } = feedObj;
+        const {
+            title,
+            description,
+            author,
+            image,
+            feedUrl,
+            categories,
+            items,
+            id
+        } = feedObj;
         // use the destructured elements to find the podcast, update the values
         await Podcast.findByIdAndUpdate({ _id: id }, {
             show_title: title,
@@ -290,7 +315,7 @@ export const updatePodFeed = async (feedObj) => {
             categories: categories
         });
         // run the episodes array through the epiHandler
-        let newEpisodes = await epiHandler(items);
+        let newEpisodes = await epiHandler(items)
         // update the podcast in db based on the feed url, push in the episodes
         let response = await Podcast.findOneAndUpdate({
             feedurl: feedUrl

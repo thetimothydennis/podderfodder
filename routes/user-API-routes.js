@@ -15,7 +15,7 @@ router.get('/api/search/', search);
 // attaches auth middleware to all API routes
 router.use(isAuthenticated);
 
-router.route('/api/user/:userid')
+router.route('/api/user/:id')
     // gets all podcasts for user
     .get(CTRLusers.getUserPods)
     // adds a podcast and episodes for a user in db
