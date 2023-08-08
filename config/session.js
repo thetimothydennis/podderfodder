@@ -12,7 +12,7 @@ let sessionOptions = {
     cookie: {
         httpOnly: false,
         maxAge: parseInt(process.env.SESSION_COOKIE_MAX_AGE)
-    }
+    },
 };
 
 export function configureSession() {

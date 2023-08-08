@@ -103,9 +103,12 @@ export const postChangePassword = async (req, res) => {
 export const postForgotPassword = async (req, res) => {
     try {
         let { email } = req.body;
+        console.log(email)
         const token = (randomBytes)(20).toString('hex');
         const user = await User.findOneAndUpdate({email: email}, {resetPasswordToken: token});
     
+        console.log(user)
+
         const resetEmail = {
             to: user.email,
             from: `donut-reply@timothyddennis.com`,
