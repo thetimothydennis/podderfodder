@@ -52,7 +52,7 @@ export function UserLogin () {
                 <div className="row">
                     <a className="col-sm" 
                        href="/github" 
-                       style={{"pointer-events": "all"}} 
+                       style={{"pointerEvents": "all"}} 
                        onPointerEnter={handleGHClick} 
                        onPointerDown={handleGHClick} 
                        onPointerLeave={handleGHReset} 
@@ -65,7 +65,7 @@ export function UserLogin () {
                     </a>
                     <a className="col-sm" 
                        href="/google" 
-                       style={{"pointer-events": "all"}} 
+                       style={{"pointerEvents": "all"}} 
                        onPointerEnter={handleGoogClick} 
                        onPointerDown={handleGoogClick} 
                        onPointerLeave={handleGoogReset} 
