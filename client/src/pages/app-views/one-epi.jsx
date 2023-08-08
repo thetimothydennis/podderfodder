@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { func, string } from 'prop-types';
 import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
+import AudioMetadata from '../../functions/media-session.jsx';
 
 function OneEpi (props) {
 
@@ -51,7 +52,12 @@ function OneEpi (props) {
                 />
                 <br />
                 <audio className="audioPlayer" src={epi} controls />
-
+                <AudioMetadata 
+                    podTitle={showTitle}
+                    epiTitle={title}
+                    author={author}
+                    audio={epi}
+                />
                 <p className="oneEpiContent">{content}</p>
             </div>
         </div>
