@@ -170,7 +170,9 @@ export const ingestFeed = async (feedObj) => {
             items,
             lastBuildDate
         } = feedObj;
-        console.log(feedObj)
+        if (!author) {
+            author = title;
+        };
         if (!lastBuildDate) {
             lastBuildDate = items[0].pubDate;
         };
@@ -313,6 +315,9 @@ export const updatePodFeed = async (feedObj) => {
             id,
             lastBuildDate
         } = feedObj;
+        if (!author) {
+            author = title;
+        }
         if (!lastBuildDate) {
             lastBuildDate = items[0].pubDate;
         };
