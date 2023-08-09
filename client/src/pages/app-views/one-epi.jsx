@@ -6,6 +6,8 @@ import AudioMetadata from '../../functions/media-session.jsx';
 
 function OneEpi (props) {
 
+    const { userId, epiId, setPodId, setDocTitle } = props;
+
     function formatDate (date) {
         return new Date(date).toString().slice(0, 15);
     }
@@ -20,7 +22,7 @@ function OneEpi (props) {
 
     const getEpisode = useCallback(async () => {
         let res = await axios.get(
-            `${apiCall}/api/user/${props.userId}/${props.epiId}`
+            `${apiCall}/api/user/${userId}/${epiId}`
         );
         let item = res.data[0].podcasts;
         setShowTitle(item.show_title);
@@ -30,9 +32,9 @@ function OneEpi (props) {
         setDate(item.episodes.pubDate);
         setEpi(item.episodes.epi_url);
         setContent(item.episodes.content);
-        props.setPodId(item.pod_id);
-        props.setDocTitle(`${item.episodes.title} - Podder Fodder`)
-    }, [props]);
+        setPodId(item.pod_id);
+        setDocTitle(`${item.episodes.title} - Podder Fodder`)
+    }, [epiId, setDocTitle, setPodId, userId]);
 
     useEffect(() => {
         getEpisode();

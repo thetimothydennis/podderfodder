@@ -4,27 +4,27 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 
 function AllEpis (props) {
+    const { userId, setDocTitle, setPodId, setEpiId } = props;
     const [episodes, setEpisodes] = useState([]);
 
     const getAllEpis = useCallback(async () => {
         let res = await axios.get(
-            `${apiCall}/api/allepisodes/${props.userId}`
+            `${apiCall}/api/allepisodes/${userId}`
         );
-        console.log(res.data)
         setEpisodes(res.data);
-    }, [props.userId])
+    }, [userId])
 
     useEffect(() => {
-        props.setDocTitle('All Episodes - Podder Fodder')
-    }, [props]);
+        setDocTitle('All Episodes - Podder Fodder')
+    }, [setDocTitle]);
 
     useEffect(() => {
         getAllEpis();
     }, [getAllEpis]);
 
     const handleClick = (e) => {
-        props.setPodId(e.target.value);
-        props.setEpiId(e.target.id);
+        setPodId(e.target.value);
+        setEpiId(e.target.id);
     };
 
     return (

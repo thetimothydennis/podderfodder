@@ -4,16 +4,15 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 
 function AllPods(props) {
-    const { setDocTitle } = props;
+    const { setDocTitle, setPodId, setDisplay, userId } = props;
     const [podcasts, setPodcasts] = useState([]);
 
     const getPods = useCallback(async () => {
         let res = await axios.get(
-            `${apiCall}/api/user/${props.userId}/`
+            `${apiCall}/api/user/${userId}/`
         );
-        console.log(res.data)
         setPodcasts(res.data);
-    }, [props.userId]);
+    }, [userId]);
 
     useEffect(() => {
         getPods();
@@ -25,14 +24,14 @@ function AllPods(props) {
 
     async function handleDeleteClick(e) {
         await axios.delete(
-            `${apiCall}/api/user/${props.userId}/${e.target.value}`
+            `${apiCall}/api/user/${userId}/${e.target.value}`
         ).then(() => {
-            props.setDisplay('allPods');
+            setDisplay('allPods');
         });
     }
 
     async function handlePodClick(e) {
-        props.setPodId(e.target.id);
+        setPodId(e.target.id);
     }
 
         return (

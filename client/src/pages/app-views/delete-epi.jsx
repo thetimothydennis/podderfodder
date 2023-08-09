@@ -3,9 +3,11 @@ import { func } from 'prop-types';
 
 function DeleteEpi (props) {
 
+    const { setDocTitle } = props;
+
     useEffect(() => {
-        props.setDocTitle('Episode Deleted - Podder Fodder')
-    }, [props]);
+        setDocTitle('Episode Deleted - Podder Fodder')
+    }, [setDocTitle]);
 
     return (
         <div className="Epi">

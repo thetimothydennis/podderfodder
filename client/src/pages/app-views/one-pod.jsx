@@ -4,6 +4,8 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 
 function OnePod(props) {
+    const { userId, podId, setDocTitle, setPodId, setDisplay } = props;
+
     const [episodes, setEpisodes] = useState([]);
     const [showTitle, setShowTitle] = useState('');
     const [showDesc, setShowDesc] = useState('');
@@ -12,7 +14,7 @@ function OnePod(props) {
     
     const getPodcasts = useCallback(async () => {
         let res = await axios.get(
-            `${apiCall}/api/user/${props.userId}/${props.podId}`
+            `${apiCall}/api/user/${userId}/${podId}`
         );
         let {
             show_title,
@@ -26,15 +28,15 @@ function OnePod(props) {
         setShowImg(image);
         setEpisodes(episodes);
         setShowAuthor(author);
-        props.setDocTitle(`${show_title} - Podder Fodder`);
-    }, [props]);
+        setDocTitle(`${show_title} - Podder Fodder`);
+    }, [setDocTitle, podId, userId]);
 
     const updatePod = async () => {
         await axios.put(
-            `${apiCall}/api/user/${props.userId}/${props.podId}`
+            `${apiCall}/api/user/${userId}/${podId}`
         ).then((res) => {
-            props.setPodId(res.data[0].podcasts.pod_id);
-            props.setDisplay('onePod');
+            setPodId(res.data[0].podcasts.pod_id);
+            setDisplay('onePod');
         });
     };
     
@@ -44,9 +46,9 @@ function OnePod(props) {
 
     const handleClick = async (e) => {
         await axios.delete(
-            `${apiCall}/api/user/${props.userId}/${e.target.value}`
+            `${apiCall}/api/user/${userId}/${e.target.value}`
         ).then(() => {
-            props.setDisplay('onePod');
+            setDisplay('onePod');
         });
     };
 
@@ -77,24 +79,24 @@ function OnePod(props) {
                     <div className="row epiRow" 
                         key={x} 
                         value={item._id}
-                        id={`${props.podId}/${item._id}`}>
-                        <div className="col-sm" id={`${props.podId}/${item._id}`} >
+                        id={`${podId}/${item._id}`}>
+                        <div className="col-sm" id={`${podId}/${item._id}`} >
                             <b>{item.title}</b>
                         </div>
-                        <div className="col-sm allEpiDuration" id={`${props.podId}/${item._id}`}>
+                        <div className="col-sm allEpiDuration" id={`${podId}/${item._id}`}>
                             {item.duration} min.
                         </div>
-                        <div className="col-sm allEpiDuration" id={`${props.podId}/${item._id}`}>
+                        <div className="col-sm allEpiDuration" id={`${podId}/${item._id}`}>
                             { item.pubDate.toString().slice(0, 10) }
                         </div>
-                        <div className="col-sm epiContent" id={`${props.podId}/${item._id}`}>
+                        <div className="col-sm epiContent" id={`${podId}/${item._id}`}>
                             {item.content.slice(0, 200)}...
                         </div>
                         <div>
                             <button id={-7} 
                                     type="button"
                                     className="btn btn-dark"
-                                    value={`${props.podId}/${item._id}`} 
+                                    value={`${podId}/${item._id}`} 
                                     onClick={handleClick}
                             >
                                 Delete episode

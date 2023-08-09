@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import { func } from 'prop-types';
 
 function ImportedPod (props) {
+    const { setDocTitle } = props;
     
     useEffect(() => {
-        props.setDocTitle('Adding Pod - Podder Fodder')
-    }, [props]);
+        setDocTitle('Adding Pod - Podder Fodder')
+    }, [setDocTitle]);
 
     return (
         <div className="Epi">

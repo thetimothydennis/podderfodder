@@ -3,9 +3,11 @@ import { func } from 'prop-types';
 
 function UpdatePod (props) {
 
+    const { setDocTitle } = props;
+
     useEffect(() => {
-        props.setDocTitle('Updating Pod - Podder Fodder')
-    }, [props]);
+        setDocTitle('Updating Pod - Podder Fodder')
+    }, [setDocTitle]);
 
         return (
         <div className="Epi">

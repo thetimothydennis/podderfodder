@@ -4,6 +4,8 @@ import axios from 'axios';
 import { apiCall } from '../../functions/api-call.jsx';
 
 function PodSearch (props) {
+    const { userId, setPodId, setDisplay, setDocTitle } = props;
+
     const [input, setInput] = useState('');
     const [response, setResponse] = useState([]);
     const [feedInput, setFeedInput] = useState('');
@@ -19,20 +21,20 @@ function PodSearch (props) {
     const handleSubmit = useCallback(async (inputArg) => {
         setRender(<p>Waiting</p>)
         await axios.post(
-            `${apiCall}/api/user/${props.userId}`, 
+            `${apiCall}/api/user/${userId}`, 
             {
                 feedurl: inputArg
             }
         ).then((res) => {
             let pod_id = res.data[0].podcasts.pod_id;
-            props.setPodId(pod_id);
-            props.setDisplay('onePod');
+            setPodId(pod_id);
+            setDisplay('onePod');
         })
-    }, [props]);
+    }, [setPodId, setDisplay, userId]);
 
     useEffect(() => {
-        props.setDocTitle('Search and Add - Podder Fodder')
-    }, [props]);
+        setDocTitle('Search and Add - Podder Fodder')
+    }, [setDocTitle]);
 
     useEffect(() => {
         getSearch(input);
