@@ -48,6 +48,9 @@ const PodcastSchema = new mongoose.Schema({
     categories: {
         type: String
     },
+    buildDate: {
+        type: Date
+    },
     episodes: [EpisodeSchema]
 });
 

@@ -70,6 +70,7 @@ const standardProject = {
         image: "$image",
         feedurl: "$feedurl",
         categories: "$categories",
+        buildDate: "$buildDate",
         episodes: {
             $sortArray: {
                 input: "$episodes",
@@ -166,7 +167,8 @@ export const ingestFeed = async (feedObj) => {
             image,
             feedUrl,
             categories,
-            items
+            items,
+            lastBuildDate
         } = feedObj;
         if (description && description.match(/(<([^>]+)>)/gi)) {
             description = reformat.removeHTML(description);
@@ -182,6 +184,7 @@ export const ingestFeed = async (feedObj) => {
                 image: image,
                 feedurl: feedUrl,
                 categories: categories,
+                buildDate: lastBuildDate,
                 episodes: []
             });
             await insertPod.save();
@@ -303,7 +306,8 @@ export const updatePodFeed = async (feedObj) => {
             feedUrl,
             categories,
             items,
-            id
+            id,
+            lastBuildDate
         } = feedObj;
         // use the destructured elements to find the podcast, update the values
         await Podcast.findByIdAndUpdate({ _id: id }, {
@@ -312,7 +316,8 @@ export const updatePodFeed = async (feedObj) => {
             author: author,
             image: image,
             feedurl: feedUrl,
-            categories: categories
+            categories: categories,
+            buildDate: lastBuildDate
         });
         // run the episodes array through the epiHandler
         let newEpisodes = await epiHandler(items)

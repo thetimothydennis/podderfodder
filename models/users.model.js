@@ -79,6 +79,7 @@ const aggrStdProjection = () => {
                 image: 1,
                 categories: 1,
                 description: 1,
+                buildDate: 1,
                 episodes: {
                     epi_id: "$podcasts.episodes._id",
                     title: 1,
@@ -101,6 +102,15 @@ const aggrSortEpis = {
     }
 };
 
+const aggrSortPods = {
+    $sortArray: {
+        input: "$podcasts",
+        sortBy: {
+            buildDate: -1
+        }
+    }
+}
+
 // just podcasts aggregation
 const aggrPodsProjection = () => {
     return {
@@ -120,7 +130,13 @@ export const getAllUserPods = async (userId) => {
         let userPods = await User.aggregate(
             [
                 aggrUserIdMatch(userId),
-                aggrPodsProjection()
+                aggrPodsProjection(),
+                aggrPodUnwind(),
+                {
+                    $sort: {
+                        "podcasts.buildDate": -1
+                    }
+                }
             ]
         );
         return userPods;

@@ -11,7 +11,8 @@ function AllPods(props) {
         let res = await axios.get(
             `${apiCall}/api/user/${props.userId}/`
         );
-        setPodcasts(res.data[0].podcasts);
+        console.log(res.data)
+        setPodcasts(res.data);
     }, [props.userId]);
 
     useEffect(() => {
@@ -43,38 +44,38 @@ function AllPods(props) {
                     {podcasts.map((item, x) => (
                         <div className="row epiRow" 
                               key={x}
-                              id={item._id}
+                              id={item.podcasts._id}
                         >
                             <div className="col-sm" onClick={handlePodClick} 
-                            id={item._id} 
+                            id={item.podcasts._id} 
                             >
                                 <img alt="podcast_show_image"
                                 width='150' 
-                                src={item.image} 
+                                src={item.podcasts.image} 
                             />
                             </div>
                             <div className="col-sm" onClick={handlePodClick} 
-                                id={item._id} 
+                                id={item.podcasts._id} 
                             >
-                                <b>{item.show_title}</b>
+                                <b>{item.podcasts.show_title}</b>
                             </div >
                             <div className="col-sm allEpiAuthor" onClick={handlePodClick} 
-                                id={item._id}
+                                id={item.podcasts._id}
                             >
-                                {item.author}
+                                {item.podcasts.author}
                             </div>
                             <div className="col-sm" onClick={handlePodClick} 
-                                id={item._id}
+                                id={item.podcasts._id}
                             >
-                                {item.description.slice(0, 250)}
+                                {item.podcasts.description.slice(0, 250)}
                             </div>
-                            <div className="col-sm" id={item._id} 
+                            <div className="col-sm" id={item.podcasts._id} 
                                 onClick={handleDeleteClick}
                             >
                                 <button id='-6'
                                         type="button"
                                         className="btn btn-dark"
-                                        value={item._id} 
+                                        value={item.podcasts._id} 
                                         onClick={handleDeleteClick}
                                 >
                                     Delete podcast

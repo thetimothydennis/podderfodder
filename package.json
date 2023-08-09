@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles",
-    "serve": "NODE_ENV=test nodemon server.js",
+    "serve": "NODE_ENV=prod nodemon server.js",
     "prod": "NODE_ENV=prod pm2 start server.js"
   },
   "keywords": [],

@@ -10,6 +10,7 @@ function AllEpis (props) {
         let res = await axios.get(
             `${apiCall}/api/allepisodes/${props.userId}`
         );
+        console.log(res.data)
         setEpisodes(res.data);
     }, [props.userId])
 

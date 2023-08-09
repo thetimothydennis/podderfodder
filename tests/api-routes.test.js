@@ -75,7 +75,7 @@ describe('test other CRUD operations after login', () => {
     feedArr.forEach(feedUrl => {
         test('test api post route', async () => {
             const existing = await agent.get(`/api/user/${USER_ID}`);
-            podsLength = existing.body[0].podcasts.length;
+            podsLength = existing.body.length;
             expect(existing.statusCode).toBe(200);
             const response = await agent.post(`/api/user/${USER_ID}`)
                 .type('form')
@@ -84,7 +84,7 @@ describe('test other CRUD operations after login', () => {
                 expect(response.statusCode).toBe(200);
                 episLength = response.body[0].podcasts.episodes.length;
             const modified = await agent.get(`/api/user/${USER_ID}`);
-            expect(modified.body[0].podcasts.length).toBe(podsLength + 1);
+            expect(modified.body.length).toBe(podsLength + 1);
             expect(modified.statusCode).toBe(200);
         }, 15000);
     
