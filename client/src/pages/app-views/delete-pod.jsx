@@ -11,7 +11,7 @@ function DeletePod (props) {
         <div className="Epi">
             <br />
             <p>Podcast deleted</p>
-            <img src="waiting.svg" height="300em" />
+            <img className="waiting" src="waiting.svg" height="300em" />
         </div>
     );
 }

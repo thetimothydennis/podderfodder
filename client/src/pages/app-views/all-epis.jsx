@@ -28,9 +28,9 @@ function AllEpis (props) {
 
     return (
         <div className="Epi">
-            <h1>
+            <h3>
                 All Episodes
-            </h1>
+            </h3>
         
             <div className="container">
                 {episodes.map((item, x) => (

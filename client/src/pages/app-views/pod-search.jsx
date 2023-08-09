@@ -77,7 +77,7 @@ function PodSearch (props) {
    
     return (
         <div>
-            <h1>Search for Podcasts</h1>
+            <h3>Search for Podcasts</h3>
                 <div className="container">
                     <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
                         <label className="col-sm form-control" htmlFor="feedInput">Input RSS feed URL

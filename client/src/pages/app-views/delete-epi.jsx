@@ -11,7 +11,7 @@ function DeleteEpi (props) {
         <div className="Epi">
             <br />
             <p>Episode deleted</p>
-            <img src="waiting.svg" height="300em" />
+            <img className="waiting" src="waiting.svg" height="300em" />
         </div>
     );
 }

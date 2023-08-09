@@ -36,9 +36,9 @@ function AllPods(props) {
 
         return (
             <div className="Epi">
-                <h1>
+                <h3>
                     All Podcasts
-                </h1>
+                </h3>
                 <div className="container">
                     {podcasts.map((item, x) => (
                         <div className="row epiRow" 

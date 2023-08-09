@@ -11,7 +11,7 @@ function ImportedPod (props) {
         <div className="Epi">
             <br />
             <p>Adding pod. You will be redirected momentarily.</p>
-            <img src="waiting.svg" height="300em" />
+            <img className="waiting" src="waiting.svg" height="300em" />
         </div>
     );
 }

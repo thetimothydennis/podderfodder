@@ -1,4 +1,5 @@
 import MediaSession from '@mebtte/react-media-session';
+import { string } from 'prop-types';
 
 function AudioMetadata (props) {
     const { podTitle, epiTitle, author, audio } = props;
@@ -12,5 +13,13 @@ function AudioMetadata (props) {
         />
     )
 }
+
+AudioMetadata.propTypes = {
+    podTitle: string,
+    epiTitle: string,
+    album: string,
+    author: string,
+    audio: string
+};
 
 export default AudioMetadata;

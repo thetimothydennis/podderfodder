@@ -41,16 +41,15 @@ function OneEpi (props) {
     return (
         <div className="Epi">
             <div className="oneEpi">
-                <h1 id={props.podId}>{showTitle}</h1>
-                <h2>{title}</h2>
+                <h3>{title}</h3>
                 <h4 className="allEpiDuration">{formatDate(date)}</h4>
-                <h3 className="allEpiAuthor">{author}</h3>
+                <h4 className="oneEpiShowTitle" id={props.podId}>{showTitle}</h4>
+                <h4 className="allEpiAuthor">{author}</h4>
                 <img className="epiImg" 
                             alt="podcast_image" 
                             src={image}
                             height="250em" 
                 />
-                <br />
                 <audio className="audioPlayer" src={epi} controls />
                 <AudioMetadata 
                     podTitle={showTitle}

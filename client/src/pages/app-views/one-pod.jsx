@@ -33,7 +33,6 @@ function OnePod(props) {
         await axios.put(
             `${apiCall}/api/user/${props.userId}/${props.podId}`
         ).then((res) => {
-            console.log(res.data[0].podcasts.pod_id)
             props.setPodId(res.data[0].podcasts.pod_id);
             props.setDisplay('onePod');
         });
@@ -55,12 +54,12 @@ function OnePod(props) {
 
     return (
         <div className="Epi">
-            <h1>
+            <h3>
                 {showTitle}
-            </h1>
-            <h2>
+            </h3>
+            <h4>
                 {showAuthor}
-            </h2>
+            </h4>
             <img alt="podcast_image" 
                  height="250em"
                  src={showImg}

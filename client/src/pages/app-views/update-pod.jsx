@@ -11,7 +11,7 @@ function UpdatePod (props) {
         <div className="Epi">
             <br />
                 <p>Updating pod. You will be redirected shortly.</p>
-            <img src="waiting.svg" height="300em" />
+            <img className="waiting" src="waiting.svg" height="300em" />
         </div>
     );
 }
