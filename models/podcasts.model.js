@@ -170,6 +170,10 @@ export const ingestFeed = async (feedObj) => {
             items,
             lastBuildDate
         } = feedObj;
+        console.log(feedObj)
+        if (!lastBuildDate) {
+            lastBuildDate = items[0].pubDate;
+        };
         if (description && description.match(/(<([^>]+)>)/gi)) {
             description = reformat.removeHTML(description);
         };
@@ -298,7 +302,7 @@ export const findByFeedUrl = async (feedUrl) => {
 export const updatePodFeed = async (feedObj) => {
     try {
         // destructure the needed elements from the feed object
-        const {
+        let {
             title,
             description,
             author,
@@ -309,6 +313,9 @@ export const updatePodFeed = async (feedObj) => {
             id,
             lastBuildDate
         } = feedObj;
+        if (!lastBuildDate) {
+            lastBuildDate = items[0].pubDate;
+        };
         // use the destructured elements to find the podcast, update the values
         await Podcast.findByIdAndUpdate({ _id: id }, {
             show_title: title,

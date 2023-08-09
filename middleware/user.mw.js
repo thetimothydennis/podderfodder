@@ -8,7 +8,7 @@ export const addUserPods = async (req, res, next) => {
     try {
         let feedDb;
         let feedUrl = req.body.feedurl;
-        const userId = req.params.id;
+        const userId = req.params.userid;
         let checkPod = await podcasts.findByFeedUrl(req.body.feedurl);
         if (checkPod.length > 0) {
             feedDb = checkPod;
@@ -27,7 +27,6 @@ export const addUserPods = async (req, res, next) => {
         await users.addPodsToUser(userId, feedDb);
         const getAddedPod = await users.checkPodByURL(userId, feedUrl);
         req.params.podid = getAddedPod[0].podcasts.pod_id;
-        req.params.userid = userId;
         next();
     }
     catch (error) {
@@ -42,13 +41,8 @@ export const updateOnePodcast = async (req, res, next) => {
         // destructure req.params object
         let {podid, userid} = req.params;
         // get the feed url for the pod from db
-        let feedUrl;
-        if (req.podid || req.id) {
-            feedUrl = req.feedurl;
-        } else {
-            let feedUrlToUpdate = await users.getUserPodcast(userid, podid);
-            feedUrl = feedUrlToUpdate[0].podcasts.feedurl;
-        }
+        let feedUrlToUpdate = await users.getUserPodcast(userid, podid);
+        let feedUrl = feedUrlToUpdate[0].podcasts.feedurl;
         // use feedurl to parse the RSS
         const updateParsedFeed = await feedFunctions.parseFeed(feedUrl);
         // add the podcast id from db into the newly parsed feed object

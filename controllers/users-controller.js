@@ -5,10 +5,6 @@ import { errHandler } from '../functions/err-handler.js';
 export const updateUserPod = async (req, res) => {
     try {
         let { userid, podid, updated } = req.params;
-        if (req.id && req.podid) {
-            userid = req.id;
-            podid = req.podid.toString();
-        };
         // pass off updated feed object to the model
         let updatedUserPod = await users.updateUserPodAndEpis(userid, podid, updated);
         res.send(updatedUserPod);
@@ -34,7 +30,7 @@ export const getUserPod = async (req, res) => {
 // get all pods for user
 export const getUserPods = async (req, res) => {
     try {
-        let userId = req.params.id;
+        let userId = req.params.userid;
         // let getPodcasts = await users.getUserPodcasts(userId);
         let getPodcasts = await users.getAllUserPods(userId);
         res.send(getPodcasts);
