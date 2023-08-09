@@ -1,8 +1,8 @@
-import { Router } from 'express';
-import * as httpCTRL from '../controllers/http-controller.js';
+import { Router } from "express";
+import * as httpCTRL from "../controllers/http-controller.js";
 
 const router = Router();
 
-router.get('*', httpCTRL.httpRedirectAll);
+router.get("*", httpCTRL.httpRedirectAll);
 
 export default router;

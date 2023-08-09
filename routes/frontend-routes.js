@@ -1,11 +1,14 @@
 // package imports
-import express from 'express';
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import express from "express";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 // auth middleware import
-import isAuthenticated from '../middleware/is-authenticated.js';
+import isAuthenticated from "../middleware/is-authenticated.js";
 // frontend controller import
-import { appRoute, resetPasswordPage } from '../controllers/frontend-controller.js';
+import {
+	appRoute,
+	resetPasswordPage,
+} from "../controllers/frontend-controller.js";
 
 // instantiates the frontend router
 const router = express.Router();
@@ -21,13 +24,13 @@ router.get("/login", appRoute);
 // register route
 router.get("/register", appRoute);
 // page for initiating forgot password workflow
-router.get('/forgotpassword', appRoute);
+router.get("/forgotpassword", appRoute);
 // page for resetting password after receiving tokenized link
-router.get('/resetpassword/:token', resetPasswordPage);
+router.get("/resetpassword/:token", resetPasswordPage);
 // authenticated app route
 router.get("/app", isAuthenticated, appRoute);
 // route for changing password by user who is logged in
-router.get('/changepassword', isAuthenticated, appRoute);
+router.get("/changepassword", isAuthenticated, appRoute);
 
 // exports the router for index.js
 export default router;

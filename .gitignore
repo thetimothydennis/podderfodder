@@ -109,3 +109,4 @@ certs
 .env.test
 .env
 dump
+.prettierrc
