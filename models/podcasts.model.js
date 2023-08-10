@@ -5,7 +5,7 @@ import mongoose from "mongoose";
 // mongodb aggregate pipeline constant
 async function aggregatePipeline (matchObj, projection) {
 	try {
-		let aggResult = await Podcast.aggregate([
+		const aggResult = await Podcast.aggregate([
 			matchObj,
 			{
 				$set: {
@@ -30,8 +30,7 @@ async function aggregatePipeline (matchObj, projection) {
 		]);
 		return aggResult;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 }
 
@@ -41,19 +40,13 @@ const emptyMatch = {
 
 function feedUrlMatch (feedUrl) {
 	return {
-		$match: {
-			feedurl: feedUrl,
-		},
+		$match: { feedurl: feedUrl, },
 	};
 }
 
 function idMatch (id) {
 	return {
-		$match: {
-			_id: {
-				$in: [new mongoose.Types.ObjectId(id)],
-			},
-		},
+		$match: { _id: { $in: [new mongoose.Types.ObjectId(id)], }, },
 	};
 }
 
@@ -71,9 +64,7 @@ const standardProject = {
 		episodes: {
 			$sortArray: {
 				input: "$episodes",
-				sortBy: {
-					pubDate: -1,
-				},
+				sortBy: { pubDate: -1, },
 			},
 		},
 	},
@@ -108,11 +99,11 @@ async function epiHandler (itemsArr) {
 				continue;
 			} else {
 				let duration = itemsArr[i].itunes.duration;
-				let url = itemsArr[i].enclosure.url;
-				let episode = itemsArr[i];
+				const url = itemsArr[i].enclosure.url;
+				const episode = itemsArr[i];
 				let { title, pubDate, link, content } = episode;
-				let web_url = link;
-				let epi_url = url;
+				const web_url = link;
+				const epi_url = url;
 				if (content && content.match(/(<([^>]+)>)/gi)) {
 					content = reformat.removeHTML(content);
 				}
@@ -120,14 +111,14 @@ async function epiHandler (itemsArr) {
 					duration = reformat.deColonDuration(duration);
 				}
 				duration = Math.round(duration / 60);
-				let itemCheck = await Podcast.find(
+				const itemCheck = await Podcast.find(
 					{ "episodes.epi_url": url, },
 					{ "episodes.$": 1, }
 				);
 				if (itemCheck.length > 0) {
 					continue;
 				} else if (itemCheck.length === 0) {
-					let newEpisode = new Episodes({
+					const newEpisode = new Episodes({
 						title,
 						pubDate,
 						web_url,
@@ -141,9 +132,7 @@ async function epiHandler (itemsArr) {
 		}
 		return newEpis;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
-		return err;
+		return err.message;
 	}
 }
 
@@ -162,14 +151,14 @@ export const ingestFeed = async (feedObj) => {
 			lastBuildDate,
 		} = feedObj;
 		if (!author) {author = title;}
-		if (!lastBuildDate) {lastBuildDate = items[0].pubDate;}
+		lastBuildDate = items[0].pubDate;
 		if (description && description.match(/(<([^>]+)>)/gi)) {
 			description = reformat.removeHTML(description);
 		}
-		let checkPod = await Podcast.find({ feedurl: feedUrl });
+		const checkPod = await Podcast.find({ feedurl: feedUrl });
 		if (checkPod.length !== 0) {return checkPod;}
 		else {
-			let insertPod = new Podcast({
+			const insertPod = new Podcast({
 				show_title: title,
 				description: description,
 				author: author,
@@ -181,19 +170,18 @@ export const ingestFeed = async (feedObj) => {
 			});
 			await insertPod.save();
 			// inserting episodes
-			let newEpis = await epiHandler(items);
+			const newEpis = await epiHandler(items);
 			await Podcast.findOneAndUpdate(
 				{ feedurl: feedUrl, },
 				{ $push: { episodes: {	$each: newEpis,	}, }, }
 			);
-			let response = await aggregatePipeline(
+			const response = await aggregatePipeline(
 				feedUrlMatch(feedUrl),
 				standardProject
 			);
 			return response;
 		}
-		// eslint-disable-next-line no-console
-	} catch (err) {	console.log(err);}
+	} catch (err) {	return err.message; }
 };
 // read a podcast with episodes
 export const readPodcast = async (id) => {
@@ -201,34 +189,26 @@ export const readPodcast = async (id) => {
 		const getOnePod = await aggregatePipeline(idMatch(id), standardProject);
 		return getOnePod;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };
 
 // read a podcast and one episode
 export const readOneEpisode = async (id) => {
 	try {
-		let onePodResponse = await Podcast.find(
-			{
-				"episodes._id": id,
-			},
-			{
-				"episodes.$": 1,
-			}
+		const onePodResponse = await Podcast.find(
+			{ "episodes._id": id, },
+			{ "episodes.$": 1, }
 		);
-
-		let epiId = onePodResponse[0].episodes[0]._id;
-		let podId = onePodResponse[0]._id;
-
+		const epiId = onePodResponse[0].episodes[0]._id;
+		const podId = onePodResponse[0]._id;
 		const getOneEpi = await Podcast.aggregate([
 			idMatch(podId),
 			oneEpiProject(onePodResponse, epiId),
 		]);
 		return getOneEpi[0];
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };
 
@@ -236,45 +216,34 @@ export const readOneEpisode = async (id) => {
 export const deleteOneEpisode = async (podId, epiId) => {
 	try {
 		const deleteUpdate = await Podcast.updateOne(
-			{
-				_id: podId,
-			},
-			{
-				$pull: {
-					episodes: {
-						_id: epiId,
-					},
-				},
-			}
+			{ _id: podId, },
+			{ $pull: { episodes: { _id: epiId, }, }, }
 		);
 		return deleteUpdate;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };
 
 // read all podcasts with episodes
 export const readAllPodcasts = async () => {
 	try {
-		let allPodResponse = await Podcast.aggregate([
+		const allPodResponse = await Podcast.aggregate([
 			emptyMatch,
 			standardProject,
 		]);
 		return allPodResponse;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };
 
 export const findByFeedUrl = async (feedUrl) => {
 	try {
-		let podCheck = await Podcast.find({ feedurl: feedUrl });
+		const podCheck = await Podcast.find({ feedurl: feedUrl });
 		return podCheck;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };
 
@@ -297,9 +266,7 @@ export const updatePodFeed = async (feedObj) => {
 		if (!author) {
 			author = title;
 		}
-		if (!lastBuildDate) {
-			lastBuildDate = items[0].pubDate;
-		}
+		lastBuildDate = items[0].pubDate;
 		// use the destructured elements to find the podcast, update the values
 		await Podcast.findByIdAndUpdate(
 			{ _id: id },
@@ -314,19 +281,16 @@ export const updatePodFeed = async (feedObj) => {
 			}
 		);
 		// run the episodes array through the epiHandler
-		let newEpisodes = await epiHandler(items);
+		const newEpisodes = await epiHandler(items);
 		// update the podcast in db based on the feed url, push in the episodes
-		let response = await Podcast.findOneAndUpdate(
+		const response = await Podcast.findOneAndUpdate(
 			{ feedurl: feedUrl, },
-			{ $push: {
-					episodes: { $each: newEpisodes, },
-			}, }
+			{ $push: { episodes: { $each: newEpisodes, }, }, }
 		);
 		// return the updated podcast
 		return response;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };
 
@@ -336,8 +300,7 @@ export const deletePodcast = async (id) => {
 		const deletePod = await Podcast.findByIdAndDelete(id);
 		return deletePod;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };
 
@@ -347,7 +310,6 @@ export const deleteAllPodcasts = async () => {
 		const deleteAll = await Podcast.deleteMany();
 		return deleteAll;
 	} catch (err) {
-		// eslint-disable-next-line no-console
-		console.log(err);
+		return err.message;
 	}
 };

@@ -19,7 +19,7 @@ export const parseFeed = async (feedUrl) => {
 		// destructures more data from the feed
 		const { author, image } = parsedFeed.itunes;
 		// creates a categories property from the feed
-		let categories = parsedFeed.itunes.categories.join(", ");
+		const categories = parsedFeed.itunes.categories.join(", ");
 		let podObj = {
 			title,
 			description,

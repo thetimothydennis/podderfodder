@@ -15,8 +15,7 @@ function googleStratSetup (passport) {
         googleconfig,
         async (accessToken, refreshToken, profile, done) => {
             try {
-                let user = await User.findOne({ googleId: profile.id });
-
+                const user = await User.findOne({ googleId: profile.id });
                 if (user) {
                     return done(null, user)
                 } else {
@@ -48,7 +47,7 @@ function githubStratSetup (passport) {
         githubConfig,
         async (accessToken, refreshToken, profile, done) => {
             try {
-                let user = await User.findOne({ githubId: profile.id });
+                const user = await User.findOne({ githubId: profile.id });
                 if (user) {
                     return done(null, user)
                 } else {
