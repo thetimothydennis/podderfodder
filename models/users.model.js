@@ -4,7 +4,7 @@ import { User } from "./user-schema.js";
 // aggregation components
 // match components
 // match by userId
-const aggrUserIdMatch = (userId) => {
+function aggrUserIdMatch (userId) {
 	return {
 		$match: {
 			_id: {
@@ -12,10 +12,10 @@ const aggrUserIdMatch = (userId) => {
 			},
 		},
 	};
-};
+}
 
 // match by podcast id
-const aggrPodIdMatch = (podId) => {
+function aggrPodIdMatch (podId) {
 	return {
 		$match: {
 			"podcasts._id": {
@@ -23,19 +23,19 @@ const aggrPodIdMatch = (podId) => {
 			},
 		},
 	};
-};
+}
 
 // match by podcast feed URL
-const aggrFeedURLMatch = (feedUrl) => {
+function aggrFeedURLMatch (feedUrl) {
 	return {
 		$match: {
 			"podcasts.feedurl": feedUrl,
 		},
 	};
-};
+}
 
 // match by episode id
-const aggrEpiIdMatch = (epiId) => {
+function aggrEpiIdMatch (epiId) {
 	return {
 		$match: {
 			"podcasts.episodes._id": {
@@ -43,29 +43,29 @@ const aggrEpiIdMatch = (epiId) => {
 			},
 		},
 	};
-};
+}
 
 // manipulation components
 // unwind podcasts array
-const aggrPodUnwind = () => {
+function aggrPodUnwind () {
 	return {
 		$unwind: {
 			path: "$podcasts",
 		},
 	};
-};
+}
 
 // unwind episodes array
-const aggrEpiUnwind = () => {
+function aggrEpiUnwind () {
 	return {
 		$unwind: {
 			path: "$podcasts.episodes",
 		},
 	};
-};
+}
 
 // standard aggregate projection
-const aggrStdProjection = () => {
+function aggrStdProjection () {
 	return {
 		$project: {
 			name: 1,
@@ -91,28 +91,11 @@ const aggrStdProjection = () => {
 			},
 		},
 	};
-};
+}
 
-const aggrSortEpis = {
-	$sortArray: {
-		input: "$episodes",
-		sortBy: {
-			pubDate: -1,
-		},
-	},
-};
-
-const aggrSortPods = {
-	$sortArray: {
-		input: "$podcasts",
-		sortBy: {
-			buildDate: -1,
-		},
-	},
-};
 
 // just podcasts aggregation
-const aggrPodsProjection = () => {
+function aggrPodsProjection () {
 	return {
 		$project: {
 			name: 1,
@@ -122,7 +105,7 @@ const aggrPodsProjection = () => {
 			podcasts: 1,
 		},
 	};
-};
+}
 
 // get all user pods
 export const getAllUserPods = async (userId) => {
@@ -139,6 +122,7 @@ export const getAllUserPods = async (userId) => {
 		]);
 		return userPods;
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -154,6 +138,7 @@ export const getAUserPod = async (userId, podId) => {
 		]);
 		return userPods;
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -164,6 +149,7 @@ export const getUserById = async (id) => {
 		let user = await User.findById(id);
 		return user;
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -200,6 +186,7 @@ export const addPodsToUser = async (userId, feedRes) => {
 			return userReturn;
 		}
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -215,6 +202,28 @@ export const checkPodByURL = async (userId, feedURL) => {
 		]);
 		return checkURL;
 	} catch (err) {
+		// eslint-disable-next-line no-console
+		console.log(err);
+	}
+};
+
+
+// delete a podcast and episodes from user
+export const deleteAUserPod = async (userId, podId) => {
+	try {
+		const deleteUserPod = await User.updateOne(
+			{ _id: userId },
+			{
+				$pull: {
+					podcasts: {
+						_id: podId,
+					},
+				},
+			}
+		);
+		return deleteUserPod;
+	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -228,7 +237,7 @@ export const updateUserPodAndEpis = async (userId, podId, feedObj) => {
 			aggrPodIdMatch(podId),
 			aggrStdProjection(),
 		]);
-		if (userPodUrlGet.length == 0) {
+		if (userPodUrlGet.length === 0) {
 			return ["podcast added to user"];
 		} else {
 			let feedUrl = userPodUrlGet[0].podcasts.feedurl;
@@ -252,6 +261,7 @@ export const updateUserPodAndEpis = async (userId, podId, feedObj) => {
 			return updatedPodReturn;
 		}
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -268,6 +278,7 @@ export const getUserPodcast = async (userId, podId) => {
 		]);
 		return podFind;
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -283,6 +294,7 @@ export const getUserPodcasts = async (userId) => {
 		]);
 		return getPods;
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -303,6 +315,7 @@ export const getAllUserEpisodes = async (userId) => {
 		]);
 		return getEpisodes;
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -320,6 +333,7 @@ export const getUserEpisode = async (userId, podId, epiId) => {
 		]);
 		return getEpisode;
 	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };
@@ -341,25 +355,7 @@ export const deleteAUserEpi = async (userId, podId, epiId) => {
 		);
 		return deleteOneUserEpi;
 	} catch (err) {
-		console.log(err);
-	}
-};
-
-// delete a podcast and episodes from user
-export const deleteAUserPod = async (userId, podId) => {
-	try {
-		const deleteUserPod = await User.updateOne(
-			{ _id: userId },
-			{
-				$pull: {
-					podcasts: {
-						_id: podId,
-					},
-				},
-			}
-		);
-		return deleteUserPod;
-	} catch (err) {
+		// eslint-disable-next-line no-console
 		console.log(err);
 	}
 };

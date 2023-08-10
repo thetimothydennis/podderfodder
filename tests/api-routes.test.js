@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { config } from "dotenv";
 config({ path: `../.env.${process.env.NODE_ENV}` });
 import req from "supertest";

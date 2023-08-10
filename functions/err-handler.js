@@ -1,5 +1,6 @@
 // error handling
 function errConsole(error) {
+	// eslint-disable-next-line no-console
 	return console.log(error);
 }
 

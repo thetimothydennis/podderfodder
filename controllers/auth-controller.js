@@ -56,7 +56,6 @@ export const postRegister = async (req, res) => {
 					res.redirect("/register");
 					return;
 				}
-				console.log(`user registered`);
 				res.redirect("/app");
 			});
 		}
@@ -111,14 +110,11 @@ export const postChangePassword = async (req, res) => {
 export const postForgotPassword = async (req, res) => {
 	try {
 		let { email } = req.body;
-		console.log(email);
 		const token = randomBytes(20).toString("hex");
 		const user = await User.findOneAndUpdate(
 			{ email: email },
 			{ resetPasswordToken: token }
 		);
-
-		console.log(user);
 
 		const resetEmail = {
 			to: user.email,
@@ -134,10 +130,13 @@ export const postForgotPassword = async (req, res) => {
 
 		MailService.send(resetEmail)
 			.then((response) => {
+				// eslint-disable-next-line no-console
 				console.log(response[0].statusCode);
+				// eslint-disable-next-line no-console
 				console.log(response[0].headers);
 			})
 			.catch((error) => {
+				// eslint-disable-next-line no-console
 				console.log(error);
 			});
 
