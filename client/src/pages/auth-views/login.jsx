@@ -4,6 +4,8 @@ import Password from "../../components/form-parts/password";
 import GoogleButton from "../../components/buttons/google-button";
 import GithubButton from "../../components/buttons/github-button";
 import GoogleAcctNote from "../../components/text-blocks/goog-acct-note";
+import NoAccountNote from "../../components/text-blocks/no-account";
+import ForgotPasswordNote from "../../components/text-blocks/forgot-password-note";
 
 export function UserLogin() {
 	useEffect(() => { document.title = "Login - Podder Fodder"; }, [])
@@ -23,14 +25,8 @@ export function UserLogin() {
 					className="btn btn-dark">
 					Login
 				</button>
-				<p>
-					Don&apos;t have an account yet? Create one{" "}
-					<a href="/register">here</a>.
-				</p>
-				<p>
-					Forgot your password? Click{" "}
-					<a href="/forgotpassword">here</a>.
-				</p>
+				<NoAccountNote />
+				<ForgotPasswordNote />
 				<p>Or, you can login with one of these social providers:</p>
 				<div className="row">
 					<GithubButton />
