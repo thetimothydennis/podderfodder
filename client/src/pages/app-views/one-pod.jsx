@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
+import FullLayout from "../../components/mapped-data/one-pod/full-layout.jsx";
 
 function OnePod(props) {
 	const { userId, podId, setDocTitle, setPodId, setDisplay } = props;
@@ -33,77 +34,24 @@ function OnePod(props) {
 			});
 	};
 
-	useEffect(() => {
-		getPodcasts();
-	}, [getPodcasts]);
+	useEffect(() => { getPodcasts(); }, [getPodcasts]);
 
 	const handleClick = async (e) => {
 		await axios
 			.delete(`${apiCall}/api/user/${userId}/${e.target.value}`)
-			.then(() => {
-				setDisplay("onePod");
-			});
+			.then(() => { setDisplay("onePod"); });
 	};
 
 	return (
-		<div className="Epi">
-			<h3>{showTitle}</h3>
-			<h4>{showAuthor}</h4>
-			<img
-				alt="podcast_image"
-				height="250em"
-				src={showImg}
-			/>
-			<br />
-			<button
-				id={-8}
-				onClick={updatePod}
-				type="button"
-				className="btn btn-dark onePodBtn">
-				Update Pod Feed
-			</button>
-			<p>{showDesc}</p>
-			<div className="container">
-				{episodes.map((item, x) => (
-					<div
-						className="row epiRow"
-						key={x}
-						value={item._id}
-						id={`${podId}/${item._id}`}>
-						<div
-							className="col-sm"
-							id={`${podId}/${item._id}`}>
-							<b>{item.title}</b>
-						</div>
-						<div
-							className="col-sm allEpiDuration"
-							id={`${podId}/${item._id}`}>
-							{item.duration} min.
-						</div>
-						<div
-							className="col-sm allEpiDuration"
-							id={`${podId}/${item._id}`}>
-							{item.pubDate.toString().slice(0, 10)}
-						</div>
-						<div
-							className="col-sm epiContent"
-							id={`${podId}/${item._id}`}>
-							{item.content.slice(0, 200)}...
-						</div>
-						<div>
-							<button
-								id={-7}
-								type="button"
-								className="btn btn-dark"
-								value={`${podId}/${item._id}`}
-								onClick={handleClick}>
-								Delete episode
-							</button>
-						</div>
-					</div>
-				))}
-			</div>
-		</div>
+		<FullLayout
+			podId={podId}
+			showTitle={showTitle}
+			showAuthor={showAuthor}
+			showImg={showImg}
+			showDesc={showDesc}
+			updatePod={updatePod}
+			handleClick={handleClick}
+			episodes={episodes} />
 	);
 }
 

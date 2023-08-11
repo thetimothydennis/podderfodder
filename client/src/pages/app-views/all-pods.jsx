@@ -2,11 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
-import ShowImage from "../../components/mapped-data/all-pods/show-image.jsx";
-import ShowTitle from "../../components/mapped-data/all-pods/show-title.jsx";
-import Author from "../../components/mapped-data/all-pods/author.jsx";
-import Description from "../../components/mapped-data/all-pods/description.jsx";
-import DeleteButton from "../../components/mapped-data/all-pods/delete-button.jsx";
+import FullLayout from "../../components/mapped-data/all-pods/full-layout.jsx";
 
 function AllPods(props) {
 	const { setDocTitle, setPodId, setDisplay, userId } = props;
@@ -38,33 +34,10 @@ function AllPods(props) {
 	}
 
 	return (
-		<div className="Epi">
-			<h3>All Podcasts</h3>
-			<div className="container">
-				{podcasts.map((item, x) => (
-					<div
-						className="row epiRow"
-						key={x}
-						id={item.podcasts._id}>
-						<ShowImage 
-							item={item}
-							handlePodClick={handlePodClick} />
-						<ShowTitle
-							item={item}
-							handlePodClick={handlePodClick} />
-						<Author
-							item={item}
-							handlePodClick={handlePodClick} />
-						<Description
-							item={item}
-							handlePodClick={handlePodClick} />
-						<DeleteButton
-							item={item}
-							handleDeleteClick={handleDeleteClick} />
-					</div>
-				))}
-			</div>
-		</div>
+		<FullLayout
+			podcasts={podcasts}
+			handlePodClick={handlePodClick}
+			handleDeleteClick={handleDeleteClick} />
 	);
 }
 
