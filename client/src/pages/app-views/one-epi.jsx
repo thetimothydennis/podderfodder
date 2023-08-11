@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
-import AudioMetadata from "../../functions/media-session.jsx";
+import FullLayout from "../../components/mapped-data/one-epi/full-layout.jsx";
 
 function OneEpi(props) {
-	const { userId, epiId, setPodId, setDocTitle } = props;
+	const { userId, epiId, setPodId, setDocTitle, podId } = props;
 
 	function formatDate(date) {
 		return new Date(date).toString().slice(0, 15);
@@ -38,33 +38,16 @@ function OneEpi(props) {
 	}, [getEpisode]);
 
 	return (
-		<div className="Epi">
-			<div className="oneEpi">
-				<h3>{title}</h3>
-				<h4 className="allEpiDuration">{formatDate(date)}</h4>
-				<h4
-					className="oneEpiShowTitle"
-					id={props.podId}>
-					{showTitle}
-				</h4>
-				<h4 className="allEpiAuthor">{author}</h4>
-				<img
-					className="epiImg"
-					alt="podcast_image"
-					src={image}
-					height="250em" />
-				<audio
-					className="audioPlayer"
-					src={epi}
-					controls />
-				<AudioMetadata
-					podTitle={showTitle}
-					epiTitle={title}
-					author={author}
-					audio={epi} />
-				<p className="oneEpiContent">{content}</p>
-			</div>
-		</div>
+		<FullLayout
+			title={title}
+			date={date}
+			podId={podId}
+			showTitle={showTitle}
+			author={author}
+			image={image}
+			epi={epi}
+			content={content}
+			formatDate={formatDate} />
 	);
 }
 
