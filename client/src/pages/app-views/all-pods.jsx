@@ -2,6 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
+import ShowImage from "../../components/mapped-data/all-pods/show-image.jsx";
+import ShowTitle from "../../components/mapped-data/all-pods/show-title.jsx";
+import Author from "../../components/mapped-data/all-pods/author.jsx";
+import Description from "../../components/mapped-data/all-pods/description.jsx";
+import DeleteButton from "../../components/mapped-data/all-pods/delete-button.jsx";
 
 function AllPods(props) {
 	const { setDocTitle, setPodId, setDisplay, userId } = props;
@@ -41,47 +46,21 @@ function AllPods(props) {
 						className="row epiRow"
 						key={x}
 						id={item.podcasts._id}>
-						<div
-							className="col-sm"
-							onClick={handlePodClick}
-							id={item.podcasts._id}>
-							<img
-								alt="podcast_show_image"
-								width="150"
-								src={item.podcasts.image}
-							/>
-						</div>
-						<div
-							className="col-sm"
-							onClick={handlePodClick}
-							id={item.podcasts._id}>
-							<b>{item.podcasts.show_title}</b>
-						</div>
-						<div
-							className="col-sm allEpiAuthor"
-							onClick={handlePodClick}
-							id={item.podcasts._id}>
-							{item.podcasts.author}
-						</div>
-						<div
-							className="col-sm"
-							onClick={handlePodClick}
-							id={item.podcasts._id}>
-							{item.podcasts.description.slice(0, 250)}
-						</div>
-						<div
-							className="col-sm"
-							id={item.podcasts._id}
-							onClick={handleDeleteClick}>
-							<button
-								id="-6"
-								type="button"
-								className="btn btn-dark"
-								value={item.podcasts._id}
-								onClick={handleDeleteClick}>
-								Delete podcast
-							</button>
-						</div>
+						<ShowImage 
+							item={item}
+							handlePodClick={handlePodClick} />
+						<ShowTitle
+							item={item}
+							handlePodClick={handlePodClick} />
+						<Author
+							item={item}
+							handlePodClick={handlePodClick} />
+						<Description
+							item={item}
+							handlePodClick={handlePodClick} />
+						<DeleteButton
+							item={item}
+							handleDeleteClick={handleDeleteClick} />
 					</div>
 				))}
 			</div>
