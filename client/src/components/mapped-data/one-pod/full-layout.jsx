@@ -28,7 +28,7 @@ function FullLayout (props) {
 						item={item}
 						podId={podId}
 						handleClick={handleClick}
-						x={x} />
+						key={x} />
 				))}
 			</div>
 		</div>

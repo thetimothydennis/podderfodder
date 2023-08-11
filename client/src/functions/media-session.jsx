@@ -1,3 +1,4 @@
+import React from "react";
 import MediaSession from "@mebtte/react-media-session";
 import { string } from "prop-types";
 

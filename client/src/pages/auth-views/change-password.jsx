@@ -1,4 +1,7 @@
 import React, { useEffect } from "react";
+import PasswordReqs from "../../components/text-blocks/password-reqs";
+import Password from "../../components/form-parts/password";
+import PassMatch from "../../components/form-parts/pass-match";
 
 export function ChangePassword() {
 	useEffect(() => { document.title = "Registration - Podder Fodder"; }, []);
@@ -10,37 +13,9 @@ export function ChangePassword() {
 				className="container"
 				method="POST"
 				action="/api/changepassword">
-				<ul className="ruleList">
-					Password requirements:
-					<li className="ruleItem">between 7 and 15 characters</li>
-					<li className="ruleItem">one uppercase letter</li>
-					<li className="ruleItem">one lowercase letter</li>
-					<li className="ruleItem">one numeric digit</li>
-				</ul>
-				<p className="row form-group">
-					<label
-						className="col-sm form-control"
-						htmlFor="newpassword">
-						new password
-						<input
-							className="col-sm form-control"
-							type="password"
-							name="newpassword"
-							id="newpassword" />
-					</label>
-				</p>
-				<p className="row form-group">
-					<label
-						className="col-sm form-control"
-						htmlFor="newpassmatch">
-						new password match
-						<input
-							className="col-sm form-control"
-							type="password"
-							name="newpassmatch"
-							id="newpassmatch" />
-					</label>
-				</p>
+				<PasswordReqs />
+				<Password />
+				<PassMatch />
 				<button
 					type="submit"
 					className="btn btn-dark">

@@ -37,21 +37,22 @@ export const postLogin = handlePassportLogin("local");
 // local user registration handler
 export const postRegister = async (req, res) => {
 	try {
-		let verifyEmail = await checkEmail(req.body.email);
-		let testPass = testPassword(req.body.password);
+		let { email, password, passmatch, username, name } = req.body;
+		let verifyEmail = await checkEmail(email);
+		let testPass = testPassword(password);
 		if (
-			req.body.password !== req.body.passwordMatch ||
+			password !== passmatch ||
 			verifyEmail.isValid === false ||
 			testPass === null
 		) {
 			res.redirect("/register");
 		} else {
 			const user = new User({
-				username: req.body.username,
-				email: req.body.email,
-				name: req.body.name,
+				username: username,
+				email: email,
+				name: name,
 			});
-			User.register(user, req.body.password, (err) => {
+			User.register(user, password, (err) => {
 				if (err) {
 					res.redirect("/register");
 					return;
@@ -87,13 +88,13 @@ export const getLogout = (req, res) => {
 export const postChangePassword = async (req, res) => {
 	try {
 		let { username } = req.user;
-		let { newpassword, newpassmatch } = req.body;
-		let testNewPass = testPassword(newpassword);
-		if (newpassword !== newpassmatch || testNewPass === null) {
+		let { password, passmatch } = req.body;
+		let testNewPass = testPassword(password);
+		if (password !== passmatch || testNewPass === null) {
 			res.redirect("/changepassword");
 		} else {
 			let updateUser = await User.findOne({ username: username });
-			updateUser.setPassword(newpassword, async () => {
+			updateUser.setPassword(password, async () => {
 				await updateUser.save();
 				req.session.destroy();
 				req.logout(() => {
@@ -150,18 +151,18 @@ export const postForgotPassword = async (req, res) => {
 export const postResetPassword = async (req, res) => {
 	try {
 		let { token } = req.params;
-		let { newpassword, newpassmatch } = req.body;
-		let testResetPass = testPassword(newpassword);
+		let { password, passmatch } = req.body;
+		let testResetPass = testPassword(password);
 		let user = await User.find({ resetPasswordToken: token });
 		let username = user[0].username;
 		let updateUser;
 		if (user.length === 0) {
 			res.redirect(`/forgotpassword`);
-		} else if (newpassword !== newpassmatch || testResetPass === null) {
+		} else if (password !== passmatch || testResetPass === null) {
 			res.redirect(`/api/resetpassword/${token}`);
 		} else {
 			updateUser = await User.findOne({ username: username });
-			updateUser.setPassword(newpassword, async () => {
+			updateUser.setPassword(password, async () => {
 				await updateUser.save();
 			});
 			await User.findOneAndUpdate(

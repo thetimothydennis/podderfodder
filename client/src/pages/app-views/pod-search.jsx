@@ -38,8 +38,9 @@ function PodSearch(props) {
 	useEffect(() => { getSearch(input); }, [input]);
 
 	useEffect(() => {
-		setRender(response.map((item) => (
+		setRender(response.map((item, x) => (
 				<TableRender 
+					key={x}
 					item={item}
 					handleSubmit={handleSubmit} />
 		))); }, [input, response, handleSubmit]);

@@ -7,11 +7,11 @@ import Content from "./content.jsx";
 import DeleteButton from "./delete-button.jsx";
 
 function BelowFold (props) {
-    const { item, podId, handleClick, x } = props;
+    const { item, podId, handleClick, key } = props;
     return (
             <div
 			    className="row epiRow"
-				key={x}
+				key={key}
 				value={item._id}
 				id={`${podId}/${item._id}`}>
 				<EpiTitle
@@ -38,7 +38,7 @@ BelowFold.propTypes = {
     item: object,
     podId: string,
     handleClick: func,
-    x: number
+    key: number
 }
 
 export default BelowFold;
