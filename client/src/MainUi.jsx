@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import NavBar from "./pages/pod-nav-bar.jsx";
@@ -15,6 +15,7 @@ import DeleteEpi from "./pages/app-views/delete-epi.jsx";
 import ImportedPod from "./pages/app-views/imported-pod.jsx";
 import "./App.css";
 
+// eslint-disable-next-line max-lines-per-function
 function MainUi(props) {
 	const [display, setDisplay] = useState("");
 	const [podId, setPodId] = useState("");
@@ -47,103 +48,65 @@ function MainUi(props) {
 		setRender(<Welcome userId={userId} />);
 	}, [userId]);
 
-	//logic for re-rendering the current display
-	useEffect(() => {
-		switch (display) {
-			case "allPods":
-				setRender(
-					<AllPods
-						userId={userId}
-						setDocTitle={setDocTitle}
-						setPodId={setPodId}
-						setDisplay={setDisplay}
-					/>
-				);
-				break;
-			case "onePod":
-				setRender(
-					<OnePod
-						userId={userId}
-						setDocTitle={setDocTitle}
-						podId={podId}
-						setPodId={setPodId}
-						setDisplay={setDisplay}
-					/>
-				);
-				break;
-			case "oneEpi":
-				setRender(
-					<OneEpi
-						userId={userId}
-						setDocTitle={setDocTitle}
-						podId={podId}
-						epiId={epiId}
-						setPodId={setPodId}
-					/>
-				);
-				break;
-			case "allEpis":
-				setRender(
-					<AllEpis
-						userId={userId}
-						setDocTitle={setDocTitle}
-						setPodId={setPodId}
-						setEpiId={setEpiId}
-						setDisplay={setDisplay}
-					/>
-				);
-				break;
-			case "searchPods":
-				setRender(
-					<PodSearch
-						userId={userId}
-						setDocTitle={setDocTitle}
-						setPodId={setPodId}
-						setDisplay={setDisplay}
-					/>
-				);
-				break;
-			case "updatePod":
-				setRender(<UpdatePod setDocTitle={setDocTitle} />);
-				break;
-			case "deletePod":
-				setRender(<DeletePod setDocTitle={setDocTitle} />);
-				break;
-			case "deleteEpi":
-				setRender(<DeleteEpi setDocTitle={setDocTitle} />);
-				break;
-			case "submitPod":
-				setRender(<ImportedPod setDocTitle={setDocTitle} />);
-				break;
-			case "welcome":
-				setRender(<Welcome setDocTitle={setDocTitle} />);
-				break;
-			case "":
-				setRender(<p>Please wait, loading your user profile.</p>);
-				break;
-			default:
-				setRender(<p>Please wait, loading your user profile.</p>);
-		}
-	}, [display, epiId, podId, userId, props]);
+	//logic that renders the new component when display is updated
+	useEffect(() => { if (display === "allPods" ) {
+			setRender( <AllPods
+					userId={userId}
+					setDocTitle={setDocTitle}
+					setPodId={setPodId}
+					setDisplay={setDisplay} /> );
+		} else if (display === "onePod" ) {
+			setRender( <OnePod
+					userId={userId}
+					setDocTitle={setDocTitle}
+					podId={podId}
+					setPodId={setPodId}
+					setDisplay={setDisplay} /> );
+		} else if (display === "oneEpi" ) {
+			setRender( <OneEpi
+					userId={userId}
+					setDocTitle={setDocTitle}
+					podId={podId}
+					epiId={epiId}
+					setPodId={setPodId} /> );
+		} else if (display === "allEpis" ) {
+			setRender( <AllEpis
+					userId={userId}
+					setDocTitle={setDocTitle}
+					setPodId={setPodId}
+					setEpiId={setEpiId}
+					setDisplay={setDisplay} /> );
+		} else if (display === "searchPods" ) {
+			setRender( <PodSearch
+					userId={userId}
+					setDocTitle={setDocTitle}
+					setPodId={setPodId}
+					setDisplay={setDisplay} /> );
+		} else if (display === "updatePod" ) {
+			setRender(<UpdatePod setDocTitle={setDocTitle} />);
+		} else if (display === "deletePod" ) {
+			setRender(<DeletePod setDocTitle={setDocTitle} />);
+		} else if (display === "deleteEpi" ) {
+			setRender(<DeleteEpi setDocTitle={setDocTitle} />);
+		} else if (display === "submitPod" ) {
+			setRender(<ImportedPod setDocTitle={setDocTitle} />);
+		} else if (display === "welcome" ) {
+			setRender(<Welcome setDocTitle={setDocTitle} />);
+		} else if (display === "" ) {
+			setRender(<p>Please wait, loading your user profile.</p>);
+		} }, [display, epiId, podId, userId, props]);
 
-	// logic for telling the app to re-render the display
+	// logic for telling the app which display to re-render
 	const handleClick = (e) => {
 		if (e.target.id) {
-			if (e.target.id === "-1") {
-				setDisplay("allPods");
-			} else if (e.target.id === "-2") {
-				setDisplay("allEpis");
-			} else if (e.target.id === "-3") {
-				setDisplay("searchPods");
-			} else if (e.target.id === "-4") {
-				setDisplay("submitPod");
-			} else if (e.target.id === "-6") {
-				setDisplay("deletePod");
-			} else if (e.target.id === "-7") {
-				setDisplay("deleteEpi");
-			} else if (e.target.id === "-8") {
-				setDisplay("updatePod");
-			} else if (display === "allPods") {
+			if (e.target.id === "-1") { setDisplay("allPods"); }
+			else if (e.target.id === "-2") { setDisplay("allEpis"); }
+			else if (e.target.id === "-3") { setDisplay("searchPods"); }
+			else if (e.target.id === "-4") { setDisplay("submitPod"); }
+			else if (e.target.id === "-6") { setDisplay("deletePod"); }
+			else if (e.target.id === "-7") { setDisplay("deleteEpi"); }
+			else if (e.target.id === "-8") { setDisplay("updatePod"); }
+			else if (display === "allPods") {
 				setPodId(e.target.id);
 				setDisplay("onePod");
 			} else if (display === "onePod") {

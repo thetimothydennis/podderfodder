@@ -34,7 +34,8 @@
         "default-case": "warn",
         "dot-notation": "error",
         "eqeqeq": "warn",
-        "max-lines-per-function": ["warn", 50]
+        "max-lines-per-function": ["warn", { "max": 50, "skipBlankLines": true, "skipComments": true }],
+        "max-lines": ["warn", { "skipBlankLines": true, "skipComments": true }]
     },
     "reportUnusedDisableDirectives": true
 }

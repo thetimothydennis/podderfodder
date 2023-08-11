@@ -1,9 +1,7 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 
 export function ChangePassword() {
-	useEffect(() => {
-		document.title = "Registration - Podder Fodder";
-	}, []);
+	useEffect(() => { document.title = "Registration - Podder Fodder"; }, []);
 
 	return (
 		<div className="Epi">
@@ -28,8 +26,7 @@ export function ChangePassword() {
 							className="col-sm form-control"
 							type="password"
 							name="newpassword"
-							id="newpassword"
-						/>
+							id="newpassword" />
 					</label>
 				</p>
 				<p className="row form-group">
@@ -41,8 +38,7 @@ export function ChangePassword() {
 							className="col-sm form-control"
 							type="password"
 							name="newpassmatch"
-							id="newpassmatch"
-						/>
+							id="newpassmatch" />
 					</label>
 				</p>
 				<button

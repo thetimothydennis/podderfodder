@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
@@ -52,19 +52,16 @@ function OneEpi(props) {
 					className="epiImg"
 					alt="podcast_image"
 					src={image}
-					height="250em"
-				/>
+					height="250em" />
 				<audio
 					className="audioPlayer"
 					src={epi}
-					controls
-				/>
+					controls />
 				<AudioMetadata
 					podTitle={showTitle}
 					epiTitle={title}
 					author={author}
-					audio={epi}
-				/>
+					audio={epi} />
 				<p className="oneEpiContent">{content}</p>
 			</div>
 		</div>

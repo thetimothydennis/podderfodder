@@ -1,13 +1,12 @@
+import React from "react";
 import { Route, Routes } from "react-router-dom";
 import MainUi from "../MainUi.jsx";
 import { HomePage } from "../pages/home-page.jsx";
 import { UserLogin } from "../pages/auth-views/login.jsx";
 import { UserRegister } from "../pages/auth-views/register.jsx";
 import { ChangePassword } from "../pages/auth-views/change-password.jsx";
-import {
-	ForgotPassword,
-	ResetPassword,
-} from "../pages/auth-views/forgot-password.jsx";
+import { ForgotPassword } from "../pages/auth-views/forgot-password.jsx";
+import { ResetPassword } from "../pages/auth-views/reset-password.jsx";
 
 // main user interface component
 export function RoutesUi() {

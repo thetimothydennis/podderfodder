@@ -1,4 +1,4 @@
-import { Cookies } from "react-cookie";
+import React, { Cookies } from "react-cookie";
 
 function NavBar() {
 	const handleClick = () => {

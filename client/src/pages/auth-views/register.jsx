@@ -1,4 +1,12 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import PasswordReqs from "../../components/text-blocks/password-reqs";
+import PasswordWarn from "../../components/text-blocks/password-warn";
+import RegistrationNotice from "../../components/text-blocks/registration-notice";
+import PassMatch from "../../components/form-parts/pass-match";
+import Password from "../../components/form-parts/password";
+import Username from "../../components/form-parts/username";
+import Email from "../../components/form-parts/email";
+import Name from "../../components/form-parts/name";
 
 export function UserRegister() {
 	useEffect(() => {
@@ -8,90 +16,19 @@ export function UserRegister() {
 	return (
 		<div>
 			<h1>Podder Fodder Registration</h1>
-			<p>
-				Provide your name, a valid email address, a username and enter
-				your password twice to register.
-			</p>
+			<RegistrationNotice />
 
 			<div className="Epi">
 				<form
 					className="container"
 					method="POST"
 					action="/api/register">
-					<p className="row form-group">
-						<label
-							className="col-sm form-control"
-							htmlFor="name">
-							name
-							<input
-								className="col-sm form-control"
-								type="text"
-								name="name"
-								id="name"
-							/>
-						</label>
-					</p>
-					<p className="row form-group">
-						<label
-							className="col-sm form-control"
-							htmlFor="email">
-							email
-							<input
-								className="col-sm form-control"
-								type="text"
-								name="email"
-								id="email"
-							/>
-						</label>
-					</p>
-					<p className="row form-group">
-						<label
-							className="col-sm form-control"
-							htmlFor="username">
-							username
-							<input
-								className="col-sm form-control"
-								type="text"
-								name="username"
-								id="username"
-							/>
-						</label>
-					</p>
-					<ul className="ruleList">
-						<b>Password requirements: </b>
-						<li className="ruleItem">
-							between 7 and 15 characters
-						</li>
-						<li className="ruleItem">one uppercase letter</li>
-						<li className="ruleItem">one lowercase letter</li>
-						<li className="ruleItem">one numeric digit</li>
-					</ul>
-					<p className="row form-group">
-						<label
-							className="col-sm form-control"
-							htmlFor="password">
-							password
-							<input
-								className="col-sm form-control"
-								type="password"
-								name="password"
-								id="password"
-							/>
-						</label>
-					</p>
-					<p className="row form-group">
-						<label
-							className="col-sm form-control"
-							htmlFor="password">
-							re-enter password
-							<input
-								className="col-sm form-control"
-								type="password"
-								name="passwordMatch"
-								id="passwordMatch"
-							/>
-						</label>
-					</p>
+					<Name />
+					<Email />
+					<Username />
+					<PasswordReqs />
+					<Password />
+					<PassMatch />
 					<button
 						type="submit"
 						className="btn btn-dark">
@@ -99,10 +36,7 @@ export function UserRegister() {
 					</button>
 				</form>
 			</div>
-			<p>
-				If you provide an invalid email address or password, or if your
-				passwords don&apos;t match, you will be redirected back here
-			</p>
+			<PasswordWarn />
 		</div>
 	);
 }
