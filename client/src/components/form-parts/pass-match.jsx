@@ -10,8 +10,8 @@ function PassMatch () {
             <input
                 className="col-sm form-control"
                 type="password"
-                name="passwordMatch"
-                id="passwordMatch" />
+                name="passmatch"
+                id="passmatch" />
         </label>
     </p>
     )

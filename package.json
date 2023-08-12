@@ -6,7 +6,10 @@
 	"scripts": {
 		"test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles",
 		"serve": "NODE_ENV=prod nodemon server.js",
-		"prod": "NODE_ENV=prod pm2 start server.js"
+		"prod": "NODE_ENV=prod pm2 start server.js",
+		"deploy": "NODE_ENV=prod docker compose build && docker compose up -d",
+		"redeploy": "NODE_ENV=prod docker compose down && docker compose build && docker compose up -d",
+		"killserver": "docker compose down"
 	},
 	"keywords": [],
 	"author": "",
