@@ -4,6 +4,7 @@ config({ path: `./.env.${process.env.NODE_ENV}` });
 
 import { createServer } from "http";
 import { createServer as createHTTPSServer } from "https";
+import { Server } from "socket.io";
 
 import app from "./index.js";
 import httpApp from "./httpApp.js";
@@ -24,7 +25,17 @@ if (process.env.NODE_ENV === "prod") {
 	});
 }
 
+const httpsServer = createHTTPSServer(ssl_options, app)
+
+export const io = new Server(httpsServer, {});
+io.on("connection", socket => {
+    console.log(`${socket.id} user just connected`);
+    socket.on("disconnect", () => {
+        console.log(`a user disconnected`)
+    })
+})
+
 // starts the https server
-createHTTPSServer(ssl_options, app).listen(PORT, () => {
+httpsServer.listen(PORT, () => {
 	console.log(`app listening on port ${PORT}`);
 });

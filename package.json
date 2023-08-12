@@ -7,9 +7,11 @@
 		"test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles",
 		"serve": "NODE_ENV=prod nodemon server.js",
 		"prod": "NODE_ENV=prod pm2 start server.js",
-		"deploy": "NODE_ENV=prod docker compose build && docker compose up -d",
-		"redeploy": "NODE_ENV=prod docker compose down && docker compose build && docker compose up -d",
-		"killserver": "docker compose down"
+		"deploy": "NODE_ENV=prod cd ./client && npm run-script build && docker compose build && docker compose up -d",
+		"redeploy": "NODE_ENV=prod cd ./client && npm run-script build && docker compose down && docker rmi capstone-thetimothydennis-api && docker compose build && docker compose up -d",
+		"killserver": "docker compose down",
+		"build": "cd ./client && npm run-script build",
+		"logs": "docker logs $(docker ps -lq)"
 	},
 	"keywords": [],
 	"author": "",
@@ -33,7 +35,8 @@
 		"passport-github2": "^0.1.12",
 		"passport-google-oauth20": "^2.0.0",
 		"passport-local-mongoose": "^8.0.0",
-		"rss-parser": "^3.13.0"
+		"rss-parser": "^3.13.0",
+		"socket.io": "^4.7.2"
 	},
 	"type": "module",
 	"devDependencies": {

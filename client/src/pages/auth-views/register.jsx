@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { func } from "prop-types";
 import PasswordReqs from "../../components/text-blocks/password-reqs";
 import PasswordWarn from "../../components/text-blocks/password-warn";
 import RegistrationNotice from "../../components/text-blocks/registration-notice";
@@ -8,7 +9,17 @@ import Username from "../../components/form-parts/username";
 import Email from "../../components/form-parts/email";
 import Name from "../../components/form-parts/name";
 
-export function UserRegister() {
+import socketIO from "socket.io-client";
+import { apiCall } from "../../functions/api-call.jsx";
+
+const socket = socketIO.connect(apiCall);
+
+function UserRegister() {
+
+	socket.on("error", (arg) => {
+		console.log(arg)
+	});
+
 	useEffect(() => {
 		document.title = "Registration - Podder Fodder";
 	}, []);
@@ -40,3 +51,9 @@ export function UserRegister() {
 		</div>
 	);
 }
+
+UserRegister.propTypes = {
+	socket: func
+}
+
+export default UserRegister;
