@@ -1,5 +1,4 @@
 import React from "react";
-import { string, func } from "prop-types";
 import { Route, Routes } from "react-router-dom";
 import MainUi from "../MainUi.jsx";
 import { HomePage } from "../pages/home-page.jsx";
@@ -10,7 +9,7 @@ import { ForgotPassword } from "../pages/auth-views/forgot-password.jsx";
 import { ResetPassword } from "../pages/auth-views/reset-password.jsx";
 
 // main user interface component
-export function RoutesUi({ socket }) {
+export function RoutesUi() {
 
 	// main frontend routes definition and render return
 	return (
@@ -34,7 +33,7 @@ export function RoutesUi({ socket }) {
 				{/* app route for registering */}
 				<Route
 					path="/register"
-					element={<UserRegister socket={socket} />}
+					element={<UserRegister />}
 				/>
 				{/* app route for changing password */}
 				<Route
@@ -56,9 +55,5 @@ export function RoutesUi({ socket }) {
 	);
 }
 
-RoutesUi.propTypes = {
-	toastie: string,
-	socket: func
-}
 
 export default RoutesUi;
