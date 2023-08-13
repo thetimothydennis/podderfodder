@@ -33,7 +33,29 @@ export const handleGoogleLogin = passport.authenticate("google", {
 });
 
 // local user login handler
-export const postLogin = handlePassportLogin("local");
+export const postLogin = passport.authenticate("local", {
+	failureMessage: true,
+	failureRedirect: "/login",
+	successRedirect: "/app"
+});
+
+
+// (req, res, next) => {
+// 	passport.authenticate("local", function callback (err, user, info, status) {
+// 		if (err) {
+// 			return next(err)
+// 		}
+// 		if (!user) {
+// 			Socket.emit("error", {
+// 				message: "invalid user credentials"
+// 			})
+// 			return res.redirect("/login")
+// 		}
+// 		res.redirect("/app");
+// 	})(req, res, next);
+// };
+
+// handlePassportLogin("local");
 
 // local user registration handler
 export const postRegister = async (req, res) => {

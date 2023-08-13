@@ -2,7 +2,24 @@ import { Router } from "express";
 // import auth controller
 import * as AuthCTRL from "../controllers/auth-controller.js";
 
+import { Socket } from "../config/sockets.js";
+
 const router = Router();
+
+router.use((req, res, next) => {
+    let { messages } = req.session;
+    if (messages && messages.length > 1) {
+        for (let i = 1; i < messages.length; i++) {
+            Socket.emit("error", {
+                message: messages[i]
+            })
+            delete messages[i]
+        };
+        next();
+    } else {
+        next();
+    }
+})
 
 // route for authenticating user
 router.post("/api/login", AuthCTRL.postLogin);
