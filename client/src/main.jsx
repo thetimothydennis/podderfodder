@@ -4,7 +4,7 @@ import App from "./routes/browser-router.jsx";
 import "./index.css";
 
 createRoot(document.getElementById("root")).render(
-	<>
+	<React.StrictMode>
 		<App />
-	</>
+	</React.StrictMode>
 );

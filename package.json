@@ -36,7 +36,8 @@
 		"passport-google-oauth20": "^2.0.0",
 		"passport-local-mongoose": "^8.0.0",
 		"rss-parser": "^3.13.0",
-		"socket.io": "^4.7.2"
+		"socket.io": "^4.7.2",
+		"socket.io-client": "^4.7.2"
 	},
 	"type": "module",
 	"devDependencies": {

@@ -137,3 +137,8 @@ audio.audioPlayer {
 	align-content: center;
 	align-items: center;
 }
+
+.toastMessage {
+	background-color: #1d1d1d;
+	color: #ccc;
+}

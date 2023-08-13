@@ -5,7 +5,7 @@ import { randomBytes } from "crypto";
 import { checkEmail } from "email-validator-node";
 import MailService from "@sendgrid/mail";
 import { errHandler } from "../functions/err-handler.js";
-import { io } from "../server.js";
+import { Socket } from "../config/sockets.js";
 
 configurePassport(passport);
 
@@ -45,9 +45,10 @@ export const postRegister = async (req, res) => {
 			password !== passmatch ||
 			verifyEmail.isValid === false ||
 			testPass === null
-		) {
-			io.on("connect", (socket) => {
-				socket.emit("error", "bad registration information")
+		) {			
+			// global.io.timeout(4000).emit("error", "bad registration information")
+			Socket.emit("error", {
+				message: "bad registration data"
 			})
 			res.redirect("/register");
 		} else {
