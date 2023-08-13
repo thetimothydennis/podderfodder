@@ -46,10 +46,19 @@ export const postRegister = async (req, res) => {
 			verifyEmail.isValid === false ||
 			testPass === null
 		) {			
-			// global.io.timeout(4000).emit("error", "bad registration information")
-			Socket.emit("error", {
-				message: "bad registration data"
-			})
+			if (password !== passmatch) {
+				Socket.emit("error", {
+					message: "passwords don't match"
+				})
+			} else if (verifyEmail.isValid === false) {
+				Socket.emit("error", {
+					message: "email isn't valid"
+				})
+			} else if (testPass === null) {
+				Socket.emit("error", {
+					message: "password isn't strong enough"
+				})
+			}
 			res.redirect("/register");
 		} else {
 			const user = new User({
@@ -96,6 +105,15 @@ export const postChangePassword = async (req, res) => {
 		let { password, passmatch } = req.body;
 		let testNewPass = testPassword(password);
 		if (password !== passmatch || testNewPass === null) {
+			if (password !== passmatch) {
+				Socket.emit("error", {
+					message: "passwords don't match"
+				})
+			} else if (testNewPass === null) {
+				Socket.emit("error", {
+					message: "password isn't strong enough"
+				})
+			}
 			res.redirect("/changepassword");
 		} else {
 			let updateUser = await User.findOne({ username: username });
@@ -103,6 +121,9 @@ export const postChangePassword = async (req, res) => {
 				await updateUser.save();
 				req.session.destroy();
 				req.logout(() => {
+					Socket.emit("error", {
+						message: "password changed"
+					})
 					res.redirect("/login");
 				});
 			});
@@ -116,37 +137,47 @@ export const postChangePassword = async (req, res) => {
 export const postForgotPassword = async (req, res) => {
 	try {
 		let { email } = req.body;
-		const token = randomBytes(20).toString("hex");
-		const user = await User.findOneAndUpdate(
-			{ email: email },
-			{ resetPasswordToken: token }
-		);
-
-		const resetEmail = {
-			to: user.email,
-			from: `donut-reply@timothyddennis.com`,
-			subject: `password reset`,
-			text: `
-                You are receiving this because a password reset has been requested for your account.
-                Please click on the following link, or paste into your browser to complete the process.
-                ${process.env.LOCAL_BASE_URL}${process.env.PORT}/resetpassword/${token}
-                If you didn't request a password, ignore this email and your password will remain unchanged
-                `,
-		};
-
-		MailService.send(resetEmail)
-			.then((response) => {
-				// eslint-disable-next-line no-console
-				console.log(response[0].statusCode);
-				// eslint-disable-next-line no-console
-				console.log(response[0].headers);
-			})
-			.catch((error) => {
-				// eslint-disable-next-line no-console
-				console.log(error);
+		const checkUser = await User.findOne({ email: email });
+		if (!checkUser || checkUser.length === 0) {
+			Socket.emit("error", {
+				message: "couldn't find email address"
 			});
-
-		res.redirect("/login");
+			res.redirect("/forgotpassword")
+		} else {
+			const token = randomBytes(20).toString("hex");
+			const user = await User.findOneAndUpdate(
+				{ email: email },
+				{ resetPasswordToken: token }
+			);
+	
+			const resetEmail = {
+				to: user.email,
+				from: `donut-reply@timothyddennis.com`,
+				subject: `password reset`,
+				text: `
+					You are receiving this because a password reset has been requested for your account.
+					Please click on the following link, or paste into your browser to complete the process.
+					${process.env.LOCAL_BASE_URL}${process.env.PORT}/resetpassword/${token}
+					If you didn't request a password, ignore this email and your password will remain unchanged
+					`,
+			};
+	
+			MailService.send(resetEmail)
+				.then((response) => {
+					// eslint-disable-next-line no-console
+					console.log(response[0].statusCode);
+					// eslint-disable-next-line no-console
+					console.log(response[0].headers);
+				})
+				.catch((error) => {
+					// eslint-disable-next-line no-console
+					console.log(error);
+				});
+			Socket.emit("error", {
+				message: "Check your email for a reset link"
+			});
+			res.redirect("/login");
+		}
 	} catch (err) {
 		errHandler(err, res);
 	}
@@ -162,9 +193,15 @@ export const postResetPassword = async (req, res) => {
 		let username = user[0].username;
 		let updateUser;
 		if (user.length === 0) {
+			Socket.emit("error", {
+				message: "account not found"
+			})
 			res.redirect(`/forgotpassword`);
 		} else if (password !== passmatch || testResetPass === null) {
-			res.redirect(`/api/resetpassword/${token}`);
+			Socket.emit("error", {
+				message: "passwords don't match"
+			})
+			res.redirect(`/resetpassword/${token}`);
 		} else {
 			updateUser = await User.findOne({ username: username });
 			updateUser.setPassword(password, async () => {
@@ -174,6 +211,9 @@ export const postResetPassword = async (req, res) => {
 				{ username: username },
 				{ resetPasswordToken: "" }
 			);
+			Socket.emit("error", {
+				message: "password reset"
+			})
 			res.redirect("/login");
 		}
 	} catch (err) {
