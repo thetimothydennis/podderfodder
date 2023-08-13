@@ -9,16 +9,7 @@ import Username from "../../components/form-parts/username";
 import Email from "../../components/form-parts/email";
 import Name from "../../components/form-parts/name";
 
-import socketIO from "socket.io-client";
-import { apiCall } from "../../functions/api-call.jsx";
-
-const socket = socketIO.connect(apiCall);
-
 function UserRegister() {
-
-	socket.on("error", (arg) => {
-		console.log(arg)
-	});
 
 	useEffect(() => {
 		document.title = "Registration - Podder Fodder";

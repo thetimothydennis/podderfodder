@@ -1,5 +1,4 @@
 import React from "react";
-import { func } from "prop-types";
 import { Route, Routes } from "react-router-dom";
 import MainUi from "../MainUi.jsx";
 import { HomePage } from "../pages/home-page.jsx";
