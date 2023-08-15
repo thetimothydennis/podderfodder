@@ -6,7 +6,7 @@ import {
 describe("removeHTML", () => {
 	test('input <a href="http://google.com" target="_blank">Link</a> and get back Link', () => {
 		let actual = removeHTML(
-			`<a href="http://google.com" target="_blank">Link</a>`
+			`<a href="http://google.com" target="_blank">Link</a>`,
 		);
 		expect(actual).toBe("Link");
 	});
@@ -16,10 +16,10 @@ describe("removeHTML", () => {
 	});
 	test(`input <p>To see why this code isn&apos;t the best in the world, <a href="https://dummysite.com" target="_blank">click here</a>.</p> to get To see why this code isn't the best in the world, click here.`, () => {
 		let actual = removeHTML(
-			`<p>To see why this code isn&apos;t the best in the world, <a href="https://dummysite.com" target="_blank">click here</a>.</p>`
+			`<p>To see why this code isn&apos;t the best in the world, <a href="https://dummysite.com" target="_blank">click here</a>.</p>`,
 		);
 		expect(actual).toBe(
-			`To see why this code isn't the best in the world, click here.`
+			`To see why this code isn't the best in the world, click here.`,
 		);
 	});
 });

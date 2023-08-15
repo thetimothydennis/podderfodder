@@ -23,7 +23,7 @@ router
 	.post(
 		MWusers.addUserPods,
 		MWusers.updateOnePodcast,
-		CTRLusers.updateUserPod
+		CTRLusers.updateUserPod,
 	);
 
 router

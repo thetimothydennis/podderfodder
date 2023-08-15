@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === "prod") {
 	});
 }
 
-const httpsServer = createHTTPSServer(ssl_options, app)
+const httpsServer = createHTTPSServer(ssl_options, app);
 
 io.attach(httpsServer);
 

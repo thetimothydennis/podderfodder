@@ -4,27 +4,21 @@ import PassRecoveryNote from "../../components/text-blocks/pass-recovery-note";
 import CheckEmail from "../../components/text-blocks/check-email";
 
 export function ForgotPassword() {
-	useEffect(() => {
-		document.title = "Forgot Password - Podder Fodder";
-	}, []);
+  useEffect(() => {
+    document.title = "Forgot Password - Podder Fodder";
+  }, []);
 
-	return (
-		<div className="Epi">
-			<h1>Forgot Password</h1>
-			<PassRecoveryNote />
-			<form
-				className="container"
-				method="POST"
-				action="/api/forgotpassword">
-				<Email />
-				<button
-					type="submit"
-					className="btn btn-dark">
-					Send reset link
-				</button>
-			</form>
-			<CheckEmail />
-		</div>
-	);
+  return (
+    <div className="Epi">
+      <h1>Forgot Password</h1>
+      <PassRecoveryNote />
+      <form className="container" method="POST" action="/api/forgotpassword">
+        <Email />
+        <button type="submit" className="btn btn-dark">
+          Send reset link
+        </button>
+      </form>
+      <CheckEmail />
+    </div>
+  );
 }
-

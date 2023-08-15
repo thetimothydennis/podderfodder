@@ -6,26 +6,22 @@ import Artist from "./artist-name";
 import CollectionViewUrl from "./collection-view-url";
 import AddPodButton from "./add-pod-button";
 
-function TableRender (props) {
-    const { item, handleSubmit } = props;
-    return (
-            <div
-				className="row epiRow"
-				key={item.collectionId}>
-				<CollectionName item={item} />
-				<Artwork item={item} />
-				<Artist item={item} />
-				<CollectionViewUrl item={item} />
-				<AddPodButton
-					item={item}
-					handleSubmit={handleSubmit} />
-			</div>
-    )
+function TableRender(props) {
+  const { item, handleSubmit } = props;
+  return (
+    <div className="row epiRow" key={item.collectionId}>
+      <CollectionName item={item} />
+      <Artwork item={item} />
+      <Artist item={item} />
+      <CollectionViewUrl item={item} />
+      <AddPodButton item={item} handleSubmit={handleSubmit} />
+    </div>
+  );
 }
 
 TableRender.propTypes = {
-    item: object,
-    handleSubmit: func
-}
+  item: object,
+  handleSubmit: func,
+};
 
 export default TableRender;

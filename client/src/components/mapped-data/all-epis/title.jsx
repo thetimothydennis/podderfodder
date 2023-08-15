@@ -1,20 +1,21 @@
 import React from "react";
 import { object } from "prop-types";
 
-function EpiTitle (props) {
-    const { item } = props;
-    return (
-            <div
-                className="col-sm"
-                id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
-                value={item.podcasts.pod_id}>
-                <b>{item.podcasts.episodes.title}</b>
-            </div>
-            )
+function EpiTitle(props) {
+  const { item } = props;
+  return (
+    <div
+      className="col-sm"
+      id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+      value={item.podcasts.pod_id}
+    >
+      <b>{item.podcasts.episodes.title}</b>
+    </div>
+  );
 }
 
 EpiTitle.propTypes = {
-    item: object
-}
+  item: object,
+};
 
 export default EpiTitle;

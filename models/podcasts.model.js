@@ -3,7 +3,7 @@ import { Podcast, Episodes } from "./user-schema.js";
 import mongoose from "mongoose";
 
 // mongodb aggregate pipeline constant
-async function aggregatePipeline (matchObj, projection) {
+async function aggregatePipeline(matchObj, projection) {
 	try {
 		const aggResult = await Podcast.aggregate([
 			matchObj,
@@ -38,15 +38,15 @@ const emptyMatch = {
 	$match: {},
 };
 
-function feedUrlMatch (feedUrl) {
+function feedUrlMatch(feedUrl) {
 	return {
-		$match: { feedurl: feedUrl, },
+		$match: { feedurl: feedUrl },
 	};
 }
 
-function idMatch (id) {
+function idMatch(id) {
 	return {
-		$match: { _id: { $in: [new mongoose.Types.ObjectId(id)], }, },
+		$match: { _id: { $in: [new mongoose.Types.ObjectId(id)] } },
 	};
 }
 
@@ -64,13 +64,13 @@ const standardProject = {
 		episodes: {
 			$sortArray: {
 				input: "$episodes",
-				sortBy: { pubDate: -1, },
+				sortBy: { pubDate: -1 },
 			},
 		},
 	},
 };
 
-function oneEpiProject (onePodResponse, epiId) {
+function oneEpiProject(onePodResponse, epiId) {
 	return {
 		$project: {
 			_id: 0,
@@ -91,7 +91,7 @@ function oneEpiProject (onePodResponse, epiId) {
 	};
 }
 
-async function epiHandler (itemsArr) {
+async function epiHandler(itemsArr) {
 	try {
 		let newEpis = [];
 		for (let i = 0; i < 20 && i < itemsArr.length; i++) {
@@ -112,8 +112,8 @@ async function epiHandler (itemsArr) {
 				}
 				duration = Math.round(duration / 60);
 				const itemCheck = await Podcast.find(
-					{ "episodes.epi_url": url, },
-					{ "episodes.$": 1, }
+					{ "episodes.epi_url": url },
+					{ "episodes.$": 1 },
 				);
 				if (itemCheck.length > 0) {
 					continue;
@@ -150,14 +150,17 @@ export const ingestFeed = async (feedObj) => {
 			items,
 			lastBuildDate,
 		} = feedObj;
-		if (!author) {author = title;}
+		if (!author) {
+			author = title;
+		}
 		lastBuildDate = items[0].pubDate;
 		if (description && description.match(/(<([^>]+)>)/gi)) {
 			description = reformat.removeHTML(description);
 		}
 		const checkPod = await Podcast.find({ feedurl: feedUrl });
-		if (checkPod.length !== 0) {return checkPod;}
-		else {
+		if (checkPod.length !== 0) {
+			return checkPod;
+		} else {
 			const insertPod = new Podcast({
 				show_title: title,
 				description: description,
@@ -172,16 +175,18 @@ export const ingestFeed = async (feedObj) => {
 			// inserting episodes
 			const newEpis = await epiHandler(items);
 			await Podcast.findOneAndUpdate(
-				{ feedurl: feedUrl, },
-				{ $push: { episodes: {	$each: newEpis,	}, }, }
+				{ feedurl: feedUrl },
+				{ $push: { episodes: { $each: newEpis } } },
 			);
 			const response = await aggregatePipeline(
 				feedUrlMatch(feedUrl),
-				standardProject
+				standardProject,
 			);
 			return response;
 		}
-	} catch (err) {	return err.message; }
+	} catch (err) {
+		return err.message;
+	}
 };
 // read a podcast with episodes
 export const readPodcast = async (id) => {
@@ -197,8 +202,8 @@ export const readPodcast = async (id) => {
 export const readOneEpisode = async (id) => {
 	try {
 		const onePodResponse = await Podcast.find(
-			{ "episodes._id": id, },
-			{ "episodes.$": 1, }
+			{ "episodes._id": id },
+			{ "episodes.$": 1 },
 		);
 		const epiId = onePodResponse[0].episodes[0]._id;
 		const podId = onePodResponse[0]._id;
@@ -216,8 +221,8 @@ export const readOneEpisode = async (id) => {
 export const deleteOneEpisode = async (podId, epiId) => {
 	try {
 		const deleteUpdate = await Podcast.updateOne(
-			{ _id: podId, },
-			{ $pull: { episodes: { _id: epiId, }, }, }
+			{ _id: podId },
+			{ $pull: { episodes: { _id: epiId } } },
 		);
 		return deleteUpdate;
 	} catch (err) {
@@ -278,14 +283,14 @@ export const updatePodFeed = async (feedObj) => {
 				feedurl: feedUrl,
 				categories: categories,
 				buildDate: lastBuildDate,
-			}
+			},
 		);
 		// run the episodes array through the epiHandler
 		const newEpisodes = await epiHandler(items);
 		// update the podcast in db based on the feed url, push in the episodes
 		const response = await Podcast.findOneAndUpdate(
-			{ feedurl: feedUrl, },
-			{ $push: { episodes: { $each: newEpisodes, }, }, }
+			{ feedurl: feedUrl },
+			{ $push: { episodes: { $each: newEpisodes } } },
 		);
 		// return the updated podcast
 		return response;

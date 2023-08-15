@@ -9,7 +9,7 @@ export const updateUserPod = async (req, res) => {
 		const updatedUserPod = await users.updateUserPodAndEpis(
 			userid,
 			podid,
-			updated
+			updated,
 		);
 		res.send(updatedUserPod);
 	} catch (error) {

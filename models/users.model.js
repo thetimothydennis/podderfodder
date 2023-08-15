@@ -4,54 +4,56 @@ import { User } from "./user-schema.js";
 // aggregation components
 // match components
 // match by userId
-function aggrUserIdMatch (userId) {
+function aggrUserIdMatch(userId) {
 	return {
-		$match: { _id: { $in: [new mongoose.Types.ObjectId(userId)], }, },
+		$match: { _id: { $in: [new mongoose.Types.ObjectId(userId)] } },
 	};
 }
 
 // match by podcast id
-function aggrPodIdMatch (podId) {
+function aggrPodIdMatch(podId) {
 	return {
 		$match: {
-			"podcasts._id": { $in: [new mongoose.Types.ObjectId(podId)], }, 
+			"podcasts._id": { $in: [new mongoose.Types.ObjectId(podId)] },
 		},
 	};
 }
 
 // match by podcast feed URL
-function aggrFeedURLMatch (feedUrl) {
+function aggrFeedURLMatch(feedUrl) {
 	return {
-		$match: { "podcasts.feedurl": feedUrl, },
+		$match: { "podcasts.feedurl": feedUrl },
 	};
 }
 
 // match by episode id
-function aggrEpiIdMatch (epiId) {
+function aggrEpiIdMatch(epiId) {
 	return {
-		$match: { "podcasts.episodes._id": { 
+		$match: {
+			"podcasts.episodes._id": {
 				$in: [new mongoose.Types.ObjectId(epiId)],
-		}, },
+			},
+		},
 	};
 }
 
 // manipulation components
 // unwind podcasts array
-function aggrPodUnwind () {
+function aggrPodUnwind() {
 	return {
-		$unwind: { path: "$podcasts", },
+		$unwind: { path: "$podcasts" },
 	};
 }
 
 // unwind episodes array
-function aggrEpiUnwind () {
+function aggrEpiUnwind() {
 	return {
-		$unwind: { path: "$podcasts.episodes", },
+		$unwind: { path: "$podcasts.episodes" },
 	};
 }
 
 // standard aggregate projection
-function aggrStdProjection () {
+function aggrStdProjection() {
 	return {
 		$project: {
 			name: 1,
@@ -79,9 +81,8 @@ function aggrStdProjection () {
 	};
 }
 
-
 // just podcasts aggregation
-function aggrPodsProjection () {
+function aggrPodsProjection() {
 	return {
 		$project: {
 			name: 1,
@@ -100,7 +101,7 @@ export const getAllUserPods = async (userId) => {
 			aggrUserIdMatch(userId),
 			aggrPodsProjection(),
 			aggrPodUnwind(),
-			{ $sort: { "podcasts.buildDate": -1, }, },
+			{ $sort: { "podcasts.buildDate": -1 } },
 		]);
 		return userPods;
 	} catch (err) {
@@ -138,20 +139,20 @@ export const addPodsToUser = async (userId, feedRes) => {
 	try {
 		const feedData = feedRes;
 		const podCheck = await User.find(
-			{ $and: [{ _id: userId }, { "podcasts._id": feedRes[0]._id }], },
+			{ $and: [{ _id: userId }, { "podcasts._id": feedRes[0]._id }] },
 			{
 				name: 1,
 				email: 1,
 				_id: 1,
 				"podcasts.$": 1,
-			}
+			},
 		);
 		if (podCheck.length > 0) {
 			return podCheck;
 		} else {
 			await User.findOneAndUpdate(
-				{ _id: userId, },
-				{ $push: { podcasts: feedData, }, }
+				{ _id: userId },
+				{ $push: { podcasts: feedData } },
 			);
 			const userReturn = await User.findById(userId);
 			return userReturn;
@@ -176,13 +177,12 @@ export const checkPodByURL = async (userId, feedURL) => {
 	}
 };
 
-
 // delete a podcast and episodes from user
 export const deleteAUserPod = async (userId, podId) => {
 	try {
 		const deleteUserPod = await User.updateOne(
 			{ _id: userId },
-			{ $pull: { podcasts: { _id: podId, }, }, }
+			{ $pull: { podcasts: { _id: podId } } },
 		);
 		return deleteUserPod;
 	} catch (err) {
@@ -205,8 +205,8 @@ export const updateUserPodAndEpis = async (userId, podId, feedObj) => {
 			const feedUrl = userPodUrlGet[0].podcasts.feedurl;
 			await deleteAUserPod(userId, podId);
 			await User.findOneAndUpdate(
-				{ _id: userId, },
-				{ $push: { podcasts: feedObj, }, }
+				{ _id: userId },
+				{ $push: { podcasts: feedObj } },
 			);
 			const updatedPodReturn = await User.aggregate([
 				aggrUserIdMatch(userId),
@@ -260,7 +260,7 @@ export const getAllUserEpisodes = async (userId) => {
 			aggrPodUnwind(),
 			aggrEpiUnwind(),
 			aggrStdProjection(),
-			{ $sort: { "podcasts.episodes.pubDate": -1, }, },
+			{ $sort: { "podcasts.episodes.pubDate": -1 } },
 		]);
 		return getEpisodes;
 	} catch (err) {
@@ -292,7 +292,7 @@ export const deleteAUserEpi = async (userId, podId, epiId) => {
 		const epiUrl = getEpiFromDb[0].podcasts.episodes.epi_url;
 		const deleteOneUserEpi = await User.updateOne(
 			{ _id: userId, "podcasts.episodes.epi_url": epiUrl },
-			{ $pull: { "podcasts.$.episodes": { epi_url: epiUrl, }, }, }
+			{ $pull: { "podcasts.$.episodes": { epi_url: epiUrl } } },
 		);
 		return deleteOneUserEpi;
 	} catch (err) {

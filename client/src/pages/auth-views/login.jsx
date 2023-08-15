@@ -8,32 +8,29 @@ import NoAccountNote from "../../components/text-blocks/no-account";
 import ForgotPasswordNote from "../../components/text-blocks/forgot-password-note";
 
 export function UserLogin() {
-	useEffect(() => { document.title = "Login - Podder Fodder"; }, [])
+  useEffect(() => {
+    document.title = "Login - Podder Fodder";
+  }, []);
 
-	return (
-		<div className="Epi">
-			<h1>Podder Fodder Login</h1>
-			<p>You must log in before accessing the platform.</p>
-			<form
-				className="container"
-				method="POST"
-				action="/api/login">
-				<Username />
-				<Password />
-				<button
-					type="submit"
-					className="btn btn-dark">
-					Login
-				</button>
-				<NoAccountNote />
-				<ForgotPasswordNote />
-				<p>Or, you can login with one of these social providers:</p>
-				<div className="row">
-					<GithubButton />
-					<GoogleButton />
-				</div>
-				<GoogleAcctNote />
-			</form>
-		</div>
-	);
+  return (
+    <div className="Epi">
+      <h1>Podder Fodder Login</h1>
+      <p>You must log in before accessing the platform.</p>
+      <form className="container" method="POST" action="/api/login">
+        <Username />
+        <Password />
+        <button type="submit" className="btn btn-dark">
+          Login
+        </button>
+        <NoAccountNote />
+        <ForgotPasswordNote />
+        <p>Or, you can login with one of these social providers:</p>
+        <div className="row">
+          <GithubButton />
+          <GoogleButton />
+        </div>
+        <GoogleAcctNote />
+      </form>
+    </div>
+  );
 }

@@ -4,7 +4,7 @@ export default function isAuthenticated(req, res, next) {
 		let userId = req.user._id.toString();
 		let requestedUser = req.url.split("/");
 		let verifiedAuthorizedUser = requestedUser.find(
-			(item) => item === userId
+			(item) => item === userId,
 		);
 		if (verifiedAuthorizedUser) {
 			next();

@@ -8,7 +8,6 @@ import { configurePassport } from "./config/passport.js";
 import session from "express-session";
 import helmet from "helmet";
 
-
 // router imports
 import authRoutes from "./routes/auth-routes.js";
 import UsersRouter from "./routes/user-API-routes.js";
@@ -29,9 +28,11 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(session(configureSession()));
 
 // attaches cors middleware to allow for cross origin requests
-app.use(cors({
-    origin: ["http://localhost", "https://localhost"]
-}));
+app.use(
+	cors({
+		origin: ["http://localhost", "https://localhost"],
+	}),
+);
 
 // middleware mounts for passport and user session
 app.use(passport.initialize());

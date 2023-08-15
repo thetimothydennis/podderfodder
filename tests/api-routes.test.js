@@ -29,24 +29,24 @@ describe("test api get routes after login", () => {
 
 	test("get user podcast", async () => {
 		const response = await agent.get(
-			`/api/user/${USER_ID}/64d14d4a90a13438e4396cf6`
+			`/api/user/${USER_ID}/64d14d4a90a13438e4396cf6`,
 		);
 		expect(response.statusCode).toBe(200);
 		expect(response.body.length > 0);
 		expect(response.body[0].podcasts.feedurl).toBe(
-			"https://www.kuaf.com/podcast/the-new-classroom-podcast/rss.xml"
+			"https://www.kuaf.com/podcast/the-new-classroom-podcast/rss.xml",
 		);
 		expect(response.body[0].podcasts.episodes.length > 0);
 	});
 
 	test("get user podcast episode", async () => {
 		const response = await agent.get(
-			`/api/user/${USER_ID}/64d14d4a90a13438e4396cf6/64d14d4a90a13438e4396cf8`
+			`/api/user/${USER_ID}/64d14d4a90a13438e4396cf6/64d14d4a90a13438e4396cf8`,
 		);
 		expect(response.statusCode).toBe(200);
 		expect(response.body.length > 0);
 		expect(response.body[0].podcasts.episodes.epi_url).toBe(
-			"https://cpa.ds.npr.org/kuaf/audio/2020/10/the_new_classroom_episode_1.mp3"
+			"https://cpa.ds.npr.org/kuaf/audio/2020/10/the_new_classroom_episode_1.mp3",
 		);
 	});
 
@@ -58,7 +58,7 @@ describe("test api get routes after login", () => {
 
 	test("attempting to access another user's account throws an error", async () => {
 		const response = await agent.get(
-			`/api/user/${process.env.TEST_USER2_ID}`
+			`/api/user/${process.env.TEST_USER2_ID}`,
 		);
 		expect(response.statusCode).toBe(401);
 	});
@@ -125,14 +125,14 @@ describe("test other CRUD operations after login", () => {
 
 		test("delete podcast episode", async () => {
 			const response = await agent.delete(
-				`/api/user/${USER_ID}/${podId}/${epiId}`
+				`/api/user/${USER_ID}/${podId}/${epiId}`,
 			);
 			expect(response.statusCode).toBe(200);
 			expect(response.body.modifiedCount).toBe(1);
 			const verify = await agent.get(`/api/user/${USER_ID}/${podId}`);
 			expect(verify.statusCode).toBe(200);
 			expect(verify.body[0].podcasts.episodes.length).toBe(
-				episLength - 1
+				episLength - 1,
 			);
 		});
 
@@ -140,7 +140,7 @@ describe("test other CRUD operations after login", () => {
 			const existing = await agent.get(`/api/user/${USER_ID}/${podId}`);
 			expect(existing.statusCode).toBe(200);
 			expect(existing.body[0].podcasts.episodes.length).toBe(
-				episLength - 1
+				episLength - 1,
 			);
 			expect(existing.body[0].podcasts.feedurl).toBe(feedUrl);
 			expect(existing.body[0].podcasts._id).toBe(podId);
@@ -154,7 +154,7 @@ describe("test other CRUD operations after login", () => {
 
 		test("delete podcast from user", async () => {
 			const response = await agent.delete(
-				`/api/user/${USER_ID}/${podId}`
+				`/api/user/${USER_ID}/${podId}`,
 			);
 			expect(response.statusCode).toBe(200);
 			expect(response.body.modifiedCount).toBe(podsLength);

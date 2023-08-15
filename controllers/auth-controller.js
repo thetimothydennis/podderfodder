@@ -18,7 +18,7 @@ function testPassword(password) {
 function handlePassportLogin(strategy) {
 	return passport.authenticate(strategy, {
 		faliureRedirect: "/login",
-		successRedirect: "/app"
+		successRedirect: "/app",
 	});
 }
 
@@ -36,7 +36,7 @@ export const handleGoogleLogin = passport.authenticate("google", {
 export const postLogin = passport.authenticate("local", {
 	failureMessage: true,
 	failureRedirect: "/login",
-	successRedirect: "/app"
+	successRedirect: "/app",
 });
 
 // local user registration handler
@@ -50,19 +50,19 @@ export const postRegister = async (req, res) => {
 			password !== passmatch ||
 			verifyEmail.isValid === false ||
 			testPass === null
-		) {			
+		) {
 			if (password !== passmatch) {
 				Socket.emit("error", {
-					message: "passwords don't match"
-				}, room)
+						message: "passwords don't match",
+					}, room);
 			} else if (verifyEmail.isValid === false) {
 				Socket.emit("error", {
-					message: "email isn't valid"
-				}, room)
+						message: "email isn't valid",
+					}, room);
 			} else if (testPass === null) {
 				Socket.emit("error", {
-					message: "password isn't strong enough"
-				}, room)
+						message: "password isn't strong enough",
+					}, room);
 			}
 			res.redirect("/register");
 		} else {
@@ -107,35 +107,45 @@ export const getLogout = (req, res) => {
 export const postChangePassword = async (req, res) => {
 	try {
 		let room = req.sessionID;
-		console.log(room)
 		let { username } = req.user;
 		let { password, passmatch } = req.body;
 		let testNewPass = testPassword(password);
 		if (password !== passmatch || testNewPass === null) {
 			if (password !== passmatch) {
-				Socket.emit("error", {
-					message: "passwords don't match"
-				}, room)
+				Socket.emit(
+					"error",
+					{
+						message: "passwords don't match",
+					},
+					room,
+				);
 			} else if (testNewPass === null) {
-				Socket.emit("error", {
-					message: "password isn't strong enough"
-				}, room)
+				Socket.emit(
+					"error",
+					{
+						message: "password isn't strong enough",
+					},
+					room,
+				);
 			}
 			res.redirect("/changepassword");
 		} else {
 			let updateUser = await User.findOne({ username: username });
 			updateUser.setPassword(password, async () => {
-				await updateUser.save()
-					.then(() => {
-						req.session.destroy();
-						req.logout(() => {
-							Socket.emit("success", {
-								message: "password changed"
-							}, room)
-							setTimeout(() => {
-								res.redirect("/login");
-							}, 2000)	
-					})
+				await updateUser.save().then(() => {
+					req.session.destroy();
+					req.logout(() => {
+						Socket.emit(
+							"success",
+							{
+								message: "password changed",
+							},
+							room,
+						);
+						setTimeout(() => {
+							res.redirect("/login");
+						}, 2000);
+					});
 				});
 			});
 		}
@@ -151,17 +161,16 @@ export const postForgotPassword = async (req, res) => {
 		let { email } = req.body;
 		const checkUser = await User.findOne({ email: email });
 		if (!checkUser || checkUser.length === 0) {
-			Socket.emit("error", {
-				message: "couldn't find email address"
-			}, room);
-			res.redirect("/forgotpassword")
+			Socket.emit("error", { message: "couldn't find email address"
+		}, room);
+			res.redirect("/forgotpassword");
 		} else {
 			const token = randomBytes(20).toString("hex");
 			const user = await User.findOneAndUpdate(
 				{ email: email },
-				{ resetPasswordToken: token }
+				{ resetPasswordToken: token },
 			);
-	
+
 			const resetEmail = {
 				to: user.email,
 				from: `donut-reply@timothyddennis.com`,
@@ -173,18 +182,15 @@ export const postForgotPassword = async (req, res) => {
 					If you didn't request a password, ignore this email and your password will remain unchanged
 					`,
 				html: `
-					<h1><strong>Hello from PodderFodder!</strong></h1>
-					<br />
-					<p>You are receiving this email because a password reset has been requested for your account.<br />
-					<br />
+					<h1><strong>Hello from PodderFodder!</strong></h1><br />
+					<p>You are receiving this email because a password reset has been requested for your account.<br /><br />
 					<a href="${process.env.LOCAL_BASE_URL}${process.env.PORT}/resetpassword/${token}" target="_blank">
 					Click here to change your password.
 					</a><br />
-					<br />
-					If you didn't request a password, ignore this email and your password will remain unchanged</p>
+					<br />If you didn't request a password, ignore this email and your password will remain unchanged</p>
 					`,
 			};
-	
+
 			MailService.send(resetEmail)
 				.then((response) => {
 					// eslint-disable-next-line no-console
@@ -197,13 +203,11 @@ export const postForgotPassword = async (req, res) => {
 					console.log(error);
 				});
 			Socket.emit("success", {
-				message: "Check your email for a reset link"
-			}, room);
+					message: "Check your email for a reset link",
+				}, room);
 			res.redirect("/login");
 		}
-	} catch (err) {
-		errHandler(err, res);
-	}
+	} catch (err) {errHandler(err, res);}
 };
 
 // handler for resetting password from tokenized link
@@ -217,14 +221,14 @@ export const postResetPassword = async (req, res) => {
 		let username = user[0].username;
 		let updateUser;
 		if (user.length === 0) {
-			Socket.emit("error", {
-				message: "account not found"
-			}, room)
+			Socket.emit( "error", {
+					message: "account not found",
+				}, room);
 			res.redirect(`/forgotpassword`);
 		} else if (password !== passmatch || testResetPass === null) {
 			Socket.emit("error", {
-				message: "passwords don't match"
-			}, room)
+					message: "passwords don't match",
+				}, room);
 			res.redirect(`/resetpassword/${token}`);
 		} else {
 			updateUser = await User.findOne({ username: username });
@@ -233,14 +237,14 @@ export const postResetPassword = async (req, res) => {
 			});
 			await User.findOneAndUpdate(
 				{ username: username },
-				{ resetPasswordToken: "" }
+				{ resetPasswordToken: "" },
 			);
 			Socket.emit("success", {
-				message: "password reset"
-			}, room)
+					message: "password reset",
+				}, room);
 			setTimeout(() => {
 				res.redirect("/login");
-			}, 2000)
+			}, 2000);
 		}
 	} catch (err) {
 		errHandler(err, res);

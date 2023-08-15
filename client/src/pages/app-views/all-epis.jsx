@@ -10,56 +10,57 @@ import Content from "../../components/mapped-data/all-epis/content.jsx";
 import PubDate from "../../components/mapped-data/all-epis/pubdate.jsx";
 
 function AllEpis(props) {
-	const { userId, setDocTitle, setPodId, setEpiId } = props;
-	const [episodes, setEpisodes] = useState([]);
+  const { userId, setDocTitle, setPodId, setEpiId } = props;
+  const [episodes, setEpisodes] = useState([]);
 
-	const getAllEpis = useCallback(async () => {
-		let res = await axios.get(`${apiCall}/api/allepisodes/${userId}`);
-		setEpisodes(res.data);
-	}, [userId]);
+  const getAllEpis = useCallback(async () => {
+    let res = await axios.get(`${apiCall}/api/allepisodes/${userId}`);
+    setEpisodes(res.data);
+  }, [userId]);
 
-	useEffect(() => {
-		setDocTitle("All Episodes - Podder Fodder");
-	}, [setDocTitle]);
+  useEffect(() => {
+    setDocTitle("All Episodes - Podder Fodder");
+  }, [setDocTitle]);
 
-	useEffect(() => {
-		getAllEpis();
-	}, [getAllEpis]);
+  useEffect(() => {
+    getAllEpis();
+  }, [getAllEpis]);
 
-	const handleClick = (e) => {
-		setPodId(e.target.value);
-		setEpiId(e.target.id);
-	};
+  const handleClick = (e) => {
+    setPodId(e.target.value);
+    setEpiId(e.target.id);
+  };
 
-	return (
-		<div className="Epi">
-			<h3>All Episodes</h3>
+  return (
+    <div className="Epi">
+      <h3>All Episodes</h3>
 
-			<div className="container">
-				{episodes.map((item, x) => (
-					<div
-						className="row epiRow"
-						onClick={handleClick}
-						key={x}
-						id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}>
-						<EpiTitle item={item} />
-						<ShowTitle item={item} />
-						<Author item={item} />
-						<Duration item={item} />
-						<Content item={item} />
-						<PubDate item={item} />
-					</div>
-				))}
-			</div>
-		</div>
-	);
+      <div className="container">
+        {episodes.map((item, x) => (
+          <div
+            className="row epiRow"
+            onClick={handleClick}
+            key={x}
+            id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
+          >
+            <EpiTitle item={item} />
+            <ShowTitle item={item} />
+            <Author item={item} />
+            <Duration item={item} />
+            <Content item={item} />
+            <PubDate item={item} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 AllEpis.propTypes = {
-	userId: string,
-	setPodId: func,
-	setEpiId: func,
-	setDocTitle: func,
+  userId: string,
+  setPodId: func,
+  setEpiId: func,
+  setDocTitle: func,
 };
 
 export default AllEpis;
