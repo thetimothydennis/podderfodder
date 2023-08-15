@@ -172,6 +172,17 @@ export const postForgotPassword = async (req, res) => {
 					${process.env.LOCAL_BASE_URL}${process.env.PORT}/resetpassword/${token}
 					If you didn't request a password, ignore this email and your password will remain unchanged
 					`,
+				html: `
+					<h1><strong>Hello from PodderFodder!</strong></h1>
+					<br />
+					<p>You are receiving this email because a password reset has been requested for your account.<br />
+					<br />
+					<a href="${process.env.LOCAL_BASE_URL}${process.env.PORT}/resetpassword/${token}" target="_blank">
+					Click here to change your password.
+					</a><br />
+					<br />
+					If you didn't request a password, ignore this email and your password will remain unchanged</p>
+					`,
 			};
 	
 			MailService.send(resetEmail)
