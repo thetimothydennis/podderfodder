@@ -6,8 +6,8 @@ config({ path: `../.env.${process.env.NODE_ENV}` });
 // options for setting up the user session, storing it in mongoDB
 let sessionOptions = {
 	secret: process.env.SESSION_SECRET,
-	resave: false,
-	saveUninitialized: false,
+	resave: true,
+	saveUninitialized: true,
 	store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
 	cookie: {
 		httpOnly: false,

@@ -3,16 +3,24 @@ import { Server } from "socket.io";
 const io = new Server();
 
 const Socket = {
-    emit: (event, data) => {
-        console.log(event, data);
+    emit: (event, data, room) => {
+        console.log(event, data, room);
         setTimeout(() => {
-            io.emit(event, data);
+            io.to(room).emit(event, data);
         }, 500)
     }
 }
 
 io.on("connection", (socket) => {
+    let sid = socket.handshake.headers.cookie;
+    let sidArr = sid.split(";")
+    let isolatedSid = sidArr.find(cookie => cookie.search("sid="));
+    let roomArr = isolatedSid.split("=");
+    let untrimmedRoom = roomArr[1];
+    let room = untrimmedRoom.slice(4, 36);
     console.log(`user ${socket.id} connected`);
+    socket.join(room)
+    console.log(`user added to ${room}`)
 
     socket.on("disconnect", () => {
         console.log(`user disconnected`);

@@ -60,6 +60,8 @@ export const postLogin = passport.authenticate("local", {
 // local user registration handler
 export const postRegister = async (req, res) => {
 	try {
+		let room = req.sessionID;
+		console.log(room)
 		let { email, password, passmatch, username, name } = req.body;
 		let verifyEmail = await checkEmail(email);
 		let testPass = testPassword(password);
@@ -71,15 +73,15 @@ export const postRegister = async (req, res) => {
 			if (password !== passmatch) {
 				Socket.emit("error", {
 					message: "passwords don't match"
-				})
+				}, room)
 			} else if (verifyEmail.isValid === false) {
 				Socket.emit("error", {
 					message: "email isn't valid"
-				})
+				}, room)
 			} else if (testPass === null) {
 				Socket.emit("error", {
 					message: "password isn't strong enough"
-				})
+				}, room)
 			}
 			res.redirect("/register");
 		} else {
@@ -123,6 +125,7 @@ export const getLogout = (req, res) => {
 // handler for changing authenticated local user password
 export const postChangePassword = async (req, res) => {
 	try {
+		let room = req.sessionID;
 		let { username } = req.user;
 		let { password, passmatch } = req.body;
 		let testNewPass = testPassword(password);
@@ -130,11 +133,11 @@ export const postChangePassword = async (req, res) => {
 			if (password !== passmatch) {
 				Socket.emit("error", {
 					message: "passwords don't match"
-				})
+				}, room)
 			} else if (testNewPass === null) {
 				Socket.emit("error", {
 					message: "password isn't strong enough"
-				})
+				}, room)
 			}
 			res.redirect("/changepassword");
 		} else {
@@ -145,7 +148,7 @@ export const postChangePassword = async (req, res) => {
 				req.logout(() => {
 					Socket.emit("error", {
 						message: "password changed"
-					})
+					}, room)
 					res.redirect("/login");
 				});
 			});
@@ -158,12 +161,13 @@ export const postChangePassword = async (req, res) => {
 // handler for initiating forgotten password reset
 export const postForgotPassword = async (req, res) => {
 	try {
+		let room = req.sessionID;
 		let { email } = req.body;
 		const checkUser = await User.findOne({ email: email });
 		if (!checkUser || checkUser.length === 0) {
 			Socket.emit("error", {
 				message: "couldn't find email address"
-			});
+			}, room);
 			res.redirect("/forgotpassword")
 		} else {
 			const token = randomBytes(20).toString("hex");
@@ -197,7 +201,7 @@ export const postForgotPassword = async (req, res) => {
 				});
 			Socket.emit("error", {
 				message: "Check your email for a reset link"
-			});
+			}, room);
 			res.redirect("/login");
 		}
 	} catch (err) {
@@ -208,6 +212,7 @@ export const postForgotPassword = async (req, res) => {
 // handler for resetting password from tokenized link
 export const postResetPassword = async (req, res) => {
 	try {
+		let room = req.sessionID;
 		let { token } = req.params;
 		let { password, passmatch } = req.body;
 		let testResetPass = testPassword(password);
@@ -217,12 +222,12 @@ export const postResetPassword = async (req, res) => {
 		if (user.length === 0) {
 			Socket.emit("error", {
 				message: "account not found"
-			})
+			}, room)
 			res.redirect(`/forgotpassword`);
 		} else if (password !== passmatch || testResetPass === null) {
 			Socket.emit("error", {
 				message: "passwords don't match"
-			})
+			}, room)
 			res.redirect(`/resetpassword/${token}`);
 		} else {
 			updateUser = await User.findOne({ username: username });
@@ -235,7 +240,7 @@ export const postResetPassword = async (req, res) => {
 			);
 			Socket.emit("error", {
 				message: "password reset"
-			})
+			}, room)
 			res.redirect("/login");
 		}
 	} catch (err) {
