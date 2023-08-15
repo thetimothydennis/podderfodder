@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd client
+cd ./client
 npm run-script build

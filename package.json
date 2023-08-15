@@ -4,10 +4,10 @@
 	"description": "Your project description.",
 	"main": "index.js",
 	"scripts": {
-		"test": "bash ./scripts/test.sh",
-		"serve": "bash ./scripts/serve.sh",
-		"deploy": "bash ./scripts/deploy.sh",
-		"redeploy": "bash ./scripts/redeploy.sh",
+		"test": "NODE_ENV=test bash ./scripts/test.sh",
+		"serve": "NODE_ENV=prod bash ./scripts/serve.sh",
+		"deploy": "NODE_ENV=prod bash ./scripts/deploy.sh",
+		"redeploy": "NODE_ENV=prod bash ./scripts/redeploy.sh",
 		"killserver": "bash ./scripts/killserver.sh",
 		"build": "bash ./scripts/build.sh",
 		"logs": "bash ./scripts/logs.sh"
