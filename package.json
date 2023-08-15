@@ -4,14 +4,13 @@
 	"description": "Your project description.",
 	"main": "index.js",
 	"scripts": {
-		"test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --detectOpenHandles",
-		"serve": "NODE_ENV=prod nodemon server.js",
-		"prod": "NODE_ENV=prod pm2 start server.js",
-		"deploy": "NODE_ENV=prod cd ./client && npm run-script build && docker compose build && docker compose up -d",
-		"redeploy": "NODE_ENV=prod cd ./client && npm run-script build && docker compose down && docker rmi capstone-thetimothydennis-api && docker compose build && docker compose up -d",
-		"killserver": "docker compose down",
-		"build": "cd ./client && npm run-script build",
-		"logs": "docker logs $(docker ps -lq)"
+		"test": "bash ./scripts/test.sh",
+		"serve": "bash ./scripts/serve.sh",
+		"deploy": "bash ./scripts/deploy.sh",
+		"redeploy": "bash ./scripts/redeploy.sh",
+		"killserver": "bash ./scripts/killserver.sh",
+		"build": "bash ./scripts/build.sh",
+		"logs": "bash ./scripts/logs.sh"
 	},
 	"keywords": [],
 	"author": "",
