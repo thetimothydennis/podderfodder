@@ -7,7 +7,7 @@ import { apiCall } from "../functions/api-call.jsx";
 
 import { io } from "socket.io-client";
 
-function toastify (arg) {
+function toastError (arg) {
 	return toast.error(arg, {
 		position: toast.POSITION.TOP_RIGHT,
 		className: "toastMessage",
@@ -15,31 +15,53 @@ function toastify (arg) {
 	});
 }
 
+function toastSuccess (arg) {
+	return toast.success(arg, {
+		position: toast.POSITION.TOP_RIGHT,
+		className: "toastMessage",
+		autoClose: 2500
+	})
+}
+
 function App() {
-	const [toastie, setToastie] = useState("")
+	const [toastErr, setToastErr] = useState("");
+	const [toastSucc, setToastSucc] = useState(""); 
 
 	useEffect(() => {
 		const socket = io(apiCall);
 
-		function onToastieEvent(value) {
-			setToastie(value.message);
+		function onToastieError(value) {
+			setToastErr(value.message);
 		};
 
-		socket.on("error", onToastieEvent);
+		function onToastieSuccess(value) {
+			setToastSucc(value.message);
+		};
+
+		socket.on("error", onToastieError);
+
+		socket.on("success", onToastieSuccess);
 
 		return () => {
 			setTimeout(() => {
-				socket.off("error", onToastieEvent);
+				socket.off("error", onToastieError);
+				socket.off("success", onToastieSuccess);
 			}, 2000)
 			socket.disconnect();
 		};
 	}, []);
 
 	useEffect(() => {
-		if (toastie !== "") {
-			toastify(toastie);
+		if (toastErr !== "") {
+			toastError(toastErr);
 		}
-	}, [toastie]);
+	}, [toastErr]);
+
+	useEffect(() => {
+		if (toastSucc !== "") {
+			toastSuccess(toastSucc)
+		}
+	}, [toastSucc]);
 
 	return (
 		<BrowserRouter>

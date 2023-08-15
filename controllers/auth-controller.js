@@ -39,25 +39,6 @@ export const postLogin = passport.authenticate("local", {
 	successRedirect: "/app"
 });
 
-
-// (req, res, next) => {
-// 	let room = req.sessionID;
-// 	passport.authenticate("local", function callback (err, user, info, status) {
-// 		if (err) {
-// 			return next(err)
-// 		}
-// 		if (!user) {
-// 			Socket.emit("error", {
-// 				message: "invalid user credentials"
-// 			}, room)
-// 			return res.redirect("/login")
-// 		}
-// 		res.redirect("/app");
-// 	})(req, res, next);
-// };
-
-// handlePassportLogin("local");
-
 // local user registration handler
 export const postRegister = async (req, res) => {
 	try {
@@ -126,6 +107,7 @@ export const getLogout = (req, res) => {
 export const postChangePassword = async (req, res) => {
 	try {
 		let room = req.sessionID;
+		console.log(room)
 		let { username } = req.user;
 		let { password, passmatch } = req.body;
 		let testNewPass = testPassword(password);
@@ -143,13 +125,17 @@ export const postChangePassword = async (req, res) => {
 		} else {
 			let updateUser = await User.findOne({ username: username });
 			updateUser.setPassword(password, async () => {
-				await updateUser.save();
-				req.session.destroy();
-				req.logout(() => {
-					Socket.emit("error", {
-						message: "password changed"
-					}, room)
-					res.redirect("/login");
+				await updateUser.save()
+					.then(() => {
+						req.session.destroy();
+						req.logout(() => {
+							Socket.emit("success", {
+								message: "password changed"
+							}, room)
+							setTimeout(() => {
+								res.redirect("/login");
+							}, 2000)	
+					})
 				});
 			});
 		}
@@ -199,7 +185,7 @@ export const postForgotPassword = async (req, res) => {
 					// eslint-disable-next-line no-console
 					console.log(error);
 				});
-			Socket.emit("error", {
+			Socket.emit("success", {
 				message: "Check your email for a reset link"
 			}, room);
 			res.redirect("/login");
@@ -238,10 +224,12 @@ export const postResetPassword = async (req, res) => {
 				{ username: username },
 				{ resetPasswordToken: "" }
 			);
-			Socket.emit("error", {
+			Socket.emit("success", {
 				message: "password reset"
 			}, room)
-			res.redirect("/login");
+			setTimeout(() => {
+				res.redirect("/login");
+			}, 2000)
 		}
 	} catch (err) {
 		errHandler(err, res);
