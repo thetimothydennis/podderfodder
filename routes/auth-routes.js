@@ -7,19 +7,21 @@ import { Socket } from "../config/sockets.js";
 const router = Router();
 
 router.use((req, res, next) => {
+    let room = req.sessionID;
     let { messages } = req.session;
-    if (messages && messages.length > 1) {
-        for (let i = 1; i < messages.length; i++) {
+    console.log(messages);
+    if (messages !== undefined && messages.length > 0) {
+        for (let message of messages) {
             Socket.emit("error", {
-                message: messages[i]
-            })
-            delete messages[i]
-        };
+                message: message
+            }, room);
+        }
+        req.session.messages = [];
         next();
     } else {
         next();
-    }
-})
+    };
+});
 
 // route for authenticating user
 router.post("/api/login", AuthCTRL.postLogin);

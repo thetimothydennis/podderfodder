@@ -18,7 +18,7 @@ function testPassword(password) {
 function handlePassportLogin(strategy) {
 	return passport.authenticate(strategy, {
 		faliureRedirect: "/login",
-		successRedirect: "/app",
+		successRedirect: "/app"
 	});
 }
 
@@ -41,6 +41,7 @@ export const postLogin = passport.authenticate("local", {
 
 
 // (req, res, next) => {
+// 	let room = req.sessionID;
 // 	passport.authenticate("local", function callback (err, user, info, status) {
 // 		if (err) {
 // 			return next(err)
@@ -48,7 +49,7 @@ export const postLogin = passport.authenticate("local", {
 // 		if (!user) {
 // 			Socket.emit("error", {
 // 				message: "invalid user credentials"
-// 			})
+// 			}, room)
 // 			return res.redirect("/login")
 // 		}
 // 		res.redirect("/app");
@@ -61,7 +62,6 @@ export const postLogin = passport.authenticate("local", {
 export const postRegister = async (req, res) => {
 	try {
 		let room = req.sessionID;
-		console.log(room)
 		let { email, password, passmatch, username, name } = req.body;
 		let verifyEmail = await checkEmail(email);
 		let testPass = testPassword(password);
