@@ -29,7 +29,9 @@ app.use(helmet({ contentSecurityPolicy: false }));
 app.use(session(configureSession()));
 
 // attaches cors middleware to allow for cross origin requests
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost", "https://localhost"]
+}));
 
 // middleware mounts for passport and user session
 app.use(passport.initialize());
