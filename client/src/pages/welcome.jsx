@@ -1,11 +1,6 @@
-import React, { useEffect } from "react";
-import { func } from "prop-types";
+import React from "react";
 
-function Welcome(props) {
-  useEffect(() => {
-    props.setDocTitle("Podder Fodder");
-  }, [props]);
-
+function Welcome() {
   return (
     <div>
       <h1>Podder Fodder</h1>
@@ -17,8 +12,6 @@ function Welcome(props) {
   );
 }
 
-Welcome.propTypes = {
-  setDocTitle: func,
-};
+
 
 export default Welcome;

@@ -3,14 +3,28 @@ import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
 import FullLayout from "../../components/mapped-data/all-pods/full-layout.jsx";
+import { toast } from "react-toastify";
 
 function AllPods(props) {
   const { setDocTitle, setPodId, setDisplay, userId } = props;
   const [podcasts, setPodcasts] = useState([]);
 
   const getPods = useCallback(async () => {
-    let res = await axios.get(`${apiCall}/api/user/${userId}/`);
-    setPodcasts(res.data);
+    let toastID = toast.loading("Loading data", {
+      className: "toastMessage"
+    })
+    axios.get(`${apiCall}/api/user/${userId}/`)
+      .then((res) => {
+        setPodcasts(res.data)
+      }).then(() => {
+        toast.update(toastID, {
+          render: "Podcasts loaded",
+          type: "success",
+          isLoading: false,
+          autoClose: 250,
+          className: "toastMessage"
+        })
+      })
   }, [userId]);
 
   useEffect(() => {

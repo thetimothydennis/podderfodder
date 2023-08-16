@@ -9,7 +9,6 @@ import { io } from "socket.io-client";
 
 function toastError(arg) {
   return toast.error(arg, {
-    position: toast.POSITION.TOP_RIGHT,
     className: "toastMessage",
     autoClose: 2500,
   });
@@ -17,7 +16,6 @@ function toastError(arg) {
 
 function toastSuccess(arg) {
   return toast.success(arg, {
-    position: toast.POSITION.TOP_RIGHT,
     className: "toastMessage",
     autoClose: 2500,
   });
@@ -66,7 +64,7 @@ function App() {
   return (
     <BrowserRouter>
       <RoutesUi />
-      <ToastContainer />
+      <ToastContainer position={toast.POSITION.BOTTOM_LEFT}/>
     </BrowserRouter>
   );
 }

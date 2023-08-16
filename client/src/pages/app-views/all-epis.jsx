@@ -8,14 +8,30 @@ import Author from "../../components/mapped-data/all-epis/author.jsx";
 import Duration from "../../components/mapped-data/all-epis/duration.jsx";
 import Content from "../../components/mapped-data/all-epis/content.jsx";
 import PubDate from "../../components/mapped-data/all-epis/pubdate.jsx";
+import { toast } from "react-toastify";
 
 function AllEpis(props) {
   const { userId, setDocTitle, setPodId, setEpiId } = props;
   const [episodes, setEpisodes] = useState([]);
 
   const getAllEpis = useCallback(async () => {
-    let res = await axios.get(`${apiCall}/api/allepisodes/${userId}`);
-    setEpisodes(res.data);
+    let toastID = toast.loading("Loading data", {
+      className: "toastMessage"
+    })
+    axios.get(`${apiCall}/api/allepisodes/${userId}`)
+      .then((res) => {
+        setEpisodes(res.data)
+        }).then(() => {
+
+            toast.update(toastID, {
+            render: "Episodes loaded",
+            type: "success",
+            isLoading: false,
+            autoClose: 250,
+            className: "toastMessage"
+          })  
+        
+        })
   }, [userId]);
 
   useEffect(() => {
