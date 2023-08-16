@@ -1,5 +1,5 @@
 {
-  "name": "podder-fodder-frontend",
+  "name": "client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -27,5 +27,9 @@
     "eslint": "^8.47.0",
     "eslint-plugin-react": "^7.33.1",
     "vite": "^4.4.0"
-  }
+  },
+  "main": "vite.config.js",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
