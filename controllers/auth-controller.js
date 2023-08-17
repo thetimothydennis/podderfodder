@@ -1,19 +1,15 @@
 import passport from "passport";
+import { randomBytes } from "crypto";
+import MailService from "@sendgrid/mail";
 import { configurePassport } from "../config/passport.js";
 import { User } from "../models/user-schema.js";
-import { randomBytes } from "crypto";
-import { checkEmail } from "email-validator-node";
-import MailService from "@sendgrid/mail";
 import { errHandler } from "../functions/err-handler.js";
 import { Socket } from "../config/sockets.js";
+import { testAccount, passwordSuite } from "../functions/auth-functions.js";
 
 configurePassport(passport);
 
 MailService.setApiKey(process.env.SENDGRID_API_KEY);
-
-function testPassword(password) {
-	return password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{7,15}$/);
-}
 
 function handlePassportLogin(strategy) {
 	return passport.authenticate(strategy, {
@@ -44,27 +40,19 @@ export const postRegister = async (req, res) => {
 	try {
 		let room = req.sessionID;
 		let { email, password, passmatch, username, name } = req.body;
-		let verifyEmail = await checkEmail(email);
-		let testPass = testPassword(password);
-		if (
-			password !== passmatch ||
-			verifyEmail.isValid === false ||
-			testPass === null
-		) {
-			if (password !== passmatch) {
-				Socket.emit("error", {
-						message: "passwords don't match",
-					}, room);
-			} else if (verifyEmail.isValid === false) {
-				Socket.emit("error", {
-						message: "email isn't valid",
-					}, room);
-			} else if (testPass === null) {
-				Socket.emit("error", {
-						message: "password isn't strong enough",
-					}, room);
-			}
+		let testDetails = await testAccount(
+			password, 
+			passmatch, 
+			email, 
+			username, 
+			name
+			)
+		if (testDetails.detailsOkay === false) {
+			Socket.emit("error", {
+				message: testDetails.message
+			}, room);
 			res.redirect("/register");
+			return;
 		} else {
 			const user = new User({
 				username: username,
@@ -73,15 +61,16 @@ export const postRegister = async (req, res) => {
 			});
 			User.register(user, password, (err) => {
 				if (err) {
+					Socket.emit("error", {
+						message: err.message
+					}, room)
 					res.redirect("/register");
 					return;
 				}
 				res.redirect("/app");
 			});
 		}
-	} catch (err) {
-		errHandler(err, res);
-	}
+	} catch (err) { errHandler(err, res);}
 };
 
 // get user data for frontend handler
@@ -89,18 +78,14 @@ export const getUserData = (req, res) => {
 	if (req.user === undefined) {
 		res.json({});
 	} else {
-		res.json({
-			user_id: req.user._id,
-		});
+		res.json({ user_id: req.user._id });
 	}
 };
 
 // user logout handler
 export const getLogout = (req, res) => {
 	req.session.destroy();
-	req.logout(() => {
-		res.redirect("/");
-	});
+	req.logout(() => { res.redirect("/"); });
 };
 
 // handler for changing authenticated local user password
@@ -109,25 +94,11 @@ export const postChangePassword = async (req, res) => {
 		let room = req.sessionID;
 		let { username } = req.user;
 		let { password, passmatch } = req.body;
-		let testNewPass = testPassword(password);
-		if (password !== passmatch || testNewPass === null) {
-			if (password !== passmatch) {
-				Socket.emit(
-					"error",
-					{
-						message: "passwords don't match",
-					},
-					room,
-				);
-			} else if (testNewPass === null) {
-				Socket.emit(
-					"error",
-					{
-						message: "password isn't strong enough",
-					},
-					room,
-				);
-			}
+		let testPassword = passwordSuite(password, passmatch);
+		if (testPassword.passPasses === false) {
+			Socket.emit("error", {
+				message: testPassword.message
+			}, room);
 			res.redirect("/changepassword");
 		} else {
 			let updateUser = await User.findOne({ username: username });
@@ -135,13 +106,9 @@ export const postChangePassword = async (req, res) => {
 				await updateUser.save().then(() => {
 					req.session.destroy();
 					req.logout(() => {
-						Socket.emit(
-							"success",
-							{
-								message: "password changed",
-							},
-							room,
-						);
+						Socket.emit("success", {
+								message: "password changed, please login",
+							}, room);
 						setTimeout(() => {
 							res.redirect("/login");
 						}, 2000);
@@ -161,7 +128,8 @@ export const postForgotPassword = async (req, res) => {
 		let { email } = req.body;
 		const checkUser = await User.findOne({ email: email });
 		if (!checkUser || checkUser.length === 0) {
-			Socket.emit("error", { message: "couldn't find email address"
+			Socket.emit("error", { 
+				message: "couldn't find email address"
 		}, room);
 			res.redirect("/forgotpassword");
 		} else {
@@ -216,7 +184,7 @@ export const postResetPassword = async (req, res) => {
 		let room = req.sessionID;
 		let { token } = req.params;
 		let { password, passmatch } = req.body;
-		let testResetPass = testPassword(password);
+		let testResetPass = passwordSuite(password, passmatch);
 		let user = await User.find({ resetPasswordToken: token });
 		let username = user[0].username;
 		let updateUser;
@@ -225,9 +193,9 @@ export const postResetPassword = async (req, res) => {
 					message: "account not found",
 				}, room);
 			res.redirect(`/forgotpassword`);
-		} else if (password !== passmatch || testResetPass === null) {
+		} else if (testResetPass.passPasses === false) {
 			Socket.emit("error", {
-					message: "passwords don't match",
+					message: testResetPass.message,
 				}, room);
 			res.redirect(`/resetpassword/${token}`);
 		} else {
@@ -240,7 +208,7 @@ export const postResetPassword = async (req, res) => {
 				{ resetPasswordToken: "" },
 			);
 			Socket.emit("success", {
-					message: "password reset",
+					message: "password reset, please login",
 				}, room);
 			setTimeout(() => {
 				res.redirect("/login");

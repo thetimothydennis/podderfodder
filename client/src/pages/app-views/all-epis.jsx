@@ -15,32 +15,26 @@ function AllEpis(props) {
   const [episodes, setEpisodes] = useState([]);
 
   const getAllEpis = useCallback(async () => {
-    let toastID = toast.loading("Loading data", {
-      className: "toastMessage"
-    })
+    let toastID = toast.loading("Loading data", { className: "toastMessage" })
     axios.get(`${apiCall}/api/allepisodes/${userId}`)
       .then((res) => {
         setEpisodes(res.data)
         }).then(() => {
-
             toast.update(toastID, {
             render: "Episodes loaded",
             type: "success",
             isLoading: false,
             autoClose: 250,
             className: "toastMessage"
-          })  
-        
+          })        
         })
   }, [userId]);
 
   useEffect(() => {
     setDocTitle("All Episodes - Podder Fodder");
-  }, [setDocTitle]);
+  }, [setDocTitle])
 
-  useEffect(() => {
-    getAllEpis();
-  }, [getAllEpis]);
+  useEffect(() => getAllEpis(), [getAllEpis]);
 
   const handleClick = (e) => {
     setPodId(e.target.value);
@@ -57,8 +51,7 @@ function AllEpis(props) {
             className="row epiRow"
             onClick={handleClick}
             key={x}
-            id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
-          >
+            id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`} >
             <EpiTitle item={item} />
             <ShowTitle item={item} />
             <Author item={item} />
