@@ -163,3 +163,7 @@ li.ruleItem {
 .controlBtn {
   color: #f50
 }
+
+.audioImg {
+  max-width: 90vw
+}
