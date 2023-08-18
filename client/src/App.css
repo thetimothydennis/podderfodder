@@ -145,7 +145,7 @@ li.ruleItem {
 .progress {
   margin-top: 7px;
   margin-bottom: 7px;
-  max-width: 400px;
+  max-width: 350px;
   background-color: #1d1d1d
 }
 
@@ -158,4 +158,8 @@ li.ruleItem {
 
 .volume {
   max-width: 138px;
+}
+
+ion-icon {
+  color: #f50
 }
