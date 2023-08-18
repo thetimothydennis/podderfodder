@@ -61,13 +61,14 @@ function Controls({ audioRef, progressBarRef, duration, setTimeProgress }) {
         <div className="controls-wrapper">
             <div className="controls">
                 <button onClick={skipBackward}>
-                    <IoPlayBackSharp />
+                    <IoPlayBackSharp className="controlBtn" />
                 </button>
                 <button onClick={togglePlayPause}>
-                    {isPlaying ? <IoPauseSharp /> : <IoPlaySharp />}
+                    {isPlaying ? <IoPauseSharp className="controlBtn"/> 
+                                : <IoPlaySharp className="controlBtn"/>}
                 </button>
                 <button onClick={skipForward}>
-                    <IoPlayForwardSharp />
+                    <IoPlayForwardSharp className="controlBtn"/>
                 </button>
             </div>
             <div>
@@ -75,11 +76,11 @@ function Controls({ audioRef, progressBarRef, duration, setTimeProgress }) {
                     onClick={() => setMuteVolume((prev) => !prev)}
                    >
                     {muteVolume || volume < 5 ? (
-                        <IoMdVolumeOff />
+                        <IoMdVolumeOff className="controlBtn"/>
                     ) : volume < 40 ? (
-                        <IoMdVolumeLow />
+                        <IoMdVolumeLow className="controlBtn"/>
                     ) : (
-                        <IoMdVolumeHigh />
+                        <IoMdVolumeHigh className="controlBtn"/>
                     )}
                 </button>
                 <input 
