@@ -5,59 +5,58 @@ import { apiCall } from "../../functions/api-call.jsx";
 import FullLayout from "../../components/mapped-data/one-epi/full-layout.jsx";
 
 function OneEpi(props) {
-  const { userId, epiId, setPodId, setDocTitle, podId } = props;
+	const { userId, epiId, setPodId, setDocTitle, podId } = props;
 
-  function formatDate(date) {
-    return new Date(date).toString().slice(0, 15);
-  }
+	function formatDate(date) {
+		return new Date(date).toString().slice(0, 15);
+	}
 
-  const [showTitle, setShowTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [image, setImage] = useState("waiting.svg");
-  const [title, setTitle] = useState("");
-  const [date, setDate] = useState(formatDate("2004-02-01T00:00:00Z"));
-  const [epi, setEpi] = useState("");
-  const [content, setContent] = useState("");
+	const [showTitle, setShowTitle] = useState("");
+	const [author, setAuthor] = useState("");
+	const [image, setImage] = useState("waiting.svg");
+	const [title, setTitle] = useState("");
+	const [date, setDate] = useState(formatDate("2004-02-01T00:00:00Z"));
+	const [epi, setEpi] = useState("");
+	const [content, setContent] = useState("");
 
-  const getEpisode = useCallback(async () => {
-    let res = await axios.get(`${apiCall}/api/user/${userId}/${epiId}`);
-    let item = res.data[0].podcasts;
-    setShowTitle(item.show_title);
-    setAuthor(item.author);
-    setImage(item.image);
-    setTitle(item.episodes.title);
-    setDate(item.episodes.pubDate);
-    setEpi(item.episodes.epi_url);
-    setContent(item.episodes.content);
-    setPodId(item.pod_id);
-    setDocTitle(`${item.episodes.title} - Podder Fodder`);
-  }, [epiId, setDocTitle, setPodId, userId]);
+	const getEpisode = useCallback(async () => {
+		let res = await axios.get(`${apiCall}/api/user/${userId}/${epiId}`);
+		let item = res.data[0].podcasts;
+		setShowTitle(item.show_title);
+		setAuthor(item.author);
+		setImage(item.image);
+		setTitle(item.episodes.title);
+		setDate(item.episodes.pubDate);
+		setEpi(item.episodes.epi_url);
+		setContent(item.episodes.content);
+		setPodId(item.pod_id);
+		setDocTitle(`${item.episodes.title} - Podder Fodder`);
+	}, [epiId, setDocTitle, setPodId, userId]);
 
-  useEffect(() => {
-    getEpisode();
-  }, [getEpisode]);
+	useEffect(() => {
+		getEpisode();
+	}, [getEpisode]);
 
-  return (
-    <FullLayout
-      title={title}
-      date={date}
-      podId={podId}
-      showTitle={showTitle}
-      author={author}
-      image={image}
-      epi={epi}
-      content={content}
-      formatDate={formatDate}
-    />
-  );
+	return (
+		<FullLayout
+			title={title}
+			date={date}
+			podId={podId}
+			showTitle={showTitle}
+			author={author}
+			image={image}
+			epi={epi}
+			content={content}
+			formatDate={formatDate} />
+	);
 }
 
 OneEpi.propTypes = {
-  userId: string,
-  epiId: string,
-  setPodId: func,
-  podId: string,
-  setDocTitle: func,
+	userId: string,
+	epiId: string,
+	setPodId: func,
+	podId: string,
+	setDocTitle: func,
 };
 
 export default OneEpi;

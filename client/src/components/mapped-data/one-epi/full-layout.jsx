@@ -1,42 +1,39 @@
 import React from "react";
 import { string, func } from "prop-types";
 import AudioMetadata from "../../../functions/media-session.jsx";
+import AudioPlayer from "../../audio-player/AudioPlayer.jsx";
 
 function FullLayout(props) {
   const {
     title,
     date,
-    podId,
     showTitle,
     author,
     image,
     epi,
     content,
     formatDate,
+    podId
   } = props;
   return (
     <div className="Epi">
       <div className="oneEpi">
-        <h3>{title}</h3>
-        <h4 className="allEpiDuration">{formatDate(date)}</h4>
-        <h4 className="oneEpiShowTitle" id={podId}>
-          {showTitle}
-        </h4>
-        <h4 className="allEpiAuthor">{author}</h4>
-        <img
-          className="epiImg"
-          alt="podcast_image"
-          src={image}
-          height="250em"
-        />
-        <audio className="audioPlayer" src={epi} controls />
         <AudioMetadata
           podTitle={showTitle}
           epiTitle={title}
           author={author}
           audio={epi}
         />
-        <p className="oneEpiContent">{content}</p>
+        <AudioPlayer 
+          podTitle={showTitle}
+          epiTitle={title}
+          author={author}
+          audio={epi}
+          image={image}
+          content={content}
+          date={date}
+          formatDate={formatDate}
+          podId={podId} />
       </div>
     </div>
   );
