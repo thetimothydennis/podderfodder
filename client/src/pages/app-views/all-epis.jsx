@@ -19,15 +19,16 @@ function AllEpis(props) {
     axios.get(`${apiCall}/api/allepisodes/${userId}`)
       .then((res) => {
         setEpisodes(res.data)
-        }).then(() => {
-            toast.update(toastID, {
-            render: "Episodes loaded",
-            type: "success",
-            isLoading: false,
-            autoClose: 250,
-            className: "toastMessage"
-          })        
         })
+      .then(() => {
+          toast.update(toastID, {
+          render: "Episodes loaded",
+          type: "success",
+          isLoading: false,
+          autoClose: 250,
+          className: "toastMessage"
+        })        
+      })
   }, [userId]);
 
   useEffect(() => {

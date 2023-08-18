@@ -1,6 +1,5 @@
 import React from "react";
 import PasswordReqs from "../../components/text-blocks/password-reqs";
-import PasswordWarn from "../../components/text-blocks/password-warn";
 import RegistrationNotice from "../../components/text-blocks/registration-notice";
 import PassMatch from "../../components/form-parts/pass-match";
 import Password from "../../components/form-parts/password";
@@ -27,7 +26,6 @@ function UserRegister() {
           </button>
         </form>
       </div>
-      <PasswordWarn />
     </div>
   );
 }

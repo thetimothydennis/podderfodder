@@ -5,7 +5,7 @@ import { configurePassport } from "../config/passport.js";
 import { User } from "../models/user-schema.js";
 import { errHandler } from "../functions/err-handler.js";
 import { Socket } from "../config/sockets.js";
-import { testAccount, passwordSuite } from "../functions/auth-functions.js";
+import { testAccount, passwordSuite, emailDBCheck } from "../functions/auth-functions.js";
 
 configurePassport(passport);
 
@@ -16,7 +16,7 @@ function handlePassportLogin(strategy) {
 		faliureRedirect: "/login",
 		successRedirect: "/app",
 	});
-}
+};
 
 // github login handlers
 export const handleGithubCallback = handlePassportLogin("github");
@@ -46,7 +46,7 @@ export const postRegister = async (req, res) => {
 			email, 
 			username, 
 			name
-			)
+			);
 		if (testDetails.detailsOkay === false) {
 			Socket.emit("error", {
 				message: testDetails.message
@@ -66,11 +66,11 @@ export const postRegister = async (req, res) => {
 					}, room)
 					res.redirect("/register");
 					return;
-				}
+				};
 				res.redirect("/app");
 			});
-		}
-	} catch (err) { errHandler(err, res);}
+		};
+	} catch (err) { errHandler(err, res) };
 };
 
 // get user data for frontend handler
@@ -79,7 +79,7 @@ export const getUserData = (req, res) => {
 		res.json({});
 	} else {
 		res.json({ user_id: req.user._id });
-	}
+	};
 };
 
 // user logout handler
@@ -107,7 +107,7 @@ export const postChangePassword = async (req, res) => {
 					req.session.destroy();
 					req.logout(() => {
 						Socket.emit("success", {
-								message: "password changed, please login",
+								message: "Password changed, please login.",
 							}, room);
 						setTimeout(() => {
 							res.redirect("/login");
@@ -115,10 +115,10 @@ export const postChangePassword = async (req, res) => {
 					});
 				});
 			});
-		}
+		};
 	} catch (err) {
 		errHandler(err, res);
-	}
+	};
 };
 
 // handler for initiating forgotten password reset
@@ -126,10 +126,10 @@ export const postForgotPassword = async (req, res) => {
 	try {
 		let room = req.sessionID;
 		let { email } = req.body;
-		const checkUser = await User.findOne({ email: email });
-		if (!checkUser || checkUser.length === 0) {
+		const checkUser = emailDBCheck(email);
+		if (checkUser.emailExists === false) {
 			Socket.emit("error", { 
-				message: "couldn't find email address"
+				message: checkUser.message
 		}, room);
 			res.redirect("/forgotpassword");
 		} else {
@@ -171,11 +171,11 @@ export const postForgotPassword = async (req, res) => {
 					console.log(error);
 				});
 			Socket.emit("success", {
-					message: "Check your email for a reset link",
+					message: "Check your email for a reset link.",
 				}, room);
 			res.redirect("/login");
 		}
-	} catch (err) {errHandler(err, res);}
+	} catch (err) {errHandler(err, res) };
 };
 
 // handler for resetting password from tokenized link
@@ -190,7 +190,7 @@ export const postResetPassword = async (req, res) => {
 		let updateUser;
 		if (user.length === 0) {
 			Socket.emit( "error", {
-					message: "account not found",
+					message: "Account not found.",
 				}, room);
 			res.redirect(`/forgotpassword`);
 		} else if (testResetPass.passPasses === false) {
@@ -208,13 +208,13 @@ export const postResetPassword = async (req, res) => {
 				{ resetPasswordToken: "" },
 			);
 			Socket.emit("success", {
-					message: "password reset, please login",
+					message: "Password reset, please login.",
 				}, room);
 			setTimeout(() => {
 				res.redirect("/login");
 			}, 2000);
-		}
+		};
 	} catch (err) {
 		errHandler(err, res);
-	}
+	};
 };

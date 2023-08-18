@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router";
 import PasswordReqs from "../../components/text-blocks/password-reqs";
-import PasswordWarn from "../../components/text-blocks/password-warn";
 import Password from "../../components/form-parts/password";
 import PassMatch from "../../components/form-parts/pass-match";
 import ResetPassNote from "../../components/text-blocks/reset-pass-note";
@@ -29,7 +28,6 @@ export function ResetPassword() {
           Reset password
         </button>
       </form>
-      <PasswordWarn />
     </div>
   );
 }
