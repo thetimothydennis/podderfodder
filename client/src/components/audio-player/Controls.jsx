@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { func, number, shape, oneOfType, any } from "prop-types";
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
-import AudioMetadata from "../../functions/media-session.jsx";
 import { 
     IoPlayBackSharp,
     IoPlayForwardSharp,

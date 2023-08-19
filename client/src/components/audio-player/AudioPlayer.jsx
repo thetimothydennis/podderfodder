@@ -16,7 +16,9 @@ function AudioPlayer(props) {
     return (
         <div className="audio-player">
             <div className="inner">
-                <AudioMetadata {...props}/>
+                <AudioMetadata 
+                    {...props} 
+                    {...{audioRef}} />
                 <DisplayTrack 
                     {...props}
                     {...{audioRef, setDuration, progressBarRef}}/>

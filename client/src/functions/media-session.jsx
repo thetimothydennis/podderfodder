@@ -1,25 +1,26 @@
 import React from "react";
 import MediaSession from "@mebtte/react-media-session";
-import { string, func} from "prop-types";
+import { string, func, oneOfType, shape, any } from "prop-types";
 
 function AudioMetadata(props) {
-  const { podTitle, epiTitle, author, audio } = props;
+  const { podTitle, epiTitle, author, audio, audioRef } = props;
 
   const skipForward = () => {
-      audio.currentTime += 30;
+      audioRef.current.currentTime += 30;
   }
 
   const skipBackward = () => {
-      audio.currentTime -= 15;
+      audioRef.current.currentTime -= 15;
   }
+
 
   return (
     <MediaSession
       title={epiTitle}
       artist={podTitle}
       album={author}
-      onPlay={audio.play}
-      onPause={audio.pause}
+      onPlay={audioRef.play}
+      onPause={audioRef.pause}
       onSeekBackward={skipBackward}
       onSeekForward={skipForward}
     />
