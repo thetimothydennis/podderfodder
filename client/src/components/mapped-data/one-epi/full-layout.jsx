@@ -13,17 +13,11 @@ function FullLayout(props) {
     epi,
     content,
     formatDate,
-    podId
+    podId,
   } = props;
   return (
     <div className="Epi">
       <div className="oneEpi">
-        <AudioMetadata
-          podTitle={showTitle}
-          epiTitle={title}
-          author={author}
-          audio={epi}
-        />
         <AudioPlayer 
           podTitle={showTitle}
           epiTitle={title}

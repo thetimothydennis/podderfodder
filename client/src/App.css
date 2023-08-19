@@ -61,7 +61,7 @@ div.col-sm:hover {
 }
 
 img.waiting {
-  max-width: 90vw;
+  max-width: 80vw;
 }
 
 .epiRow:hover,
@@ -166,5 +166,5 @@ li.ruleItem {
 }
 
 .audio-image {
-  max-width: 90vw
+  max-width: 80vw
 }
