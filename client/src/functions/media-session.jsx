@@ -18,8 +18,6 @@ function AudioMetadata(props) {
       title={epiTitle}
       artist={podTitle}
       album={author}
-      onPlay={audioRef.current.play}
-      onPause={audioRef.current.pause}
       onSeekBackward={skipBackward}
       onSeekForward={skipForward}
     />
