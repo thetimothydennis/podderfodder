@@ -145,7 +145,8 @@ li.ruleItem {
 .progress {
   margin-top: 7px;
   margin-bottom: 7px;
-  max-width: 350px;
+  width: 350px;
+  max-width: 80vw;
   background-color: #1d1d1d
 }
 
@@ -164,6 +165,6 @@ li.ruleItem {
   color: #f50
 }
 
-.audioImg {
+.audio-image {
   max-width: 90vw
 }
