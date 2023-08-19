@@ -7,10 +7,10 @@ import { string, func, any, shape, oneOfType } from "prop-types";
 function DisplayTrack(props) {
     const {
         audioRef,
-        podTitle,
-        epiTitle,
+        showTitle,
+        title,
         image,
-        audio,
+        epi,
         setDuration,
         progressBarRef,
         date,
@@ -44,22 +44,22 @@ function DisplayTrack(props) {
   })
 
   useMediaMeta({
-    title: epiTitle,
-    artist: podTitle,
+    title: title,
+    artist: showTitle,
     album: author
   })
 
     return (
         <div>
             <audio 
-                src={audio} 
+                src={epi} 
                 ref={audioRef}
                 onLoadedMetadata={onLoadedMetadata} />
             <div className="audio-info">
                 <div className="text">
-                    <h3 className="title">{epiTitle}</h3>
+                    <h3 className="title">{title}</h3>
                     <h4 className="allEpiDuration">{formatDate(date)}</h4>
-                    <h4 className="oneEpiShowTitle" id={podId}>{podTitle}</h4>
+                    <h4 className="oneEpiShowTitle" id={podId}>{showTitle}</h4>
                     <h4 className="allEpiAuthor">{author}</h4>
                 </div>
                 <div className="audio-image">
@@ -86,10 +86,10 @@ DisplayTrack.propTypes = {
         func,
         shape({ current: any})
     ]),
-    podTitle: string,
-    epiTitle: string,
+    showTitle: string,
+    title: string,
     image: string,
-    audio: string,
+    epi: string,
     setDuration: func,
     progressBarRef: oneOfType([
         func,

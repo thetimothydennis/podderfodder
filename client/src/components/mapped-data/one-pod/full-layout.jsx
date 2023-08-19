@@ -16,19 +16,11 @@ function FullLayout(props) {
   } = props;
   return (
     <div className="Epi">
-      <AboveFold
-        showTitle={showTitle}
-        showAuthor={showAuthor}
-        showImg={showImg}
-        showDesc={showDesc}
-        updatePod={updatePod}
-      />
+      <AboveFold {...{showTitle, showAuthor, showImg, showDesc, updatePod}} />
       <div className="container">
         {episodes.map((item, x) => (
           <BelowFold
-            item={item}
-            podId={podId}
-            handleClick={handleClick}
+            {...{item, podId, handleClick}}
             key={x}
           />
         ))}

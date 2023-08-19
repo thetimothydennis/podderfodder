@@ -18,15 +18,17 @@ function FullLayout(props) {
     <div className="Epi">
       <div className="oneEpi">
         <AudioPlayer 
-          podTitle={showTitle}
-          epiTitle={title}
-          author={author}
-          audio={epi}
-          image={image}
-          content={content}
-          date={date}
-          formatDate={formatDate}
-          podId={podId} />
+          {...{
+            author, 
+            epi, 
+            showTitle, 
+            image, 
+            content, 
+            date, 
+            formatDate, 
+            podId,
+             title
+          }} />
       </div>
     </div>
   );

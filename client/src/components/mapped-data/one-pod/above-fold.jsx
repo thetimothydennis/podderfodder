@@ -10,7 +10,7 @@ function AboveFold(props) {
       <h4>{showAuthor}</h4>
       <img alt="podcast_image" height="250em" src={showImg} />
       <br />
-      <UpdateButton updatePod={updatePod} />
+      <UpdateButton {...{updatePod}} />
       <p className="onePodDesc">{showDesc}</p>
     </div>
   );

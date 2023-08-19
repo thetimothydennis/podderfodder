@@ -48,11 +48,7 @@ function AllPods(props) {
   }
 
   return (
-    <FullLayout
-      podcasts={podcasts}
-      handlePodClick={handlePodClick}
-      handleDeleteClick={handleDeleteClick}
-    />
+    <FullLayout {...{podcasts, handlePodClick, handleDeleteClick}} />
   );
 }
 

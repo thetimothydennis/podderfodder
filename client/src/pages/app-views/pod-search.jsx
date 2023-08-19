@@ -43,7 +43,7 @@ function PodSearch(props) {
   useEffect(() => {
     setRender(
       response.map((item, x) => (
-        <TableRender key={x} item={item} handleSubmit={handleSubmit} />
+        <TableRender key={x} {...{item, handleSubmit}} />
       )),
     );
   }, [input, response, handleSubmit]);
@@ -51,13 +51,7 @@ function PodSearch(props) {
   return (
     <div>
       <h3>Search for Podcasts</h3>
-      <Inputs
-        input={input}
-        setInput={setInput}
-        feedInput={feedInput}
-        setFeedInput={setFeedInput}
-        handleSubmit={handleSubmit}
-      />
+      <Inputs {...{input, setInput, feedInput, setFeedInput, handleSubmit}} />
       <div className="container">{render}</div>
     </div>
   );

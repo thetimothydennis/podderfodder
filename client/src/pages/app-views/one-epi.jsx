@@ -38,16 +38,17 @@ function OneEpi(props) {
 	}, [getEpisode]);
 
 	return (
-		<FullLayout
-			title={title}
-			date={date}
-			podId={podId}
-			showTitle={showTitle}
-			author={author}
-			image={image}
-			epi={epi}
-			content={content}
-			formatDate={formatDate} />
+		<FullLayout {...{
+			title, 
+			date, 
+			podId, 
+			showTitle, 
+			author, 
+			image, 
+			epi, 
+			content, 
+			formatDate
+		}} />
 	);
 }
 

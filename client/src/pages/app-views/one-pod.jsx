@@ -46,14 +46,15 @@ function OnePod(props) {
 
   return (
     <FullLayout
-      podId={podId}
-      showTitle={showTitle}
-      showAuthor={showAuthor}
-      showImg={showImg}
-      showDesc={showDesc}
-      updatePod={updatePod}
-      handleClick={handleClick}
-      episodes={episodes}
+      {...{
+        podId, 
+        showTitle, 
+        showAuthor, 
+        showImg, 
+        showDesc, 
+        updatePod, 
+        handleClick, 
+        episodes}}
     />
   );
 }

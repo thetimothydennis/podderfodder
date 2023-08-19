@@ -53,12 +53,12 @@ function AllEpis(props) {
 						onClick={handleClick}
 						key={x}
 						id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}>
-						<EpiTitle item={item} />
-						<ShowTitle item={item} />
-						<Author item={item} />
-						<Duration item={item} />
-						<Content item={item} />
-						<PubDate item={item} />
+						<EpiTitle {...{item}} />
+						<ShowTitle {...{item}} />
+						<Author {...{item}} />
+						<Duration {...{item}} />
+						<Content {...{item}} />
+						<PubDate {...{item}} />
 					</div>
 				))}
 			</div>

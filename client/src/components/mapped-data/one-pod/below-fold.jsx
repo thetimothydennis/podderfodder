@@ -15,11 +15,11 @@ function BelowFold(props) {
       value={item._id}
       id={`${podId}/${item._id}`}
     >
-      <EpiTitle item={item} podId={podId} />
-      <Duration item={item} podId={podId} />
-      <PubDate item={item} podId={podId} />
-      <Content item={item} podId={podId} />
-      <DeleteButton item={item} podId={podId} handleClick={handleClick} />
+      <EpiTitle {...{item, podId}} />
+      <Duration {...{item, podId}} />
+      <PubDate {...{item, podId}} />
+      <Content {...{item, podId}} />
+      <DeleteButton {...{item, podId, handleClick}} />
     </div>
   );
 }

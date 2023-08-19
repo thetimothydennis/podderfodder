@@ -14,11 +14,11 @@ function FullLayout(props) {
       <div className="container">
         {podcasts.map((item, x) => (
           <div className="row epiRow" key={x} id={item.podcasts._id}>
-            <ShowImage item={item} handlePodClick={handlePodClick} />
-            <ShowTitle item={item} handlePodClick={handlePodClick} />
-            <Author item={item} handlePodClick={handlePodClick} />
-            <Description item={item} handlePodClick={handlePodClick} />
-            <DeleteButton item={item} handleDeleteClick={handleDeleteClick} />
+            <ShowImage {...{item, handlePodClick}} />
+            <ShowTitle {...{item, handlePodClick}} />
+            <Author {...{item, handlePodClick}} />
+            <Description {...{item, handlePodClick}} />
+            <DeleteButton {...{item, handleDeleteClick}} />
           </div>
         ))}
       </div>

@@ -10,11 +10,11 @@ function TableRender(props) {
   const { item, handleSubmit } = props;
   return (
     <div className="row epiRow" key={item.collectionId}>
-      <CollectionName item={item} />
-      <Artwork item={item} />
-      <Artist item={item} />
-      <CollectionViewUrl item={item} />
-      <AddPodButton item={item} handleSubmit={handleSubmit} />
+      <CollectionName {...{item}} />
+      <Artwork {...{item}} />
+      <Artist {...{item}} />
+      <CollectionViewUrl {...{item}} />
+      <AddPodButton {...{item, handleSubmit}} />
     </div>
   );
 }
