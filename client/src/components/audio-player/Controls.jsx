@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { func, number, shape, oneOfType, any } from "prop-types";
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
+import AudioMetadata from "../../functions/media-session.jsx";
 import { 
     IoPlayBackSharp,
     IoPlayForwardSharp,
@@ -9,7 +10,8 @@ import {
 } from "react-icons/io5";
 
 // eslint-disable-next-line max-lines-per-function
-function Controls({ audioRef, progressBarRef, duration, setTimeProgress }) {
+function Controls(props) {
+    const { audioRef, progressBarRef, duration, setTimeProgress } = props;
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(60);
     const [muteVolume, setMuteVolume] = useState(false);

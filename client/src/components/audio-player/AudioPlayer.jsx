@@ -4,7 +4,7 @@ import "./customize-progress-bar.module.css";
 import DisplayTrack from "./DisplayTrack";
 import Controls from "./Controls";
 import ProgressBar from "./ProgressBar";
-import AudioMetadata from "../../functions/media-session.jsx";
+import AudioMetadata from "../../functions/media-session";
 
 function AudioPlayer(props) {
     const [timeProgress, setTimeProgress] = useState(0);
@@ -15,8 +15,8 @@ function AudioPlayer(props) {
 
     return (
         <div className="audio-player">
-            <AudioMetadata {...props} {...{audioRef}} />
             <div className="inner">
+                <AudioMetadata {...props}/>
                 <DisplayTrack 
                     {...props}
                     {...{audioRef, setDuration, progressBarRef}}/>

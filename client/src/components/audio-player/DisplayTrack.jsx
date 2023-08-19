@@ -41,7 +41,7 @@ function DisplayTrack(props) {
                         <img 
                             src={image} 
                             alt="audio avatar"
-                            width="300px" />   
+                            width="275px" />   
                     ) : (
                         <div className="icon-wrapper">
                             <span className="audio-icon">

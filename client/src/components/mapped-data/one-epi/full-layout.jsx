@@ -1,6 +1,5 @@
 import React from "react";
 import { string, func } from "prop-types";
-import AudioMetadata from "../../../functions/media-session.jsx";
 import AudioPlayer from "../../audio-player/AudioPlayer.jsx";
 
 function FullLayout(props) {

@@ -1,16 +1,16 @@
 import React from "react";
 import MediaSession from "@mebtte/react-media-session";
-import { string, func, oneOfType, shape, any } from "prop-types";
+import { string, func} from "prop-types";
 
 function AudioMetadata(props) {
-  const { podTitle, epiTitle, author, audioRef } = props;
+  const { podTitle, epiTitle, author, audio } = props;
 
   const skipForward = () => {
-      audioRef.current.currentTime += 30;
+      audio.currentTime += 30;
   }
 
   const skipBackward = () => {
-      audioRef.current.currentTime -= 15;
+      audio.currentTime -= 15;
   }
 
   return (
@@ -18,8 +18,8 @@ function AudioMetadata(props) {
       title={epiTitle}
       artist={podTitle}
       album={author}
-      onPlay={audioRef.play}
-      onPause={audioRef.pause}
+      onPlay={audio.play}
+      onPause={audio.pause}
       onSeekBackward={skipBackward}
       onSeekForward={skipForward}
     />
@@ -32,10 +32,8 @@ AudioMetadata.propTypes = {
   album: string,
   author: string,
   audio: string,
-  audioRef: oneOfType([
-    func,
-    shape({ current: any})
-]),
+  skipBackward: func,
+  skipForward: func
 };
 
 export default AudioMetadata;
