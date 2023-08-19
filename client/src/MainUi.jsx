@@ -43,56 +43,35 @@ function MainUi(props) {
   }, [userId]);
 
   //logic that renders the new component when display is updated
-  // eslint-disable-next-line max-lines-per-function
   useEffect(() => {
     if (display === "allPods") {
-      setRender(<AllPods
-          userId={userId}
-          setDocTitle={setDocTitle}
-          setPodId={setPodId}
-          setDisplay={setDisplay} />,
-      );
+      setRender(<AllPods {...{userId, setDocTitle, setPodId, setDisplay}} />);
     } else if (display === "onePod") {
-      setRender(<OnePod
-          userId={userId}
-          setDocTitle={setDocTitle}
-          podId={podId}
-          setPodId={setPodId}
-          setDisplay={setDisplay} />,
+      setRender(
+        <OnePod {...{userId, setDocTitle, podId, setDisplay}} />
       );
     } else if (display === "oneEpi") {
-      setRender(<OneEpi
-          userId={userId}
-          setDocTitle={setDocTitle}
-          podId={podId}
-          epiId={epiId}
-          setPodId={setPodId} />,
+      setRender(
+        <OneEpi {...{userId, setDocTitle, podId, epiId, setPodId}} />
       );
     } else if (display === "allEpis") {
-      setRender(<AllEpis
-          userId={userId}
-          setDocTitle={setDocTitle}
-          setPodId={setPodId}
-          setEpiId={setEpiId}
-          setDisplay={setDisplay} />,
+      setRender(
+        <AllEpis {...{userId, setDocTitle, setPodId, setEpiId, setDisplay}} />
       );
     } else if (display === "searchPods") {
-      setRender(<PodSearch
-          userId={userId}
-          setDocTitle={setDocTitle}
-          setPodId={setPodId}
-          setDisplay={setDisplay} />,
+      setRender(
+        <PodSearch {...{userId, setDocTitle, setPodId, setDisplay}} />
       );
     } else if (display === "updatePod") {
-      setRender(<UpdatePod setDocTitle={setDocTitle} />);
+      setRender(<UpdatePod {...{setDocTitle}} />);
     } else if (display === "deletePod") {
-      setRender(<DeletePod setDocTitle={setDocTitle} />);
+      setRender(<DeletePod {...{setDocTitle}} />);
     } else if (display === "deleteEpi") {
-      setRender(<DeleteEpi setDocTitle={setDocTitle} />);
+      setRender(<DeleteEpi {...{setDocTitle}} />);
     } else if (display === "submitPod") {
-      setRender(<ImportedPod setDocTitle={setDocTitle} />);
+      setRender(<ImportedPod {...{setDocTitle}} />);
     } else if (display === "welcome") {
-      setRender(<Welcome setDocTitle={setDocTitle} />);
+      setRender(<Welcome {...{setDocTitle}} />);
     }
   }, [display, epiId, podId, userId, props]);
 
@@ -132,12 +111,10 @@ function MainUi(props) {
   };
 
   return (
-    <>
       <div onClick={handleClick}>
         <NavBar />
         {render}
       </div>
-    </>
   );
 }
 

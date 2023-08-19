@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { func, number, shape, oneOfType, any } from "prop-types";
-import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
-import { 
-    IoPlayBackSharp,
-    IoPlayForwardSharp,
-    IoPlaySharp,
-    IoPauseSharp,
-} from "react-icons/io5";
+import SkipBackward from "./mapped-data/skip-backward";
+import SkipForward from "./mapped-data/skip-forward";
+import PlayPause from "./mapped-data/play-pause";
+import MuteUnmute from "./mapped-data/mute-unmute";
+import VolumeSlider from "./mapped-data/volume-slider";
 
-// eslint-disable-next-line max-lines-per-function
 function Controls(props) {
     const { audioRef, progressBarRef, duration, setTimeProgress } = props;
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(60);
     const [muteVolume, setMuteVolume] = useState(false);
     const playAnimationRef = useRef();
-
 
     const repeat = useCallback(() => {
         const currentTime = audioRef.current.currentTime;
@@ -29,13 +25,10 @@ function Controls(props) {
         playAnimationRef.current = requestAnimationFrame(repeat);
     }, [audioRef, duration, progressBarRef, setTimeProgress]) 
     
-
-    const togglePlayPause = () => {
-        setIsPlaying((prev) => !prev)
-    };
+    const togglePlayPause = () => setIsPlaying((prev) => !prev);
 
     useEffect(() => {
-        if (isPlaying) {
+        if (isPlaying) { 
             audioRef.current.play();
         } else {
             audioRef.current.pause();
@@ -43,13 +36,9 @@ function Controls(props) {
         playAnimationRef.current = requestAnimationFrame(repeat);
     }, [isPlaying, audioRef, repeat])
 
-    const skipForward = () => {
-        audioRef.current.currentTime += 30;
-    }
+    const skipForward = () => audioRef.current.currentTime += 30;
 
-    const skipBackward = () => {
-        audioRef.current.currentTime -= 15;
-    }
+    const skipBackward = () => audioRef.current.currentTime -= 15;
 
     useEffect(() => {
         if (audioRef) {
@@ -61,39 +50,11 @@ function Controls(props) {
     return (
         <div className="controls-wrapper">
             <div className="controls">
-                <button onClick={skipBackward}>
-                    <IoPlayBackSharp className="controlBtn" />
-                </button>
-                <button onClick={togglePlayPause}>
-                    {isPlaying ? <IoPauseSharp className="controlBtn"/> 
-                                : <IoPlaySharp className="controlBtn"/>}
-                </button>
-                <button onClick={skipForward}>
-                    <IoPlayForwardSharp className="controlBtn"/>
-                </button>
-            </div>
-            <div>
-                <button
-                    onClick={() => setMuteVolume((prev) => !prev)}
-                   >
-                    {muteVolume || volume < 5 ? (
-                        <IoMdVolumeOff className="controlBtn"/>
-                    ) : volume < 40 ? (
-                        <IoMdVolumeLow className="controlBtn"/>
-                    ) : (
-                        <IoMdVolumeHigh className="controlBtn"/>
-                    )}
-                </button>
-                <input 
-                    type="range" 
-                    min={0} 
-                    max={100}
-                    value={volume}
-                    onChange={(e) => setVolume(e.target.value)}
-                    className="volume"
-                    style={{
-                        background: `linear-gradient(to right, #f50 ${volume}%, #3d3d3d ${volume}%)`
-                    }} />
+                <SkipBackward {...{skipBackward}} />
+                <PlayPause {...{isPlaying, togglePlayPause}} />
+                <SkipForward {...{skipForward}} />
+                <MuteUnmute {...{ muteVolume, setMuteVolume, volume }} />
+                <VolumeSlider {...{volume, setVolume}} />
             </div>
         </div>
     )

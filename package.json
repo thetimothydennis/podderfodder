@@ -16,7 +16,6 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@mebtte/react-media-session": "^1.1.2",
 		"@sendgrid/mail": "^7.7.0",
 		"axios": "^1.4.0",
 		"connect-mongo": "^5.0.0",

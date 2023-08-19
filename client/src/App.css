@@ -126,6 +126,11 @@ li.ruleItem {
   overflow-wrap: break-word;
 }
 
+.onePodDesc {
+  max-width: 80vw;
+  overflow-wrap: break-word;
+}
+
 .oneEpi {
   display: flex;
   flex-direction: column;
@@ -158,11 +163,21 @@ li.ruleItem {
 }
 
 .volume {
-  max-width: 138px;
+  max-width: 83px;
+  @media (max-width: 767px) {
+    display: none
+  }
 }
 
 .controlBtn {
-  color: #f50
+  color: #f50;
+}
+
+.btn-dark:active {
+  color: #ff1500;
+  outline-style: dashed;
+  outline-width: 1px;
+  outline-color: #ff1500;
 }
 
 .audio-image {

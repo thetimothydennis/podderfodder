@@ -1,7 +1,9 @@
 import React from "react";
+import { useMediaSession, useMediaMeta } from "use-media-session";
 import { BsMusicNoteBeamed } from "react-icons/bs";
 import { string, func, any, shape, oneOfType } from "prop-types";
 
+// eslint-disable-next-line max-lines-per-function
 function DisplayTrack(props) {
     const {
         audioRef,
@@ -22,6 +24,30 @@ function DisplayTrack(props) {
         setDuration(seconds);
         progressBarRef.current.max = seconds;
     }
+
+  useMediaSession({
+    onSeekBackward: () => {
+      audioRef.current.currentTime -= 15;
+    },
+    onSeekForward: () => {
+      audioRef.current.currentTime += 30;
+    },
+    onPlay: () => {
+      audioRef.current.play();
+    },
+    onPause: () => {
+      audioRef.current.pause();
+    },
+    onStop: () => {
+      audioRef.current.pause();
+    }
+  })
+
+  useMediaMeta({
+    title: epiTitle,
+    artist: podTitle,
+    album: author
+  })
 
     return (
         <div>
