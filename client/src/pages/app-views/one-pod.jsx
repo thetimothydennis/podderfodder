@@ -3,6 +3,8 @@ import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
 import FullLayout from "../../components/mapped-data/one-pod/one-pod-layout.jsx";
+import { toast } from "react-toastify";
+import { updateToast } from "../../functions/update-toast.jsx";
 
 function OnePod(props) {
   const { userId, podId, setDocTitle, setPodId, setDisplay } = props;
@@ -26,14 +28,18 @@ function OnePod(props) {
   }, [setDocTitle, podId, userId]);
 
   const updatePod = async () => {
-    const res = await axios.put(`${apiCall}/api/user/${userId}/${podId}`);
-      setPodId(res.data[0].podcasts.pod_id);
-      setDisplay("onePod");
+    let toastID = toast.loading("Updating podcast", {className: "toastMessage"})
+    await axios.put(`${apiCall}/api/user/${userId}/${podId}`)
+      .then((res) => {
+        setPodId(res.data[0].podcasts.pod_id);
+        setDisplay("onePod");
+      })
+      .then(() => {
+        updateToast(toastID, "Podcast updated")
+      })
   };
 
-  useEffect(() => {
-    getPodcasts();
-  }, [getPodcasts]);
+  useEffect(() => {getPodcasts()}, [getPodcasts]);
 
   const handleClick = async (e) => {
     await axios
@@ -53,8 +59,7 @@ function OnePod(props) {
         showDesc, 
         updatePod, 
         handleClick, 
-        episodes}}
-    />
+        episodes}} />
   );
 }
 

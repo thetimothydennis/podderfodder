@@ -4,10 +4,11 @@ import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
 import TableRender from "../../components/mapped-data/pod-search/table-render.jsx";
 import Inputs from "../../components/mapped-data/pod-search/inputs.jsx";
+import { toast } from "react-toastify";
+import { updateToast } from "../../functions/update-toast.jsx";
 
 function PodSearch(props) {
   const { userId, setPodId, setDisplay, setDocTitle } = props;
-
   const [input, setInput] = useState("");
   const [response, setResponse] = useState([]);
   const [feedInput, setFeedInput] = useState("");
@@ -17,17 +18,19 @@ function PodSearch(props) {
     let res = await axios.get(`${apiCall}/api/search?q=${inputStr}`);
     setResponse(res.data.results);
   }
-
   const handleSubmit = useCallback(
     async (inputArg) => {
+      let toastId = toast.loading("Adding podcast", {className: "toastMessage"})
       setRender(<p>Waiting</p>);
-      await axios
-        .post(`${apiCall}/api/user/${userId}`, { feedurl: inputArg })
+      await axios.post(`${apiCall}/api/user/${userId}`, { feedurl: inputArg })
         .then((res) => {
           let pod_id = res.data[0].podcasts.pod_id;
           setPodId(pod_id);
           setDisplay("onePod");
-        });
+        })
+        .then(() => {
+          updateToast(toastId, "Podcast added")
+        })
     },
     [setPodId, setDisplay, userId],
   );
@@ -36,9 +39,7 @@ function PodSearch(props) {
     setDocTitle("Search and Add - Podder Fodder");
   }, [setDocTitle]);
 
-  useEffect(() => {
-    getSearch(input);
-  }, [input]);
+  useEffect(() => {getSearch(input)}, [input]);
 
   useEffect(() => {
     setRender(

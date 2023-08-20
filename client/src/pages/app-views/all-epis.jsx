@@ -9,6 +9,7 @@ import Duration from "../../components/mapped-data/all-epis/duration.jsx";
 import Content from "../../components/mapped-data/all-epis/content.jsx";
 import PubDate from "../../components/mapped-data/all-epis/pubdate.jsx";
 import { toast } from "react-toastify";
+import { updateToast } from "../../functions/update-toast.jsx";
 
 function AllEpis(props) {
 	const { userId, setDocTitle, setPodId, setEpiId } = props;
@@ -19,13 +20,7 @@ function AllEpis(props) {
     axios.get(`${apiCall}/api/allepisodes/${userId}`)
       .then((res) => { setEpisodes(res.data) })
       .then(() => {
-          toast.update(toastID, {
-          render: "Episodes loaded",
-          type: "success",
-          isLoading: false,
-          autoClose: 250,
-          className: "toastMessage"
-        })        
+		updateToast(toastID, "Episodes loaded")   
       })
   }, [userId]);
 

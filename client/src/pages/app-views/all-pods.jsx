@@ -4,6 +4,7 @@ import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
 import FullLayout from "../../components/mapped-data/all-pods/all-pods-layout.jsx";
 import { toast } from "react-toastify";
+import { updateToast } from "../../functions/update-toast.jsx";
 
 function AllPods(props) {
   const { setDocTitle, setPodId, setDisplay, userId } = props;
@@ -17,13 +18,7 @@ function AllPods(props) {
       .then((res) => {
         setPodcasts(res.data)
       }).then(() => {
-        toast.update(toastID, {
-          render: "Podcasts loaded",
-          type: "success",
-          isLoading: false,
-          autoClose: 250,
-          className: "toastMessage"
-        })
+        updateToast(toastID, "Podcasts loaded")
       })
   }, [userId]);
 
