@@ -141,7 +141,7 @@ export const postForgotPassword = async (req, res) => {
 
 			const resetEmail = {
 				to: user.email,
-				from: `donut-reply@timothyddennis.com`,
+				from: `donut-reply@podderfodder.com`,
 				subject: `password reset`,
 				text: `
 					You are receiving this because a password reset has been requested for your account.
