@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
-import FullLayout from "../../components/mapped-data/all-pods/full-layout.jsx";
+import FullLayout from "../../components/mapped-data/all-pods/all-pods-layout.jsx";
 import { toast } from "react-toastify";
 
 function AllPods(props) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
-import FullLayout from "../../components/mapped-data/one-epi/full-layout.jsx";
+import FullLayout from "../../components/mapped-data/one-epi/one-epi-layout.jsx";
 
 function OneEpi(props) {
 	const { userId, epiId, setPodId, setDocTitle, podId } = props;

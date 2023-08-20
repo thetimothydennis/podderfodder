@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { func, number, shape, oneOfType, any } from "prop-types";
-import SkipBackward from "./mapped-data/skip-backward";
-import SkipForward from "./mapped-data/skip-forward";
-import PlayPause from "./mapped-data/play-pause";
-import MuteUnmute from "./mapped-data/mute-unmute";
-import VolumeSlider from "./mapped-data/volume-slider";
+import SkipBackward from "../buttons/audio-player/skip-backward";
+import SkipForward from "../buttons/audio-player/skip-forward";
+import PlayPause from "../buttons/audio-player/play-pause";
+import MuteUnmute from "../buttons/audio-player/mute-unmute";
+import VolumeSlider from "../buttons/audio-player/volume-slider";
 
 function Controls(props) {
     const { audioRef, progressBarRef, duration, setTimeProgress } = props;

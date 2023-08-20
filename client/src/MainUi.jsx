@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
+import { apiCall } from "./functions/api-call.jsx";
 import NavBar from "./pages/pod-nav-bar.jsx";
 import Welcome from "./pages/welcome.jsx";
 import PodSearch from "./pages/app-views/pod-search.jsx";
@@ -8,12 +9,10 @@ import AllPods from "./pages/app-views/all-pods.jsx";
 import OnePod from "./pages/app-views/one-pod.jsx";
 import OneEpi from "./pages/app-views/one-epi.jsx";
 import AllEpis from "./pages/app-views/all-epis.jsx";
-import { apiCall } from "./functions/api-call.jsx";
 import UpdatePod from "./pages/app-views/update-pod.jsx";
 import DeletePod from "./pages/app-views/delete-pod.jsx";
 import DeleteEpi from "./pages/app-views/delete-epi.jsx";
 import ImportedPod from "./pages/app-views/imported-pod.jsx";
-import "./App.css";
 
 // eslint-disable-next-line max-lines-per-function
 function MainUi(props) {

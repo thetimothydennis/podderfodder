@@ -1,6 +1,5 @@
 import React from "react";
 import { useMediaSession, useMediaMeta } from "use-media-session";
-import { BsMusicNoteBeamed } from "react-icons/bs";
 import { string, func, any, shape, oneOfType } from "prop-types";
 
 // eslint-disable-next-line max-lines-per-function
@@ -26,21 +25,11 @@ function DisplayTrack(props) {
     }
 
   useMediaSession({
-    onSeekBackward: () => {
-      audioRef.current.currentTime -= 15;
-    },
-    onSeekForward: () => {
-      audioRef.current.currentTime += 30;
-    },
-    onPlay: () => {
-      audioRef.current.play();
-    },
-    onPause: () => {
-      audioRef.current.pause();
-    },
-    onStop: () => {
-      audioRef.current.pause();
-    }
+    onSeekBackward: () => {audioRef.current.currentTime -= 15},
+    onSeekForward: () => {audioRef.current.currentTime += 30},
+    onPlay: () => {audioRef.current.play()},
+    onPause: () => {audioRef.current.pause()},
+    onStop: () => {audioRef.current.pause()}
   })
 
   useMediaMeta({
@@ -61,20 +50,10 @@ function DisplayTrack(props) {
                     <h4 className="allEpiDuration">{formatDate(date)}</h4>
                     <h4 className="oneEpiShowTitle" id={podId}>{showTitle}</h4>
                     <h4 className="allEpiAuthor">{author}</h4>
-                </div>
-                <div className="audio-image">
-                    {image ? (
-                        <img 
-                            src={image} 
-                            alt="audio avatar"
-                            width="275px" />   
-                    ) : (
-                        <div className="icon-wrapper">
-                            <span className="audio-icon">
-                                <BsMusicNoteBeamed />
-                            </span>
-                        </div>
-                    )}
+                    <img className="audio-image"
+                        src={image} 
+                        alt="audio avatar"
+                        width="275px" />
                 </div>
             </div>
         </div>

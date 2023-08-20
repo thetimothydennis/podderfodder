@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
-import FullLayout from "../../components/mapped-data/one-pod/full-layout.jsx";
+import FullLayout from "../../components/mapped-data/one-pod/one-pod-layout.jsx";
 
 function OnePod(props) {
   const { userId, podId, setDocTitle, setPodId, setDisplay } = props;

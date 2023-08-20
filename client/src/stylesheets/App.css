@@ -1,39 +1,67 @@
+/* core style properties */
+
 #root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  color: rgba(255, 2#242424, 0.87);
+  background-color: #0a0a0a;
+}
+
+a {
+  font-weight: 500;
+  color: #f50;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #f54;
 }
 
 body {
+  margin: 0;
   display: flex;
+  place-items: center;
   flex-flow: column;
   align-items: center;
   width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
   font-size: 1.25rem;
   background-color: #0a0a0a;
   color: #ddd;
 }
 
-label.col-sm {
-  background-color: #1d1d1d;
-  color: #ccc;
-  margin-top: -1.5%;
-  margin-bottom: -1.5%;
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
 }
 
-input.col-sm[type="text"],
-input.col-sm[type="password"] {
-  background-color: #9a9a9a;
-  color: #000;
-  font-weight: bold;
+button:hover {
+  border-color: #f54;
 }
 
-input.col[type="text"]:active,
-input.col[type="password"]:active {
-  background-color: #666;
-  color: #000;
-  font-weight: bold;
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.btn-dark:active {
+  color: #ff1500;
+  outline-style: dashed;
+  outline-width: 1px;
+  outline-color: #ff1500;
 }
 
 div {
@@ -60,16 +88,14 @@ div.col-sm:hover {
   background-color: #444444;
 }
 
-img.waiting {
-  max-width: 80vw;
-}
-
 .epiRow:hover,
 div.oneEpiShowTitle:hover {
   background-color: #444444;
   border-radius: 3%;
   border-width: 3px;
 }
+
+/* view and component specific styles */
 
 .ruleList {
   list-style: none;
@@ -107,11 +133,6 @@ li.ruleItem {
   margin-bottom: 1%;
 }
 
-.epiImg {
-  margin-bottom: 1%;
-  margin-top: 1.5%;
-}
-
 .note {
   max-width: 600px;
 }
@@ -138,10 +159,50 @@ li.ruleItem {
   align-items: center;
 }
 
+/* form style properties */
+
+label.col-sm {
+  background-color: #1d1d1d;
+  color: #ccc;
+  margin-top: -1.5%;
+  margin-bottom: -1.5%;
+}
+
+input.col-sm[type="text"],
+input.col-sm[type="password"] {
+  background-color: #9a9a9a;
+  color: #000;
+  font-weight: bold;
+}
+
+input.col[type="text"]:active,
+input.col[type="password"]:active {
+  background-color: #666;
+  color: #000;
+  font-weight: bold;
+}
+
 .toastMessage {
   background-color: #1d1d1d;
   color: #ccc;
 }
+
+/* image styles */
+
+img.waiting {
+  max-width: 80vw;
+  margin-left: auto;
+  margin-right: auto
+}
+
+
+.audio-image {
+  max-width: 80vw;
+  margin-left: auto;
+  margin-right: auto
+}
+
+/* audio player styles */
 
 .inner {
   max-width: 600px;
@@ -166,20 +227,12 @@ li.ruleItem {
   max-width: 83px;
   @media (max-width: 767px) {
     display: none
+  };
+  @media (max-width: 1023px) and (orientation: portrait) {
+    display: none
   }
 }
 
 .controlBtn {
   color: #f50;
-}
-
-.btn-dark:active {
-  color: #ff1500;
-  outline-style: dashed;
-  outline-width: 1px;
-  outline-color: #ff1500;
-}
-
-.audio-image {
-  max-width: 80vw
 }
