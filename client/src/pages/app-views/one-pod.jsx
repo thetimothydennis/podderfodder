@@ -26,10 +26,9 @@ function OnePod(props) {
   }, [setDocTitle, podId, userId]);
 
   const updatePod = async () => {
-    await axios.put(`${apiCall}/api/user/${userId}/${podId}`).then((res) => {
+    const res = await axios.put(`${apiCall}/api/user/${userId}/${podId}`);
       setPodId(res.data[0].podcasts.pod_id);
       setDisplay("onePod");
-    });
   };
 
   useEffect(() => {

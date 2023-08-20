@@ -47,7 +47,7 @@ function MainUi(props) {
       setRender(<AllPods {...{userId, setDocTitle, setPodId, setDisplay}} />);
     } else if (display === "onePod") {
       setRender(
-        <OnePod {...{userId, setDocTitle, podId, setDisplay}} />
+        <OnePod {...{userId, setDocTitle, setPodId, podId, setDisplay}} />
       );
     } else if (display === "oneEpi") {
       setRender(
