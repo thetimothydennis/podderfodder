@@ -1,8 +1,7 @@
 import React from "react";
 import { object, string } from "prop-types";
 
-function Duration(props) {
-  const { item, podId } = props;
+function Duration({ item, podId }) {
   return (
     <div className="col-sm allEpiDuration" id={`${podId}/${item._id}`}>
       {item.duration} min.

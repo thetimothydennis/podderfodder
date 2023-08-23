@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export function HomePage() {
+function HomePage() {
   useEffect(() => {
     document.title = "Podder Fodder";
   }, []);
@@ -18,3 +18,5 @@ export function HomePage() {
     </div>
   );
 }
+
+export default HomePage;

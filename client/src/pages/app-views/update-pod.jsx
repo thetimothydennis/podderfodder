@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { func } from "prop-types";
 
-function UpdatePod(props) {
-  const { setDocTitle } = props;
+function UpdatePod({ setDocTitle }) {
 
   useEffect(() => {
     setDocTitle("Updating Pod - Podder Fodder");

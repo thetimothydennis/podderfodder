@@ -6,8 +6,7 @@ import FullLayout from "../../components/mapped-data/all-pods/all-pods-layout.js
 import { toast } from "react-toastify";
 import { updateToast } from "../../functions/update-toast.jsx";
 
-function AllPods(props) {
-  const { setDocTitle, setPodId, setDisplay, userId } = props;
+function AllPods({ setDocTitle, setPodId, setDisplay, userId }) {
   const [podcasts, setPodcasts] = useState([]);
 
   const getPods = useCallback(async () => {

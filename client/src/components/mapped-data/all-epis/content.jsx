@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function Content(props) {
-  const { item } = props;
+function Content({ item }) {
   return (
     <div
       className="col-sm allEpiContent"

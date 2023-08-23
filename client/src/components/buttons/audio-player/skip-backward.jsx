@@ -3,7 +3,6 @@ import { func } from "prop-types";
 import { IoPlayBackSharp } from "react-icons/io5";
 
 function SkipBackward ({ skipBackward }) {
-
     return (
         <button className="btn btn-dark" onClick={skipBackward}>
             <IoPlayBackSharp className="controlBtn" />

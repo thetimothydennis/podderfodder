@@ -5,7 +5,8 @@ import Password from "../../components/form-parts/password";
 import PassMatch from "../../components/form-parts/pass-match";
 import ResetPassNote from "../../components/text-blocks/reset-pass-note";
 
-export function ResetPassword() {
+function ResetPassword() {
+
   const { token } = useParams();
 
   useEffect(() => {
@@ -31,3 +32,5 @@ export function ResetPassword() {
     </div>
   );
 }
+
+export default ResetPassword;

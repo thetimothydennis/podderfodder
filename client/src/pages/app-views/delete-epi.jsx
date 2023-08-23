@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
 import { func } from "prop-types";
 
-function DeleteEpi(props) {
-  const { setDocTitle } = props;
+function DeleteEpi({ setDocTitle }) {
 
   useEffect(() => {
     setDocTitle("Episode Deleted - Podder Fodder");

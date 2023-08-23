@@ -1,9 +1,7 @@
 import React from "react";
 import { object, func } from "prop-types";
 
-function ShowTitle(props) {
-  const { item, handlePodClick } = props;
-
+function ShowTitle({ item, handlePodClick }) {
   return (
     <div className="col-sm" onClick={handlePodClick} id={item.podcasts._id}>
       <b>{item.podcasts.show_title}</b>

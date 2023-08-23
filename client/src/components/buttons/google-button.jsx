@@ -3,12 +3,8 @@ import React, { useState } from "react";
 function GoogleButton() {
   const [googSrc, setGoogSrc] = useState("/buttons/google_normal.png");
 
-  const handleGoogClick = () => {
-    setGoogSrc("/buttons/google_pressed.png");
-  };
-  const handleGoogReset = () => {
-    setGoogSrc("/buttons/google_normal.png");
-  };
+  const handleGoogClick = () => {setGoogSrc("/buttons/google_pressed.png")};
+  const handleGoogReset = () => {setGoogSrc("/buttons/google_normal.png")};
 
   return (
     <a

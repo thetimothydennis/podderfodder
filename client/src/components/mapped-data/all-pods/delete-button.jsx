@@ -1,8 +1,7 @@
 import React from "react";
 import { object, func } from "prop-types";
 
-function DeleteButton(props) {
-  const { item, handleDeleteClick } = props;
+function DeleteButton({ item, handleDeleteClick }) {
   return (
     <div className="col-sm" id={item.podcasts._id} onClick={handleDeleteClick}>
       <button

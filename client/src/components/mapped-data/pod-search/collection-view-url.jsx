@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function CollectionViewUrl(props) {
-  const { item } = props;
+function CollectionViewUrl({ item }) {
   return (
     <div className="col-sm">
       <a href={item.collectionViewUrl} target="_blank" rel="noreferrer">

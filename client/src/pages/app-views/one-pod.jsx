@@ -6,9 +6,7 @@ import FullLayout from "../../components/mapped-data/one-pod/one-pod-layout.jsx"
 import { toast } from "react-toastify";
 import { updateToast } from "../../functions/update-toast.jsx";
 
-function OnePod(props) {
-  const { userId, podId, setDocTitle, setPodId, setDisplay } = props;
-
+function OnePod({ userId, podId, setDocTitle, setPodId, setDisplay }) {
   const [episodes, setEpisodes] = useState([]);
   const [showTitle, setShowTitle] = useState("");
   const [showDesc, setShowDesc] = useState("");

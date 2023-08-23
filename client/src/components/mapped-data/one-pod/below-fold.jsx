@@ -6,8 +6,7 @@ import PubDate from "./pubdate.jsx";
 import Content from "./content.jsx";
 import DeleteButton from "./delete-button.jsx";
 
-function BelowFold(props) {
-  const { item, podId, handleClick, key } = props;
+function BelowFold({ item, podId, handleClick, key }) {
   return (
     <div
       className="row epiRow"

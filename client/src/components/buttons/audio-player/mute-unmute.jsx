@@ -3,7 +3,6 @@ import { func, number, bool } from "prop-types";
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 
 function MuteUnmute ({ muteVolume, setMuteVolume, volume }) {
-
     return (
         <button
             onClick={() => setMuteVolume((prev) => !prev)}

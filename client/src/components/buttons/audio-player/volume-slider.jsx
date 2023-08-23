@@ -2,7 +2,6 @@ import React from "react";
 import { func, number } from "prop-types";
 
 function VolumeSlider ({ volume, setVolume }) {
-
     return (
         <input 
             type="range" 

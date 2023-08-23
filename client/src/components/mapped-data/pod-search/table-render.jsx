@@ -6,8 +6,7 @@ import Artist from "./artist-name";
 import CollectionViewUrl from "./collection-view-url";
 import AddPodButton from "./add-pod-button";
 
-function TableRender(props) {
-  const { item, handleSubmit } = props;
+function TableRender({ item, handleSubmit }) {
   return (
     <div className="row epiRow" key={item.collectionId}>
       <CollectionName {...{item}} />

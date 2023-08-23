@@ -1,8 +1,7 @@
 import React from "react";
 import { func } from "prop-types";
 
-function UpdateButton(props) {
-  const { updatePod } = props;
+function UpdateButton({ updatePod }) {
   return (
     <button
       id={-8}

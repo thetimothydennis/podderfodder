@@ -7,7 +7,7 @@ import GoogleAcctNote from "../../components/text-blocks/goog-acct-note";
 import NoAccountNote from "../../components/text-blocks/no-account";
 import ForgotPasswordNote from "../../components/text-blocks/forgot-password-note";
 
-export function UserLogin() {
+function UserLogin() {
   useEffect(() => {
     document.title = "Login - Podder Fodder";
   }, []);
@@ -34,3 +34,5 @@ export function UserLogin() {
     </div>
   );
 }
+
+export default UserLogin;

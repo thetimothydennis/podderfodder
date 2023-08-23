@@ -7,8 +7,7 @@ import Inputs from "../../components/mapped-data/pod-search/inputs.jsx";
 import { toast } from "react-toastify";
 import { updateToast } from "../../functions/update-toast.jsx";
 
-function PodSearch(props) {
-  const { userId, setPodId, setDisplay, setDocTitle } = props;
+function PodSearch({ userId, setPodId, setDisplay, setDocTitle }) {
   const [input, setInput] = useState("");
   const [response, setResponse] = useState([]);
   const [feedInput, setFeedInput] = useState("");

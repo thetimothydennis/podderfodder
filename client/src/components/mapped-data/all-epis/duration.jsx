@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function Duration(props) {
-  const { item } = props;
+function Duration({ item }) {
   return (
     <div
       className="col-sm allEpiDuration"

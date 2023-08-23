@@ -1,8 +1,7 @@
 import React from "react";
 import { object, func } from "prop-types";
 
-function Author(props) {
-  const { item, handlePodClick } = props;
+function Author({ item, handlePodClick }) {
   return (
     <div
       className="col-sm allEpiAuthor"

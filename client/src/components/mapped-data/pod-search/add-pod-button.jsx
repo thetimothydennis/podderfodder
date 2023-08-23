@@ -1,8 +1,7 @@
 import React from "react";
 import { object, func } from "prop-types";
 
-function AddPodButton(props) {
-  const { item, handleSubmit } = props;
+function AddPodButton({ item, handleSubmit }) {
   return (
     <div className="col-sm">
       <button

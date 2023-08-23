@@ -152,6 +152,12 @@ li.ruleItem {
   overflow-wrap: break-word;
 }
 
+.onePodTop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .oneEpi {
   display: flex;
   flex-direction: column;
@@ -225,10 +231,10 @@ img.waiting {
 
 .volume {
   max-width: 83px;
-  @media (max-width: 767px) {
+  @media (max-width: 1280px) and (orientation: portrait) {
     display: none
-  };
-  @media (max-width: 1023px) and (orientation: portrait) {
+  }
+  @media (max-width: 1024px) and (orientation: landscape) {
     display: none
   }
 }

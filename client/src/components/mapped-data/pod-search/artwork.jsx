@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function Artwork(props) {
-  const { item } = props;
+function Artwork({ item }) {
   return (
     <div className="col-sm">
       <img alt="podcast_image" src={item.artworkUrl100} />

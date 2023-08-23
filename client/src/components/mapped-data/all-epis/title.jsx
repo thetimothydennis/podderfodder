@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function EpiTitle(props) {
-  const { item } = props;
+function EpiTitle({ item }) {
   return (
     <div
       className="col-sm"

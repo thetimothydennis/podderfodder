@@ -1,9 +1,7 @@
 import React from "react";
 import { object, func } from "prop-types";
 
-function ShowImage(props) {
-  const { item, handlePodClick } = props;
-
+function ShowImage({ item, handlePodClick }) {
   return (
     <div className="col-sm" onClick={handlePodClick} id={item.podcasts._id}>
       <img

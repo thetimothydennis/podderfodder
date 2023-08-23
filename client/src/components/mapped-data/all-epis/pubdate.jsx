@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function PubDate(props) {
-  const { item } = props;
+function PubDate({ item }) {
   return (
     <div
       className="col-sm allEpiDuration"

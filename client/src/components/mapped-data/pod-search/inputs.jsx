@@ -4,8 +4,7 @@ import RSSLinkForm from "./rss-link-form";
 import RSSSubmitButton from "./rss-submit-button";
 import SearchApplePodsForm from "./search-apple-pods";
 
-function Inputs(props) {
-  const { input, setInput, feedInput, setFeedInput, handleSubmit } = props;
+function Inputs({ input, setInput, feedInput, setFeedInput, handleSubmit }) {
   return (
     <div className="container">
       <RSSLinkForm setFeedInput={setFeedInput} feedInput={feedInput} />

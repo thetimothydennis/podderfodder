@@ -1,8 +1,7 @@
 import React from "react";
 import { func, string } from "prop-types";
 
-function RSSLinkForm(props) {
-  const { setFeedInput, feedInput } = props;
+function RSSLinkForm({ setFeedInput, feedInput }) {
   return (
     <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
       <label className="col-sm form-control" htmlFor="feedInput">

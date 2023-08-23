@@ -1,8 +1,7 @@
 import React from "react";
 import { object, string } from "prop-types";
 
-function Content(props) {
-  const { item, podId } = props;
+function Content({ item, podId }) {
   return (
     <div className="col-sm epiContent" id={`${podId}/${item._id}`}>
       {item.content.slice(0, 200)}...

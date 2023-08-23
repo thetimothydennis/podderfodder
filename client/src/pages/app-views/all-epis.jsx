@@ -11,8 +11,7 @@ import PubDate from "../../components/mapped-data/all-epis/pubdate.jsx";
 import { toast } from "react-toastify";
 import { updateToast } from "../../functions/update-toast.jsx";
 
-function AllEpis(props) {
-	const { userId, setDocTitle, setPodId, setEpiId } = props;
+function AllEpis({ userId, setDocTitle, setPodId, setEpiId }) {
 	const [episodes, setEpisodes] = useState([]);
 
 	const getAllEpis = useCallback(async () => {

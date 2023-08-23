@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function Author(props) {
-  const { item } = props;
+function Author({ item }) {
   return (
     <div
       className="col-sm allEpiAuthor"

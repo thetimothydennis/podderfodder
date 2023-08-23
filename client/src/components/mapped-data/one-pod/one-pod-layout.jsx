@@ -15,16 +15,14 @@ function FullLayout(props) {
     handleClick,
   } = props;
   return (
-    <div className="Epi">
-      <AboveFold {...{showTitle, showAuthor, showImg, showDesc, updatePod}} />
-      <div className="container">
+    <div className="Epi container">
+        <AboveFold {...{showTitle, showAuthor, showImg, showDesc, updatePod}} />
         {episodes.map((item, x) => (
           <BelowFold
             {...{item, podId, handleClick}}
             key={x}
           />
         ))}
-      </div>
     </div>
   );
 }

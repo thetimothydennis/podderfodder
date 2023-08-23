@@ -3,7 +3,8 @@ import PasswordReqs from "../../components/text-blocks/password-reqs";
 import Password from "../../components/form-parts/password";
 import PassMatch from "../../components/form-parts/pass-match";
 
-export function ChangePassword() {
+function ChangePassword() {
+
   useEffect(() => {
     document.title = "Registration - Podder Fodder";
   }, []);
@@ -22,3 +23,5 @@ export function ChangePassword() {
     </div>
   );
 }
+
+export default ChangePassword;

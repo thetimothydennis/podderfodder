@@ -15,7 +15,7 @@ import DeleteEpi from "./pages/app-views/delete-epi.jsx";
 import ImportedPod from "./pages/app-views/imported-pod.jsx";
 
 // eslint-disable-next-line max-lines-per-function
-function MainUi(props) {
+function MainUi() {
   const [display, setDisplay] = useState("welcome");
   const [podId, setPodId] = useState("");
   const [epiId, setEpiId] = useState("");
@@ -43,66 +43,85 @@ function MainUi(props) {
 
   //logic that renders the new component when display is updated
   useEffect(() => {
-    if (display === "allPods") {
-      setRender(<AllPods {...{userId, setDocTitle, setPodId, setDisplay}} />);
-    } else if (display === "onePod") {
-      setRender(
-        <OnePod {...{userId, setDocTitle, setPodId, podId, setDisplay}} />
-      );
-    } else if (display === "oneEpi") {
-      setRender(<OneEpi {...{userId, setDocTitle, podId, epiId, setPodId}} />);
-    } else if (display === "allEpis") {
-      setRender(
-        <AllEpis {...{userId, setDocTitle, setPodId, setEpiId, setDisplay}} />
-      );
-    } else if (display === "searchPods") {
-      setRender(
-        <PodSearch {...{userId, setDocTitle, setPodId, setDisplay}} />
-      );
-    } else if (display === "updatePod") {
-      setRender(<UpdatePod {...{setDocTitle}} />);
-    } else if (display === "deletePod") {
-      setRender(<DeletePod {...{setDocTitle}} />);
-    } else if (display === "deleteEpi") {
-      setRender(<DeleteEpi {...{setDocTitle}} />);
-    } else if (display === "submitPod") {
-      setRender(<ImportedPod {...{setDocTitle}} />);
-    } else if (display === "welcome") {
-      setRender(<Welcome {...{setDocTitle}} />);
+    switch (display) {
+      case "allPods":
+        setRender(<AllPods {...{userId, setDocTitle, setPodId, setDisplay}} />);
+        break;
+      case "onePod":
+        setRender(<OnePod {...{userId, setDocTitle, setPodId, podId, setDisplay}} />);
+        break;
+      case "oneEpi":
+        setRender(<OneEpi {...{userId, setDocTitle, podId, epiId, setPodId}} />);
+        break;
+      case "allEpis":
+        setRender(<AllEpis {...{userId, setDocTitle, setPodId, setEpiId, setDisplay}} />);
+        break;
+      case "searchPods":
+        setRender(<PodSearch {...{userId, setDocTitle, setPodId, setDisplay}} />);
+        break;
+      case "updatePod":
+        setRender(<UpdatePod {...{setDocTitle}} />);
+        break;
+      case "deletePod":
+        setRender(<DeletePod {...{setDocTitle}} />);
+        break;
+      case "deleteEpi":
+        setRender(<DeleteEpi {...{setDocTitle}} />);
+        break;
+      case "submitPod":
+        setRender(<ImportedPod {...{setDocTitle}} />);
+        break;
+      case "welcome":
+        setRender(<Welcome {...{setDocTitle}} />);
+        break;
+      default:
+        setRender(<Welcome {...{setDocTitle}} />);
+      break;
     }
-  }, [display, epiId, podId, userId, props]);
+  }, [display, epiId, podId, userId]);
 
   // logic for telling the app which display to re-render
   const handleClick = (e) => {
     if (e.target.id) {
-      if (e.target.id === "-1") {
-        setDisplay("allPods");
-      } else if (e.target.id === "-2") {
-        setDisplay("allEpis");
-      } else if (e.target.id === "-3") {
-        setDisplay("searchPods");
-      } else if (e.target.id === "-4") {
-        setDisplay("submitPod");
-      } else if (e.target.id === "-6") {
-        setDisplay("deletePod");
-      } else if (e.target.id === "-7") {
-        setDisplay("deleteEpi");
-      } else if (e.target.id === "-8") {
-        setDisplay("updatePod");
-      } else if (display === "allPods") {
-        setPodId(e.target.id);
-        setDisplay("onePod");
-      } else if (display === "onePod") {
-        setEpiId(e.target.id);
-        setDisplay("oneEpi");
-      } else if (display === "allEpis") {
-        setEpiId(e.target.id);
-        setPodId(e.target.value);
-        setDisplay("oneEpi");
-      } else if (display === "oneEpi") {
-        setEpiId(0);
-        setPodId(e.target.id);
-        setDisplay("onePod");
+      switch (e.target.id) {
+        case "-1":
+          setDisplay("allPods");
+          break;
+        case "-2":
+          setDisplay("allEpis");
+          break;
+        case "-3":
+          setDisplay("searchPods");
+          break;
+        case "-4":
+          setDisplay("submitPod");
+          break;
+        case "-6":
+          setDisplay("deletePod");
+          break;
+        case "-7":
+          setDisplay("deleteEpi");
+          break;
+        case "-8":
+          setDisplay("updatePod");
+          break;
+        default:
+          if (display === "allPods") {
+            setPodId(e.target.id);
+            setDisplay("onePod");
+          } else if (display === "onePod") {
+            setEpiId(e.target.id);
+            setDisplay("oneEpi");
+          } else if (display === "allEpis") {
+            setEpiId(e.target.id);
+            setPodId(e.target.value);
+            setDisplay("oneEpi");
+          } else if (display === "oneEpi") {
+            setEpiId(0);
+            setPodId(e.target.id);
+            setDisplay("onePod");
+          }
+          break;
       }
     }
   };

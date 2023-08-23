@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { func } from "prop-types";
 
-function DeletePod(props) {
-  const { setDocTitle } = props;
-
+function DeletePod({ setDocTitle }) {
+  
   useEffect(() => {
     setDocTitle("Pod Deleted - Podder Fodder");
   }, [setDocTitle]);

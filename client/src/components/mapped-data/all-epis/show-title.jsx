@@ -1,8 +1,7 @@
 import React from "react";
 import { object } from "prop-types";
 
-function ShowTitle(props) {
-  const { item } = props;
+function ShowTitle({ item }) {
   return (
     <div
       className="col-sm allEpiAuthor"

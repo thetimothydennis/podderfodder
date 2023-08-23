@@ -4,8 +4,7 @@ import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
 import FullLayout from "../../components/mapped-data/one-epi/one-epi-layout.jsx";
 
-function OneEpi(props) {
-	const { userId, epiId, setPodId, setDocTitle, podId } = props;
+function OneEpi({ userId, epiId, setPodId, setDocTitle, podId }) {
 
 	function formatDate(date) {
 		return new Date(date).toString().slice(0, 15);

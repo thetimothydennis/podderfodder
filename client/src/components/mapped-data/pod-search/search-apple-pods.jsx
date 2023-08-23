@@ -1,8 +1,7 @@
 import React from "react";
 import { string, func } from "prop-types";
 
-function SearchApplePodsForm(props) {
-  const { input, setInput } = props;
+function SearchApplePodsForm({ input, setInput }) {
   return (
     <form className="row form-group" onSubmit={(e) => e.preventDefault()}>
       <label className="col-sm form-control" htmlFor="searchInput">

@@ -1,8 +1,7 @@
 import React from "react";
 import { func, string } from "prop-types";
 
-function RSSSubmitButton(props) {
-  const { handleSubmit, feedInput } = props;
+function RSSSubmitButton({ handleSubmit, feedInput }) {
   return (
     <button
       id={-4}

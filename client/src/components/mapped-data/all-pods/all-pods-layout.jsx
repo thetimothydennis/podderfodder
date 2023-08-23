@@ -6,8 +6,7 @@ import Author from "./author";
 import Description from "./description";
 import DeleteButton from "./delete-button";
 
-function FullLayout(props) {
-  const { podcasts, handlePodClick, handleDeleteClick } = props;
+function FullLayout({ podcasts, handlePodClick, handleDeleteClick }) {
   return (
     <div className="Epi">
       <h3>All Podcasts</h3>

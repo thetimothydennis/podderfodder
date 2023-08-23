@@ -2,13 +2,8 @@ import React, { useState } from "react";
 
 function GithubButton() {
   const [gitSrc, setGitSrc] = useState("/buttons/github_normal.png");
-
-  const handleGHClick = () => {
-    setGitSrc("/buttons/github_pressed.png");
-  };
-  const handleGHReset = () => {
-    setGitSrc("/buttons/github_normal.png");
-  };
+  const handleGHClick = () => {setGitSrc("/buttons/github_pressed.png")};
+  const handleGHReset = () => {setGitSrc("/buttons/github_normal.png")};
 
   return (
     <a

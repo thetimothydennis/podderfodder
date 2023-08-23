@@ -3,7 +3,8 @@ import Email from "../../components/form-parts/email";
 import PassRecoveryNote from "../../components/text-blocks/pass-recovery-note";
 import CheckEmail from "../../components/text-blocks/check-email";
 
-export function ForgotPassword() {
+function ForgotPassword() {
+  
   useEffect(() => {
     document.title = "Forgot Password - Podder Fodder";
   }, []);
@@ -22,3 +23,5 @@ export function ForgotPassword() {
     </div>
   );
 }
+
+export default ForgotPassword;

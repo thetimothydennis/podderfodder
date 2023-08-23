@@ -2,10 +2,9 @@ import React from "react";
 import { string, func } from "prop-types";
 import UpdateButton from "./update-button";
 
-function AboveFold(props) {
-  const { showTitle, showAuthor, showImg, showDesc, updatePod } = props;
+function AboveFold({ showTitle, showAuthor, showImg, showDesc, updatePod }) {
   return (
-    <div>
+    <div className="onePodTop">
       <h3>{showTitle}</h3>
       <h4>{showAuthor}</h4>
       <img alt="podcast_image" height="250em" src={showImg} />
