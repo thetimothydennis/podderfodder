@@ -231,12 +231,6 @@ img.waiting {
 
 .volume {
   max-width: 83px;
-  @media (max-width: 1280px) and (orientation: portrait) {
-    display: none
-  }
-  @media (max-width: 1024px) and (orientation: landscape) {
-    display: none
-  }
 }
 
 .controlBtn {

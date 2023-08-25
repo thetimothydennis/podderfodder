@@ -5,6 +5,7 @@ import SkipForward from "../buttons/audio-player/skip-forward";
 import PlayPause from "../buttons/audio-player/play-pause";
 import MuteUnmute from "../buttons/audio-player/mute-unmute";
 import VolumeSlider from "../buttons/audio-player/volume-slider";
+import { BrowserView, MobileView } from "react-device-detect";
 
 function Controls({ audioRef, progressBarRef, duration, setTimeProgress }) {
     const [isPlaying, setIsPlaying] = useState(false);
@@ -48,13 +49,19 @@ function Controls({ audioRef, progressBarRef, duration, setTimeProgress }) {
 
     return (
         <div className="controls-wrapper">
-            <div className="controls">
+            <BrowserView className="controls">
                 <SkipBackward {...{skipBackward}} />
                 <PlayPause {...{isPlaying, togglePlayPause}} />
                 <SkipForward {...{skipForward}} />
                 <MuteUnmute {...{ muteVolume, setMuteVolume, volume }} />
                 <VolumeSlider {...{volume, setVolume}} />
-            </div>
+            </BrowserView>
+            <MobileView className="controls">
+                <SkipBackward {...{skipBackward}} />
+                <PlayPause {...{isPlaying, togglePlayPause}} />
+                <SkipForward {...{skipForward}} />
+                <MuteUnmute {...{ muteVolume, setMuteVolume, volume }} />
+            </MobileView>
         </div>
     )
 };
