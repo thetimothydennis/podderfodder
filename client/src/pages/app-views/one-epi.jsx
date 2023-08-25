@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
-import FullLayout from "../../components/mapped-data/one-epi/one-epi-layout.jsx";
+import AudioPlayer from "../../components/audio-player/AudioPlayer.jsx";
 
 function OneEpi({ userId, epiId, setPodId, setDocTitle, podId }) {
 
@@ -37,17 +37,20 @@ function OneEpi({ userId, epiId, setPodId, setDocTitle, podId }) {
 	}, [getEpisode]);
 
 	return (
-		<FullLayout {...{
-			title, 
-			date, 
-			podId, 
-			showTitle, 
-			author, 
-			image, 
-			epi, 
-			content, 
-			formatDate
-		}} />
+		<div className="Epi oneEpi">
+			<AudioPlayer 
+				{...{
+				author, 
+				epi, 
+				showTitle, 
+				image, 
+				content, 
+				date, 
+				formatDate, 
+				podId,
+				title
+			}} />
+		</div>
 	);
 }
 

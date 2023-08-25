@@ -6,8 +6,7 @@ import PlayPause from "../buttons/audio-player/play-pause";
 import MuteUnmute from "../buttons/audio-player/mute-unmute";
 import VolumeSlider from "../buttons/audio-player/volume-slider";
 
-function Controls(props) {
-    const { audioRef, progressBarRef, duration, setTimeProgress } = props;
+function Controls({ audioRef, progressBarRef, duration, setTimeProgress }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const [volume, setVolume] = useState(60);
     const [muteVolume, setMuteVolume] = useState(false);

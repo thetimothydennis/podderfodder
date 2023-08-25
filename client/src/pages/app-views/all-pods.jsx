@@ -2,7 +2,11 @@ import React, { useState, useEffect, useCallback } from "react";
 import { func, string } from "prop-types";
 import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
-import FullLayout from "../../components/mapped-data/all-pods/all-pods-layout.jsx";
+import ShowImage from "../../components/mapped-data/all-pods/show-image";
+import ShowTitle from "../../components/mapped-data/all-pods/show-title.jsx";
+import Author from "../../components/mapped-data/all-pods/author";
+import Description from "../../components/mapped-data/all-pods/description";
+import DeleteButton from "../../components/mapped-data/all-pods/delete-button";
 import { toast } from "react-toastify";
 import { updateToast } from "../../functions/update-toast.jsx";
 
@@ -42,8 +46,21 @@ function AllPods({ setDocTitle, setPodId, setDisplay, userId }) {
   }
 
   return (
-    <FullLayout {...{podcasts, handlePodClick, handleDeleteClick}} />
-  );
+      <div className="Epi">
+        <h3>All Podcasts</h3>
+        <div className="container">
+          {podcasts.map((item, x) => (
+            <div className="row epiRow" key={x} id={item.podcasts._id}>
+              <ShowImage {...{item, handlePodClick}} />
+              <ShowTitle {...{item, handlePodClick}} />
+              <Author {...{item, handlePodClick}} />
+              <Description {...{item, handlePodClick}} />
+              <DeleteButton {...{item, handleDeleteClick}} />
+            </div>
+          ))}
+        </div>
+      </div>  
+    );
 }
 
 AllPods.propTypes = {
