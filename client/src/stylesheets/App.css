@@ -101,12 +101,7 @@ div.oneEpiShowTitle:hover {
   list-style: none;
   display: flex;
   flex-direction: column;
-  align-self: center;
-}
-
-ul.ruleList {
-  display: flex;
-  position: relative;
+  margin: auto
 }
 
 li.ruleItem {
@@ -166,6 +161,11 @@ li.ruleItem {
 }
 
 /* form style properties */
+
+.form-group {
+  width: 60vw;
+  margin: auto
+}
 
 label.col-sm {
   background-color: #1d1d1d;
