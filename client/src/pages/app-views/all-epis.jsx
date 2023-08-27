@@ -4,7 +4,6 @@ import axios from "axios";
 import { apiCall } from "../../functions/api-call.jsx";
 import EpiTitle from "../../components/mapped-data/all-epis/title.jsx";
 import ShowTitle from "../../components/mapped-data/all-epis/show-title.jsx";
-import Author from "../../components/mapped-data/all-epis/author.jsx";
 import Duration from "../../components/mapped-data/all-epis/duration.jsx";
 import Content from "../../components/mapped-data/all-epis/content.jsx";
 import PubDate from "../../components/mapped-data/all-epis/pubdate.jsx";
@@ -49,7 +48,6 @@ function AllEpis({ userId, setDocTitle, setPodId, setEpiId }) {
 						id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}>
 						<EpiTitle {...{item}} />
 						<ShowTitle {...{item}} />
-						<Author {...{item}} />
 						<Duration {...{item}} />
 						<Content {...{item}} />
 						<PubDate {...{item}} />

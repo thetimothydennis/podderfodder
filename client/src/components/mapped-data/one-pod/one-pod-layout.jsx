@@ -13,10 +13,11 @@ function FullLayout(props) {
     showDesc,
     updatePod,
     handleClick,
+    handleDeletePod
   } = props;
   return (
     <div className="Epi container">
-        <AboveFold {...{showTitle, showAuthor, showImg, showDesc, updatePod}} />
+        <AboveFold {...{showTitle, showAuthor, showImg, showDesc, handleDeletePod, updatePod}} />
         {episodes.map((item, x) => (
           <BelowFold
             {...{item, podId, handleClick}}

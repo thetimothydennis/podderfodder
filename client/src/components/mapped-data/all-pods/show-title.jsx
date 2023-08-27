@@ -3,7 +3,7 @@ import { object, func } from "prop-types";
 
 function ShowTitle({ item, handlePodClick }) {
   return (
-    <div className="col-sm" onClick={handlePodClick} id={item.podcasts._id}>
+    <div className="col-md" onClick={handlePodClick} id={item.podcasts._id}>
       <b>{item.podcasts.show_title}</b>
     </div>
   );

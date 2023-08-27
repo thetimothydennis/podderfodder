@@ -47,6 +47,13 @@ function OnePod({ userId, podId, setDocTitle, setPodId, setDisplay }) {
       });
   };
 
+  const handleDeletePod = async () => {
+    await axios.delete(`${apiCall}/api/user/${userId}/${podId}`)
+      .then(() => {
+        setDisplay("allPods");
+      })
+  }
+
   return (
     <FullLayout
       {...{
@@ -57,6 +64,7 @@ function OnePod({ userId, podId, setDocTitle, setPodId, setDisplay }) {
         showDesc, 
         updatePod, 
         handleClick, 
+        handleDeletePod,
         episodes}} />
   );
 }

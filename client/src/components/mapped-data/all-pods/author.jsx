@@ -4,7 +4,7 @@ import { object, func } from "prop-types";
 function Author({ item, handlePodClick }) {
   return (
     <div
-      className="col-sm allEpiAuthor"
+      className="col-md allEpiAuthor"
       onClick={handlePodClick}
       id={item.podcasts._id}
     >

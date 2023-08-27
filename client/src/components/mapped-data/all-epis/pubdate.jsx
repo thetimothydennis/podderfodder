@@ -4,7 +4,7 @@ import { object } from "prop-types";
 function PubDate({ item }) {
   return (
     <div
-      className="col-sm allEpiDuration"
+      className="col-md-2 allEpiDuration"
       id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
       value={item.podcasts.pod_id}
     >

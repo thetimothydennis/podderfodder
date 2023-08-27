@@ -3,7 +3,7 @@ import { object } from "prop-types";
 
 function CollectionViewUrl({ item }) {
   return (
-    <div className="col-sm">
+    <div className="col-md">
       <a href={item.collectionViewUrl} target="_blank" rel="noreferrer">
         More details
       </a>

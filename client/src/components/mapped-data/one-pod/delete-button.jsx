@@ -3,7 +3,7 @@ import { object, string, func } from "prop-types";
 
 function DeleteButton({ item, podId, handleClick }) {
   return (
-    <div>
+    <div className="col-md-2">
       <button
         id={-7}
         type="button"
@@ -11,7 +11,7 @@ function DeleteButton({ item, podId, handleClick }) {
         value={`${podId}/${item._id}`}
         onClick={handleClick}
       >
-        Delete episode
+        Delete
       </button>
     </div>
   );

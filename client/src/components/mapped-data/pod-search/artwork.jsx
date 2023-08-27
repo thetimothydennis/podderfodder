@@ -3,7 +3,7 @@ import { object } from "prop-types";
 
 function Artwork({ item }) {
   return (
-    <div className="col-sm">
+    <div className="col-md">
       <img alt="podcast_image" src={item.artworkUrl100} />
     </div>
   );

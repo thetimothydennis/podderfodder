@@ -6,11 +6,10 @@ import ShowImage from "../../components/mapped-data/all-pods/show-image";
 import ShowTitle from "../../components/mapped-data/all-pods/show-title.jsx";
 import Author from "../../components/mapped-data/all-pods/author";
 import Description from "../../components/mapped-data/all-pods/description";
-import DeleteButton from "../../components/mapped-data/all-pods/delete-button";
 import { toast } from "react-toastify";
 import { updateToast } from "../../functions/update-toast.jsx";
 
-function AllPods({ setDocTitle, setPodId, setDisplay, userId }) {
+function AllPods({ setDocTitle, setPodId, userId }) {
   const [podcasts, setPodcasts] = useState([]);
 
   const getPods = useCallback(async () => {
@@ -33,14 +32,6 @@ function AllPods({ setDocTitle, setPodId, setDisplay, userId }) {
     setDocTitle("All Podcasts - Podder Fodder");
   });
 
-  async function handleDeleteClick(e) {
-    await axios
-      .delete(`${apiCall}/api/user/${userId}/${e.target.value}`)
-      .then(() => {
-        setDisplay("allPods");
-      });
-  }
-
   async function handlePodClick(e) {
     setPodId(e.target.id);
   }
@@ -55,7 +46,6 @@ function AllPods({ setDocTitle, setPodId, setDisplay, userId }) {
               <ShowTitle {...{item, handlePodClick}} />
               <Author {...{item, handlePodClick}} />
               <Description {...{item, handlePodClick}} />
-              <DeleteButton {...{item, handleDeleteClick}} />
             </div>
           ))}
         </div>

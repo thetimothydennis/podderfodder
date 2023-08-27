@@ -4,11 +4,11 @@ import { object } from "prop-types";
 function Content({ item }) {
   return (
     <div
-      className="col-sm allEpiContent"
+      className="col-md-4 allEpiContent"
       id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
       value={item.podcasts.pod_id}
     >
-      {item.podcasts.episodes.content.slice(0, 100)}
+      {item.podcasts.episodes.content.slice(0, 200)}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { object } from "prop-types";
 function EpiTitle({ item }) {
   return (
     <div
-      className="col-sm"
+      className="col-md-2"
       id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}
       value={item.podcasts.pod_id}
     >

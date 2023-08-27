@@ -3,7 +3,7 @@ import { object, string } from "prop-types";
 
 function EpiTitle({ item, podId }) {
   return (
-    <div className="col-sm" id={`${podId}/${item._id}`}>
+    <div className="col-md-2" id={`${podId}/${item._id}`}>
       <b>{item.title}</b>
     </div>
   );
