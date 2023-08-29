@@ -15,9 +15,14 @@ function googleStratSetup(passport) {
 			googleconfig,
 			async (accessToken, refreshToken, profile, done) => {
 				try {
+					const localUser = await User.findOne({ email: profile.emails[0].value })
 					const user = await User.findOne({ googleId: profile.id });
 					if (user) {
 						return done(null, user);
+					} else if (localUser) {
+						localUser.googleId = profile.id;
+						await localUser.save();
+						return done(null, localUser);
 					} else {
 						let newUser = new User({
 							googleId: profile.id,

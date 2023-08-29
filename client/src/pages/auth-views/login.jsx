@@ -3,7 +3,6 @@ import Username from "../../components/form-parts/username";
 import Password from "../../components/form-parts/password";
 import GoogleButton from "../../components/buttons/google-button";
 import GithubButton from "../../components/buttons/github-button";
-import GoogleAcctNote from "../../components/text-blocks/goog-acct-note";
 import NoAccountNote from "../../components/text-blocks/no-account";
 import ForgotPasswordNote from "../../components/text-blocks/forgot-password-note";
 
@@ -29,7 +28,6 @@ function UserLogin() {
           <GithubButton />
           <GoogleButton />
         </div>
-        <GoogleAcctNote />
       </form>
     </div>
   );
