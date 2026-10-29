@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router";
 import MainUi from "../MainUi.jsx";
 import HomePage from "../pages/home-page.jsx";
 import UserLogin from "../pages/auth-views/login.jsx";

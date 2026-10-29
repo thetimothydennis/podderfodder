@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import Username from "../../components/form-parts/username";
 import Password from "../../components/form-parts/password";
-import GoogleButton from "../../components/buttons/google-button";
-import GithubButton from "../../components/buttons/github-button";
+// import GoogleButton from "../../components/buttons/google-button";
+// import GithubButton from "../../components/buttons/github-button";
 import NoAccountNote from "../../components/text-blocks/no-account";
 import ForgotPasswordNote from "../../components/text-blocks/forgot-password-note";
 
