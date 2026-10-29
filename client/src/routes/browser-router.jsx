@@ -64,7 +64,7 @@ function App() {
   return (
     <BrowserRouter>
       <RoutesUi />
-      <ToastContainer position={toast.POSITION.BOTTOM_LEFT}/>
+      <ToastContainer position="bottom-left"/>
     </BrowserRouter>
   );
 }
