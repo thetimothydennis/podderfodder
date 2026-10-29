@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { string } from "prop-types";
 import "../../stylesheets/customize-progress-bar.module.css";
 import DisplayTrack from "./DisplayTrack";
@@ -17,7 +17,8 @@ function AudioPlayer(props) {
             <div className="inner">
                 <DisplayTrack 
                     {...props}
-                    {...{audioRef, setDuration, progressBarRef}}/>
+                    {...{audioRef, setDuration, progressBarRef}}
+                    />
                 <ProgressBar {...{
                     progressBarRef, 
                     audioRef, 

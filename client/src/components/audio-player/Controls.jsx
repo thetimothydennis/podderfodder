@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { func, number, shape, oneOfType, any } from "prop-types";
 import SkipBackward from "../buttons/audio-player/skip-backward";
 import SkipForward from "../buttons/audio-player/skip-forward";

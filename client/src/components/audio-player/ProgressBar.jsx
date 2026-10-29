@@ -1,4 +1,3 @@
-import React from "react";
 import { number, func, oneOfType, shape, any} from "prop-types";
 
 function ProgressBar({ progressBarRef, audioRef, timeProgress, duration }) {

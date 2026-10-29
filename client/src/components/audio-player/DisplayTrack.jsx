@@ -1,5 +1,4 @@
-import React from "react";
-import { useMediaSession, useMediaMeta } from "use-media-session";
+// import { useMediaSession, useMediaMeta } from "use-media-session";
 import { string, func, any, shape, oneOfType } from "prop-types";
 
 // eslint-disable-next-line max-lines-per-function
@@ -18,32 +17,33 @@ function DisplayTrack(props) {
         podId
     } = props;
 
-    const onLoadedMetadata = () => {
-        const seconds = audioRef.current.duration;
-        setDuration(seconds);
-        progressBarRef.current.max = seconds;
-    }
+    // const onLoadedMetadata = () => {
+    //     const seconds = audioRef.current.duration;
+    //     setDuration(seconds);
+    //     progressBarRef.current.max = seconds;
+    // }
 
-  useMediaSession({
-    onSeekBackward: () => {audioRef.current.currentTime -= 15},
-    onSeekForward: () => {audioRef.current.currentTime += 30},
-    onPlay: () => {audioRef.current.play()},
-    onPause: () => {audioRef.current.pause()},
-    onStop: () => {audioRef.current.pause()}
-  })
+//   useMediaSession({
+//     onSeekBackward: () => {audioRef.current.currentTime -= 15},
+//     onSeekForward: () => {audioRef.current.currentTime += 30},
+//     onPlay: () => {audioRef.current.play()},
+//     onPause: () => {audioRef.current.pause()},
+//     onStop: () => {audioRef.current.pause()}
+//   })
 
-  useMediaMeta({
-    title: title,
-    artist: showTitle,
-    album: author
-  })
+//   useMediaMeta({
+//     title: title,
+//     artist: showTitle,
+//     album: author
+//   })
 
     return (
         <div>
             <audio 
                 src={epi} 
                 ref={audioRef}
-                onLoadedMetadata={onLoadedMetadata} />
+                // onLoadedMetadata={onLoadedMetadata} 
+                />
             <div className="audio-info">
                 <div className="text">
                     <h3 className="title">{title}</h3>
