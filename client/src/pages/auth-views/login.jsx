@@ -23,11 +23,11 @@ function UserLogin() {
         </button>
         <NoAccountNote />
         <ForgotPasswordNote />
-        <p>Or, you can login with one of these social providers:</p>
+        {/* <p>Or, you can login with one of these social providers:</p>
         <div className="row">
           <GithubButton />
           <GoogleButton />
-        </div>
+        </div> */}
       </form>
     </div>
   );

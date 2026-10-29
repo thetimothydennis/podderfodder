@@ -110,3 +110,5 @@ certs
 .env
 dump
 .prettierrc
+package-lock.json
+package-lock.json
