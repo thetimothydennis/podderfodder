@@ -1,4 +1,3 @@
-import React from "react";
 import { IoPlayForwardSharp } from "react-icons/io5";
 import { func } from "prop-types";
 

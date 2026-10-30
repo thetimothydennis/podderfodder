@@ -9,7 +9,7 @@ input[type="range"] {
   appearance: none;
   position: relative;
   background:#3d3d3d;
-  width: 100%;
+  width: 20em;
   height: 7px;
   border-radius: 2px;
   cursor: pointer;
@@ -61,6 +61,7 @@ input[type="range"]::-webkit-slider-thumb {
 /* dragging thumb - chrome and safari */
 input[type="range"]:active::-webkit-slider-thumb {
   transform: scale(1.5);
+  color: #f50;
 }
 
 /* slider thumb - firefox */

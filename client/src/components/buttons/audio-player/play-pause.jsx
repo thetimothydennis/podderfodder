@@ -1,4 +1,3 @@
-import React from "react";
 import { func, bool } from "prop-types";
 import { IoPauseSharp, IoPlaySharp } from "react-icons/io5";
 

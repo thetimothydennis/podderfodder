@@ -238,6 +238,10 @@ img.waiting {
 
 .volume {
   max-width: 83px;
+  @media(max-width:768px) {
+    display: none;
+  }
+  color: green;
 }
 
 .controlBtn {

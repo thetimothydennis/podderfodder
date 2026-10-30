@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Email from "../../components/form-parts/email";
 import PassRecoveryNote from "../../components/text-blocks/pass-recovery-note";
 import CheckEmail from "../../components/text-blocks/check-email";

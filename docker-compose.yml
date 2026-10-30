@@ -23,6 +23,8 @@ services:
             DB_NAME: podcasts
         depends_on:
             - mongo_db
+        volumes:
+            - ./client:/usr/src/app/client
 
 volumes:
     mongo_data: {}

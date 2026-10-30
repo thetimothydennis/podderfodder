@@ -1,4 +1,3 @@
-import React from "react";
 import { string, func } from "prop-types";
 
 function SearchApplePodsForm({ input, setInput }) {

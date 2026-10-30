@@ -1,4 +1,3 @@
-import React from "react";
 import { func, string } from "prop-types";
 
 function RSSLinkForm({ setFeedInput, feedInput }) {

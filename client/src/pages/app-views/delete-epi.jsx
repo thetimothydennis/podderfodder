@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { func } from "prop-types";
 
 function DeleteEpi({ setDocTitle }) {

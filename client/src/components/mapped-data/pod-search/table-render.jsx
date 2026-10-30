@@ -1,4 +1,3 @@
-import React from "react";
 import { object, func } from "prop-types";
 import CollectionName from "./collection-name";
 import Artwork from "./artwork";

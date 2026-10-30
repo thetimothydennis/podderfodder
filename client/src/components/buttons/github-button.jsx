@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function GithubButton() {
   const [gitSrc, setGitSrc] = useState("/buttons/github_normal.png");

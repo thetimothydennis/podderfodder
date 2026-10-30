@@ -1,4 +1,3 @@
-import React from "react";
 import { func, number } from "prop-types";
 
 function VolumeSlider ({ volume, setVolume }) {
@@ -11,7 +10,9 @@ function VolumeSlider ({ volume, setVolume }) {
                 onChange={(e) => setVolume(e.target.value)}
                 className="volume"
                 style={{
-                    background: `linear-gradient(to right, #f50 ${volume}%, #3d3d3d ${volume}%)`
+                    appearance: "none",
+                    background: `linear-gradient(to right, #f50 ${volume}%, #3d3d3d ${volume}%)`,
+                    height: "6px"
             }} />
     )
 }

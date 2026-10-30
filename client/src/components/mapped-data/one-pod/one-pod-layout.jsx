@@ -1,4 +1,3 @@
-import React from "react";
 import { string, func, array } from "prop-types";
 import AboveFold from "./above-fold";
 import BelowFold from "./below-fold";

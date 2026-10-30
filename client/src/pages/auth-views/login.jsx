@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Username from "../../components/form-parts/username";
 import Password from "../../components/form-parts/password";
 // import GoogleButton from "../../components/buttons/google-button";

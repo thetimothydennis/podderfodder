@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { apiCall } from "./functions/api-call.jsx";
@@ -14,7 +14,6 @@ import DeletePod from "./pages/app-views/delete-pod.jsx";
 import DeleteEpi from "./pages/app-views/delete-epi.jsx";
 import ImportedPod from "./pages/app-views/imported-pod.jsx";
 
-// eslint-disable-next-line max-lines-per-function
 function MainUi() {
   const [display, setDisplay] = useState("welcome");
   const [podId, setPodId] = useState("");

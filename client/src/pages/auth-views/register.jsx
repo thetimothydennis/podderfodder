@@ -1,4 +1,3 @@
-import React from "react";
 import PasswordReqs from "../../components/text-blocks/password-reqs";
 import RegistrationNotice from "../../components/text-blocks/registration-notice";
 import PassMatch from "../../components/form-parts/pass-match";

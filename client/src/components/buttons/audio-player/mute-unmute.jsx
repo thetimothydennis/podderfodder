@@ -1,4 +1,3 @@
-import React from "react";
 import { func, number, bool } from "prop-types";
 import { IoMdVolumeHigh, IoMdVolumeOff, IoMdVolumeLow } from "react-icons/io";
 

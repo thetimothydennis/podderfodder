@@ -1,4 +1,3 @@
-import React from "react";
 import { func, object, string, number } from "prop-types";
 import EpiTitle from "./epi-title.jsx";
 import Duration from "./duration.jsx";

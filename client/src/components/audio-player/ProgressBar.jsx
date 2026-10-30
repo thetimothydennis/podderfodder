@@ -1,4 +1,5 @@
 import { number, func, oneOfType, shape, any} from "prop-types";
+import styles from "../../stylesheets/customize-progress-bar.module.css";
 
 function ProgressBar({ progressBarRef, audioRef, timeProgress, duration }) {
 
@@ -20,14 +21,21 @@ function ProgressBar({ progressBarRef, audioRef, timeProgress, duration }) {
     }
 
     return (
-        <div className="progress">
-            <span className="time current">{formatTime(timeProgress)}</span>
+        <div className={styles.container}>
+            <span 
+                className="time current">{formatTime(timeProgress)}  </span>
             <input 
                 type="range" 
                 ref={progressBarRef}
                 defaultValue="0"
-                onChange={handleProgressBarChange} />
-            <span className="time">{formatTime(duration)}</span>
+                onChange={handleProgressBarChange}
+                style={{
+                    background: `linear-gradient(to right, #f50 ${progressBarRef}%, #3d3d3d ${progressBarRef}%)`,
+                    alignSelf:"center",
+                    margin: "0.25rem",
+                    maxWidth: "50vw",
+                }} />
+            <span className="time">  {formatTime(duration)}</span>
         </div>
     )
 };

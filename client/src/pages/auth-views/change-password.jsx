@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import PasswordReqs from "../../components/text-blocks/password-reqs";
 import Password from "../../components/form-parts/password";
 import PassMatch from "../../components/form-parts/pass-match";

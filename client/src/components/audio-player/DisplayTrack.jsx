@@ -17,11 +17,11 @@ function DisplayTrack(props) {
         podId
     } = props;
 
-    // const onLoadedMetadata = () => {
-    //     const seconds = audioRef.current.duration;
-    //     setDuration(seconds);
-    //     progressBarRef.current.max = seconds;
-    // }
+    const onLoadedMetadata = () => {
+        const seconds = audioRef.current.duration;
+        setDuration(seconds);
+        progressBarRef.current.max = seconds;
+    }
 
 //   useMediaSession({
 //     onSeekBackward: () => {audioRef.current.currentTime -= 15},
@@ -42,7 +42,7 @@ function DisplayTrack(props) {
             <audio 
                 src={epi} 
                 ref={audioRef}
-                // onLoadedMetadata={onLoadedMetadata} 
+                onLoadedMetadata={onLoadedMetadata} 
                 />
             <div className="audio-info">
                 <div className="text">

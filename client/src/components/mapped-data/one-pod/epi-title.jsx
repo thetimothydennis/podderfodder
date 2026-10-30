@@ -1,4 +1,3 @@
-import React from "react";
 import { object, string } from "prop-types";
 
 function EpiTitle({ item, podId }) {

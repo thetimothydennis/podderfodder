@@ -1,4 +1,3 @@
-import React from "react";
 import { object, string, func } from "prop-types";
 
 function DeleteButton({ item, podId, handleClick }) {

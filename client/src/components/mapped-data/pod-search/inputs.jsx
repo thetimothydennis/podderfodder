@@ -1,4 +1,3 @@
-import React from "react";
 import { string, func } from "prop-types";
 import RSSLinkForm from "./rss-link-form";
 import RSSSubmitButton from "./rss-submit-button";

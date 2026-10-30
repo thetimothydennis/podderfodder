@@ -1,4 +1,3 @@
-import React from "react";
 import { object, func } from "prop-types";
 
 function ShowImage({ item, handlePodClick }) {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 function GoogleButton() {
   const [googSrc, setGoogSrc] = useState("/buttons/google_normal.png");

@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { string } from "prop-types";
-import "../../stylesheets/customize-progress-bar.module.css";
 import DisplayTrack from "./DisplayTrack";
 import Controls from "./Controls";
 import ProgressBar from "./ProgressBar";
