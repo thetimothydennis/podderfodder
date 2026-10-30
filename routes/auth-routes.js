@@ -33,16 +33,16 @@ router.get("/api/user-data", AuthCTRL.getUserData);
 // route to change user password if already logged in
 router.post("/api/changepassword", AuthCTRL.postChangePassword);
 // route to initiate password recovery workflow
-router.post("/api/forgotpassword", AuthCTRL.postForgotPassword);
+// router.post("/api/forgotpassword", AuthCTRL.postForgotPassword);
 // route for resetting password after recovery email is sent
-router.post("/api/resetpassword/:token", AuthCTRL.postResetPassword);
+// router.post("/api/resetpassword/:token", AuthCTRL.postResetPassword);
 // callback route for github oauth
-router.get("/oauth/github/callback", AuthCTRL.handleGithubCallback);
+// router.get("/oauth/github/callback", AuthCTRL.handleGithubCallback);
 // route for logging in with github
-router.get("/github", AuthCTRL.handleGithubLogin);
+// router.get("/github", AuthCTRL.handleGithubLogin);
 // callback route for google oauth
-router.get("/oauth/google/callback", AuthCTRL.handleGoogleCallback);
+// router.get("/oauth/google/callback", AuthCTRL.handleGoogleCallback);
 // route for logging in with google
-router.get("/google", AuthCTRL.handleGoogleLogin);
+// router.get("/google", AuthCTRL.handleGoogleLogin);
 
 export default router;
