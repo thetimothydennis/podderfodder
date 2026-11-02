@@ -9,14 +9,14 @@ function AudioPlayer(props) {
     const [duration, setDuration] = useState(0);
 
     const audioRef = useRef();
-    const progressBarRef = useRef();
+    const progressBarRef = useRef(0);
 
     return (
         <div className="audio-player">
             <div className="inner">
                 <DisplayTrack 
                     {...props}
-                    {...{audioRef, setDuration, progressBarRef}}
+                    {...{audioRef, duration, progressBarRef, setDuration, progressBarRef}}
                     />
                 <ProgressBar {...{
                     progressBarRef, 

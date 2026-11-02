@@ -43,7 +43,7 @@ function PodSearch({ userId, setPodId, setDisplay, setDocTitle }) {
   useEffect(() => {
     setRender(
       response.map((item, x) => (
-        <TableRender key={x} {...{item, handleSubmit}} />
+        <TableRender key={item.trackId} {...{item, handleSubmit}} />
       )),
     );
   }, [input, response, handleSubmit]);

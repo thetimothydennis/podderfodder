@@ -41,7 +41,7 @@ function AllPods({ setDocTitle, setPodId, userId }) {
         <h3>All Podcasts</h3>
         <div className="container">
           {podcasts.map((item, x) => (
-            <div className="row epiRow" key={x} id={item.podcasts._id}>
+            <div className="row epiRow" key={item.podcasts._id} id={item.podcasts._id}>
               <ShowImage {...{item, handlePodClick}} />
               <ShowTitle {...{item, handlePodClick}} />
               <Author {...{item, handlePodClick}} />

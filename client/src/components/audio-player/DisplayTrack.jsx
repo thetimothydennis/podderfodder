@@ -1,7 +1,6 @@
-// import { useMediaSession, useMediaMeta } from "use-media-session";
 import { string, func, any, shape, oneOfType } from "prop-types";
+import { useEffect } from "react";
 
-// eslint-disable-next-line max-lines-per-function
 function DisplayTrack(props) {
     const {
         audioRef,
@@ -14,7 +13,8 @@ function DisplayTrack(props) {
         date,
         author,
         formatDate,
-        podId
+        podId,
+        duration
     } = props;
 
     const onLoadedMetadata = () => {
@@ -23,19 +23,45 @@ function DisplayTrack(props) {
         progressBarRef.current.max = seconds;
     }
 
-//   useMediaSession({
-//     onSeekBackward: () => {audioRef.current.currentTime -= 15},
-//     onSeekForward: () => {audioRef.current.currentTime += 30},
-//     onPlay: () => {audioRef.current.play()},
-//     onPause: () => {audioRef.current.pause()},
-//     onStop: () => {audioRef.current.pause()}
-//   })
+    let metadata = {
+        title: title,
+        artist: showTitle,
+        album: author,
+        duration: duration,
+    }
 
-//   useMediaMeta({
-//     title: title,
-//     artist: showTitle,
-//     album: author
-//   })
+    useEffect(() => {
+        if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
+
+        navigator.mediaSession.metadata = new MediaMetadata({
+        title: metadata.title,
+        artist: metadata.artist ?? '',
+        album: metadata.album ?? '',
+        // artwork: metadata.artwork ?? [],
+        });
+
+        navigator.mediaSession.setActionHandler('play', () => {audioRef.current.play()});
+        navigator.mediaSession.setActionHandler('pause', () => {audioRef.current.pause()});
+        navigator.mediaSession.setActionHandler('seekforward', () => {audioRef.current.currentTime += 30})
+        navigator.mediaSession.setActionHandler('seekbackward', () => {audioRef.current.currentTime -= 15})
+        navigator.mediaSession.setActionHandler('seekto', (d) => {
+            if (d.seekTime != null) {
+                seek(d.seekTime)
+                audioRef.current.currentTime = d.seekTime
+            };
+        });
+        
+        // Optional: Update position state for progress bars
+        navigator.mediaSession.setPositionState?.({ 
+          duration, 
+          playbackRate: 1, 
+          position: audioRef.current.currentTime
+        });
+
+        return () => {
+        // Cleanup handlers on unmount if necessary
+        };
+    }, [metadata]);
 
     return (
         <div>

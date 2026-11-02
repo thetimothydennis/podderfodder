@@ -44,7 +44,7 @@ function AllEpis({ userId, setDocTitle, setPodId, setEpiId }) {
 					<div
 						className="row epiRow"
 						onClick={handleClick}
-						key={x}
+						key={item.podcasts.episodes.epi_id}
 						id={`${item.podcasts.pod_id}/${item.podcasts.episodes.epi_id}`}>
 						<EpiTitle {...{item}} />
 						<ShowTitle {...{item}} />
