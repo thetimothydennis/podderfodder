@@ -25,6 +25,8 @@ function DisplayTrack(props) {
 
     useEffect(() => {
 
+        let reference = audioRef.current
+
         let metadata = {
             title: title,
             artist: showTitle,
@@ -61,10 +63,10 @@ function DisplayTrack(props) {
             }
         }
  
-        audioRef.current?.addEventListener("timeupdate", updateTimeState);
+        reference?.addEventListener("timeupdate", updateTimeState);
 
         return () => {
-            audioRef.current?.removeEventListener("timeupdate", updateTimeState);
+            reference?.removeEventListener("timeupdate", updateTimeState);
             navigator.mediaSession.setActionHandler("play", null);
             navigator.mediaSession.setActionHandler("pause", null);
             navigator.mediaSession.setActionHandler("seekto", null);

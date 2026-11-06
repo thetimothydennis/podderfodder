@@ -13,10 +13,19 @@ function PodSearch({ userId, setPodId, setDisplay, setDocTitle }) {
   const [feedInput, setFeedInput] = useState("");
   const [render, setRender] = useState();
 
-  async function getSearch(inputStr) {
-    let res = await axios.get(`${apiCall}/api/search?q=${inputStr}`);
-    setResponse(res.data.results);
-  }
+  // async function getSearch(inputStr) {
+  //   let res = await axios.get(`${apiCall}/api/search?q=${inputStr}`);
+  //   setResponse(res.data.results);
+  // }
+
+  const getSearch = useCallback(
+    async (inputStr) => {
+      let res = await axios.get(`${apiCall}/api/search?q=${inputStr}`);
+      setResponse(res.data.results);
+    },
+    []
+  )
+
   const handleSubmit = useCallback(
     async (inputArg) => {
       let toastId = toast.loading("Adding podcast", {className: "toastMessage"})
@@ -38,14 +47,25 @@ function PodSearch({ userId, setPodId, setDisplay, setDocTitle }) {
     setDocTitle("Search and Add - Podder Fodder");
   }, [setDocTitle]);
 
-  useEffect(() => {getSearch(input)}, [input]);
+  // useEffect(() => {getSearch(input)}, [input]);
 
   useEffect(() => {
-    setRender(
-      response.map((item, x) => (
-        <TableRender key={item.trackId} {...{item, handleSubmit}} />
-      )),
-    );
+    async function getUpdate() {
+      await getSearch(input)
+    }
+    getUpdate()
+  }, [getSearch, input])
+
+  useEffect(() => {
+    async function updateRender () {
+      setRender(
+        response.map((item, x) => (
+          <TableRender key={item.trackId} {...{item, handleSubmit}} />
+        )),
+      );
+    }
+    updateRender()
+
   }, [input, response, handleSubmit]);
 
   return (

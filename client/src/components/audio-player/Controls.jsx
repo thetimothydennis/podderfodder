@@ -20,10 +20,12 @@ function Controls({ audioRef, progressBarRef, duration, setTimeProgress }) {
             '--range-progress',
             `${(progressBarRef.current.value / duration) * 100}%`
         )
-
-        playAnimationRef.current = requestAnimationFrame(repeat);
     }, [audioRef, duration, progressBarRef, setTimeProgress]) 
     
+    useEffect(() => {
+        playAnimationRef.current = requestAnimationFrame(repeat);
+    }, [repeat])
+
     const togglePlayPause = () => setIsPlaying((prev) => !prev);
 
     useEffect(() => {

@@ -37,7 +37,12 @@ function OnePod({ userId, podId, setDocTitle, setPodId, setDisplay }) {
       })
   };
 
-  useEffect(() => {getPodcasts()}, [getPodcasts]);
+  useEffect(() => {
+    async function getUpdate () {
+      await getPodcasts()
+    }
+    getUpdate()
+  }, [getPodcasts]);
 
   const handleClick = async (e) => {
     await axios

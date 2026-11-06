@@ -19,8 +19,8 @@ function FullLayout(props) {
         <AboveFold {...{showTitle, showAuthor, showImg, showDesc, handleDeletePod, updatePod}} />
         {episodes.map((item, x) => (
           <BelowFold
-            {...{item, podId, handleClick}}
             key={item._iId}
+            {...{item, podId, handleClick}}
           />
         ))}
     </div>

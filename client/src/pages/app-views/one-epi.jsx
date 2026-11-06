@@ -14,7 +14,7 @@ function OneEpi({ userId, epiId, setPodId, setDocTitle, podId }) {
 	const [author, setAuthor] = useState("");
 	const [image, setImage] = useState("waiting.svg");
 	const [title, setTitle] = useState("");
-	const [date, setDate] = useState(formatDate("2004-02-01T00:00:00Z"));
+	const [date, setDate] = useState("");
 	const [epi, setEpi] = useState("");
 	const [content, setContent] = useState("");
 
@@ -33,7 +33,10 @@ function OneEpi({ userId, epiId, setPodId, setDocTitle, podId }) {
 	}, [epiId, setDocTitle, setPodId, userId]);
 
 	useEffect(() => {
-		getEpisode();
+		async function getUpdate() {
+			await getEpisode();
+		}
+		getUpdate();
 	}, [getEpisode]);
 
 	return (

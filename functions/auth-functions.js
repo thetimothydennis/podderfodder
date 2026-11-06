@@ -30,7 +30,7 @@ export async function emailDBCheck(email) {
 			emailCheckObj.emailExists = true;
 			emailCheckObj.message = "Email already in use."
 		}; 
-	} catch (err) {
+	} catch {
 		emailCheckObj.message = "Couldn't check db"
 	};
 	return emailCheckObj;

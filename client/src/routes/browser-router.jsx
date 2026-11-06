@@ -40,11 +40,12 @@ function App() {
 
     socket.on("success", onToastieSuccess);
 
+    const socketTimeout = setTimeout(() => {
+      socket.off("error", onToastieError);
+      socket.off("success", onToastieSuccess);
+    }, 2000);
     return () => {
-      setTimeout(() => {
-        socket.off("error", onToastieError);
-        socket.off("success", onToastieSuccess);
-      }, 2000);
+      clearTimeout(socketTimeout)
       socket.disconnect();
     };
   }, []);
