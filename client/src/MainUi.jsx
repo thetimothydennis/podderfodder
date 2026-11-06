@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { apiCall } from "./functions/api-call.jsx";
@@ -21,23 +21,34 @@ function MainUi() {
   const [render, setRender] = useState(<Welcome />);
   const [userId, setUserId] = useState("");
   const [docTitle, setDocTitle] = useState("Podder Fodder");
-  const cookie = new Cookies();
 
-  async function getUserId() {
-    if (cookie.get("userId") === "" || !cookie.get("userId")) {
+  const cookie = useMemo(() => {
+    return new Cookies();
+  }, [])
+
+  const getUserId = useCallback(async () => {
+      if (cookie.get("userId") === "" || !cookie.get("userId")) {
       let res = await axios.get(`${apiCall}/api/user-data`);
       cookie.set("userId", res.data.user_id);
     }
     setUserId(cookie.get("userId"));
-  }
+  }, [cookie])
 
-  useEffect(() => { getUserId(); });
+  useEffect(() => {
+    async function updateUserId() {
+      await getUserId()
+    }
+    updateUserId()
+  }, [getUserId])
 
   useEffect(() => { document.title = docTitle; }, [docTitle]);
 
   useEffect(() => {
-    setDisplay("welcome");
-    setRender(<Welcome userId={userId} />);
+    async function initializeDisplay () {
+      setDisplay("welcome");
+      setRender(<Welcome userId={userId} />);
+    }
+    initializeDisplay()
   }, [userId]);
 
   //logic that renders the new component when display is updated
