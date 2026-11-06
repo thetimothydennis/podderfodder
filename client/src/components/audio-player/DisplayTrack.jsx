@@ -23,14 +23,16 @@ function DisplayTrack(props) {
         progressBarRef.current.max = seconds;
     }
 
-    let metadata = {
-        title: title,
-        artist: showTitle,
-        album: author,
-        duration: duration,
-    }
-
     useEffect(() => {
+
+        let metadata = {
+            title: title,
+            artist: showTitle,
+            album: author,
+            duration: duration,
+            currentTime: audioRef.current ? audioRef.current.CurrentTime : 0
+        }
+
         if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
 
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -45,23 +47,29 @@ function DisplayTrack(props) {
         navigator.mediaSession.setActionHandler('seekforward', () => {audioRef.current.currentTime += 30})
         navigator.mediaSession.setActionHandler('seekbackward', () => {audioRef.current.currentTime -= 15})
         navigator.mediaSession.setActionHandler('seekto', (d) => {
-            if (d.seekTime != null) {
-                seek(d.seekTime)
+            if (audioRef.current.currentTime && d.seekTime != null) {
                 audioRef.current.currentTime = d.seekTime
             };
         });
-        
-        // Optional: Update position state for progress bars
-        navigator.mediaSession.setPositionState?.({ 
-          duration, 
-          playbackRate: 1, 
-          position: audioRef.current.currentTime
-        });
+        const updateTimeState = () => {
+            if (audioRef.current) {
+                navigator.mediaSession.setPositionState({ 
+                    duration: audioRef.current.duration || 0, 
+                    playbackRate: audioRef.current.playbackRate, 
+                    position: audioRef.current.currentTime
+                    });
+            }
+        }
+ 
+        audioRef.current?.addEventListener("timeupdate", updateTimeState);
 
         return () => {
-        // Cleanup handlers on unmount if necessary
+            audioRef.current?.removeEventListener("timeupdate", updateTimeState);
+            navigator.mediaSession.setActionHandler("play", null);
+            navigator.mediaSession.setActionHandler("pause", null);
+            navigator.mediaSession.setActionHandler("seekto", null);
         };
-    }, [metadata]);
+    }, [audioRef, author, duration, showTitle, title]);
 
     return (
         <div>
