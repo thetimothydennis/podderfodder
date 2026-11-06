@@ -51,43 +51,57 @@ function MainUi() {
     initializeDisplay()
   }, [userId]);
 
-  //logic that renders the new component when display is updated
   useEffect(() => {
-    switch (display) {
+    async function doWork() {
+    switch(display) {
       case "allPods":
         setRender(<AllPods {...{userId, setDocTitle, setPodId, setDisplay}} />);
         break;
-      case "onePod":
-        setRender(<OnePod {...{userId, setDocTitle, setPodId, podId, setDisplay}} />);
-        break;
-      case "oneEpi":
-        setRender(<OneEpi {...{userId, setDocTitle, podId, epiId, setPodId}} />);
-        break;
-      case "allEpis":
-        setRender(<AllEpis {...{userId, setDocTitle, setPodId, setEpiId, setDisplay}} />);
-        break;
-      case "searchPods":
-        setRender(<PodSearch {...{userId, setDocTitle, setPodId, setDisplay}} />);
-        break;
-      case "updatePod":
-        setRender(<UpdatePod {...{setDocTitle}} />);
-        break;
-      case "deletePod":
-        setRender(<DeletePod {...{setDocTitle}} />);
-        break;
-      case "deleteEpi":
-        setRender(<DeleteEpi {...{setDocTitle}} />);
-        break;
-      case "submitPod":
-        setRender(<ImportedPod {...{setDocTitle}} />);
-        break;
-      case "welcome":
-        setRender(<Welcome {...{setDocTitle}} />);
-        break;
-      default:
-        setRender(<Welcome {...{setDocTitle}} />);
-      break;
     }
+    }
+    doWork()
+  },[display, userId])
+
+  //logic that renders the new component when display is updated
+  useEffect(() => {
+    async function setDisplayMode() {
+      switch (display) {
+        case "allPods":
+          setRender(<AllPods {...{userId, setDocTitle, setPodId, setDisplay}} />);
+          break;
+        case "onePod":
+          setRender(<OnePod {...{userId, setDocTitle, setPodId, podId, setDisplay}} />);
+          break;
+        case "oneEpi":
+          setRender(<OneEpi {...{userId, setDocTitle, podId, epiId, setPodId}} />);
+          break;
+        case "allEpis":
+          setRender(<AllEpis {...{userId, setDocTitle, setPodId, setEpiId, setDisplay}} />);
+          break;
+        case "searchPods":
+          setRender(<PodSearch {...{userId, setDocTitle, setPodId, setDisplay}} />);
+          break;
+        case "updatePod":
+          setRender(<UpdatePod {...{setDocTitle}} />);
+          break;
+        case "deletePod":
+          setRender(<DeletePod {...{setDocTitle}} />);
+          break;
+        case "deleteEpi":
+          setRender(<DeleteEpi {...{setDocTitle}} />);
+          break;
+        case "submitPod":
+          setRender(<ImportedPod {...{setDocTitle}} />);
+          break;
+        case "welcome":
+          setRender(<Welcome {...{setDocTitle}} />);
+          break;
+        default:
+          setRender(<Welcome {...{setDocTitle}} />);
+        break;
+      }
+    }
+    setDisplayMode()
   }, [display, epiId, podId, userId]);
 
   // logic for telling the app which display to re-render
